@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Scrollbar Variables - Light Mode Default */
+  --sb-track: #ffffff;
+  --sb-thumb: #d1d5db;
+  --sb-border: #ffffff;
+  --sb-hover: #06b6d4;
+  /* cyan-500 */
+}
+
+/* Dark Mode Overrides */
+.dark {
+  --sb-track: #0a0a0a;
+  --sb-thumb: #333333;
+  --sb-border: #0a0a0a;
+  --sb-hover: #22d3ee;
+  /* cyan-400 */
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sb-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb);
+  border-radius: 5px;
+  border: 2px solid var(--sb-border);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-hover);
+}
