@@ -125,7 +125,7 @@ export default function Home() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.5 }}
-                        className="pt-8 flex items-center justify-center lg:justify-start gap-6 text-gray-400 dark:text-gray-500"
+                        className="pt-8 pb-8 flex items-center justify-center lg:justify-start gap-6 text-gray-400 dark:text-gray-500"
                     >
                         <a href="https://github.com/purushothaman-web" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors">
                             <Github size={24} />
