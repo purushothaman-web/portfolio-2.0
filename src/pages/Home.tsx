@@ -1,14 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Github, Mail, Terminal, GitBranch, XCircle, AlertCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-const GridBackground = () => (
-    <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-cyan-400 opacity-20 blur-[100px] dark:bg-cyan-500/20"></div>
-    </div>
-);
+import { scrollToSection } from '../utils/scrollToSection';
 
 const roles = ["Web Developer", "React Developer", "UI/UX Enthusiast"];
 
@@ -43,8 +36,7 @@ export default function Home() {
     }, [displayText, isDeleting, roleIndex]);
 
     return (
-        <div className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-white dark:bg-gray-950 pt-20">
-            <GridBackground />
+        <div id="hero" className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-gray-50 dark:bg-gray-900 pt-20">
 
             <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
 
@@ -104,21 +96,21 @@ export default function Home() {
                         transition={{ duration: 0.5, delay: 0.4 }}
                         className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4"
                     >
-                        <Link
-                            to="/projects"
+                        <button
+                            onClick={() => scrollToSection('projects')}
                             className="group px-8 py-3 bg-gray-900 dark:bg-white text-white dark:text-black rounded-lg font-bold transition-all hover:bg-gray-800 dark:hover:bg-gray-200 flex items-center space-x-2"
                         >
                             <span>View Projects</span>
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                        </Link>
+                        </button>
 
-                        <Link
-                            to="/contact"
+                        <button
+                            onClick={() => scrollToSection('contact')}
                             className="px-8 py-3 bg-transparent border border-gray-300 dark:border-gray-700 hover:border-gray-900 dark:hover:border-white text-gray-900 dark:text-white rounded-lg font-medium transition-colors flex items-center space-x-2"
                         >
                             <Mail size={18} />
                             <span>Contact Me</span>
-                        </Link>
+                        </button>
                     </motion.div>
 
                     <motion.div

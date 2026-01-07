@@ -1,23 +1,29 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../ui/ThemeToggle';
 import Logo from '../ui/Logo';
+import { scrollToSection, useActiveSection, useHashNavigation, useKeyboardNavigation } from '../../utils/scrollToSection';
 
 const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'Skills', path: '/skills' },
-    { name: 'Achievements', path: '/achievements' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Home', anchor: 'hero' },
+    { name: 'About', anchor: 'about' },
+    { name: 'Projects', anchor: 'projects' },
+    { name: 'Skills', anchor: 'skills' },
+    { name: 'Achievements', anchor: 'achievements' },
+    { name: 'Contact', anchor: 'contact' },
 ];
+
+const sectionIds = navLinks.map(link => link.anchor);
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const location = useLocation();
+    const activeSection = useActiveSection(sectionIds);
+    
+    // Enable hash navigation and keyboard navigation
+    useHashNavigation(sectionIds);
+    useKeyboardNavigation(sectionIds, activeSection);
 
     // Handle scroll effect
     useEffect(() => {
@@ -28,11 +34,10 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Close mobile menu when route changes
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+    const handleNavClick = (anchor: string) => {
+        scrollToSection(anchor);
         setIsOpen(false);
-    }, [location]);
+    };
 
     return (
         <nav
@@ -44,24 +49,24 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
                 {/* Logo - Minimal & Clean */}
-                <Link to="/" aria-label="Home">
+                <button onClick={() => scrollToSection('hero')} aria-label="Home" className="focus:outline-none">
                     <Logo className="w-10 h-10" />
-                </Link>
+                </button>
 
                 {/* Desktop Navigation - The "Ghost" Links */}
                 <div className="hidden lg:flex items-center space-x-8">
                     <ul className="flex space-x-8">
                         {navLinks.map((link) => (
                             <li key={link.name}>
-                                <Link
-                                    to={link.path}
-                                    className={`text-sm font-medium transition-colors duration-200 ${location.pathname === link.path
+                                <button
+                                    onClick={() => handleNavClick(link.anchor)}
+                                    className={`text-sm font-medium transition-colors duration-200 ${activeSection === link.anchor
                                         ? 'text-black dark:text-white'
                                         : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                                         }`}
                                 >
                                     {link.name}
-                                </Link>
+                                </button>
                             </li>
                         ))}
                     </ul>
@@ -103,16 +108,16 @@ export default function Navbar() {
                     >
                         <div className="px-6 py-6 space-y-4 flex flex-col">
                             {navLinks.map((link) => (
-                                <Link
+                                <button
                                     key={link.name}
-                                    to={link.path}
-                                    className={`text-lg font-medium transition-colors ${location.pathname === link.path
+                                    onClick={() => handleNavClick(link.anchor)}
+                                    className={`text-lg font-medium transition-colors text-left ${activeSection === link.anchor
                                         ? 'text-black dark:text-white'
                                         : 'text-gray-500 dark:text-gray-400'
                                         }`}
                                 >
                                     {link.name}
-                                </Link>
+                                </button>
                             ))}
                             <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
                                 <a

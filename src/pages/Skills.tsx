@@ -90,7 +90,7 @@ export const Skills = () => {
     ];
 
     return (
-        <div className="min-h-screen py-24 px-6 max-w-5xl mx-auto">
+        <div id="skills" className="min-h-screen py-24 px-6 max-w-5xl mx-auto bg-white dark:bg-gray-950">
             <div className="space-y-8">
 
                 {/* Dashboard Header */}

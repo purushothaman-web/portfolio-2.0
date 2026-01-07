@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { scrollToSection } from '../../utils/scrollToSection';
 
 interface HistoryItem {
     type: 'system' | 'user' | 'success' | 'error';
@@ -15,7 +15,6 @@ const TerminalModal = () => {
         { type: 'system', content: 'Welcome to DevMode Terminal v2.0.0' },
         { type: 'system', content: 'Type "help" to see available commands.' }
     ]);
-    const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -65,7 +64,7 @@ const TerminalModal = () => {
             case 'help':
                 newHistory.push({
                     type: 'system',
-                    content: 'Available commands:\n  help      - Show this help message\n  clear     - Clear terminal history\n  home      - Go to Home page\n  about     - Go to About page\n  projects  - Go to Projects page\n  contact   - Go to Contact page\n  skills    - Go to Skills page\n  ls        - List directory contents (simulated)\n  whoami    - Display user info\n  repo      - Open GitHub repository\n  theme <mode> - Set theme (light/dark)'
+                    content: 'Available commands:\n  help      - Show this help message\n  clear     - Clear terminal history\n  home      - Scroll to Home section\n  about     - Scroll to About section\n  projects  - Scroll to Projects section\n  contact   - Scroll to Contact section\n  skills    - Scroll to Skills section\n  achievements - Scroll to Achievements section\n  ls        - List directory contents (simulated)\n  whoami    - Display user info\n  repo      - Open GitHub repository\n  theme <mode> - Set theme (light/dark)'
                 });
                 break;
             case 'clear':
@@ -73,28 +72,33 @@ const TerminalModal = () => {
                 setInput('');
                 return;
             case 'home':
-                newHistory.push({ type: 'success', content: 'Navigating to Home...' });
-                navigate('/');
+                newHistory.push({ type: 'success', content: 'Scrolling to Home...' });
+                scrollToSection('hero');
                 setIsOpen(false);
                 break;
             case 'about':
-                newHistory.push({ type: 'success', content: 'Navigating to About...' });
-                navigate('/about');
+                newHistory.push({ type: 'success', content: 'Scrolling to About...' });
+                scrollToSection('about');
                 setIsOpen(false);
                 break;
             case 'projects':
-                newHistory.push({ type: 'success', content: 'Navigating to Projects...' });
-                navigate('/projects');
+                newHistory.push({ type: 'success', content: 'Scrolling to Projects...' });
+                scrollToSection('projects');
                 setIsOpen(false);
                 break;
             case 'contact':
-                newHistory.push({ type: 'success', content: 'Navigating to Contact...' });
-                navigate('/contact');
+                newHistory.push({ type: 'success', content: 'Scrolling to Contact...' });
+                scrollToSection('contact');
                 setIsOpen(false);
                 break;
             case 'skills':
-                newHistory.push({ type: 'success', content: 'Navigating to Skills...' });
-                navigate('/skills');
+                newHistory.push({ type: 'success', content: 'Scrolling to Skills...' });
+                scrollToSection('skills');
+                setIsOpen(false);
+                break;
+            case 'achievements':
+                newHistory.push({ type: 'success', content: 'Scrolling to Achievements...' });
+                scrollToSection('achievements');
                 setIsOpen(false);
                 break;
             case 'ls':

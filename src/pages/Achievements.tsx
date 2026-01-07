@@ -121,7 +121,7 @@ export const Achievements = () => {
     ];
 
     return (
-        <div className="min-h-screen py-24 px-6 max-w-7xl mx-auto">
+        <div id="achievements" className="min-h-screen py-24 px-6 bg-gray-50 dark:bg-gray-900">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

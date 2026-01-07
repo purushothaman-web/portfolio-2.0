@@ -36,7 +36,7 @@ export const Contact = () => {
     };
 
     return (
-        <div className="min-h-screen py-24 px-6 max-w-5xl mx-auto flex flex-col justify-center">
+        <div id="contact" className="min-h-screen py-24 px-6 max-w-5xl mx-auto flex flex-col justify-center bg-white dark:bg-gray-950">
             <div className="grid lg:grid-cols-2 gap-12 items-start">
 
                 {/* Left Column: Server Info */}

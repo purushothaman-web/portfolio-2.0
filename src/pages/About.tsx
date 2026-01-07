@@ -37,7 +37,7 @@ const TimelineItem = ({ year, title, subtitle, description, type }: TimelineItem
 
 export const About = () => {
     return (
-        <div className="min-h-screen py-24 px-6 max-w-5xl mx-auto">
+        <div id="about" className="min-h-screen py-24 px-6 max-w-5xl mx-auto bg-white dark:bg-gray-950">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
