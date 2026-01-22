@@ -11,12 +11,9 @@
     Content-Type = "application/pdf"
     Cache-Control = "public, max-age=31536000"
 
-[[redirects]]
-  from = "/*.pdf"
-  to = "/:splat"
-  status = 200
-
+# SPA redirect - exclude PDF files
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
