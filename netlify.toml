@@ -5,13 +5,6 @@
 [build.environment]
   SECRETS_SCAN_OMIT_KEYS = "VITE_EMAILJS_SERVICE_ID,VITE_EMAILJS_TEMPLATE_ID,VITE_EMAILJS_PUBLIC_KEY"
 
-[[headers]]
-  for = "/*.pdf"
-  [headers.values]
-    Content-Type = "application/pdf"
-    Cache-Control = "public, max-age=31536000"
-
-# SPA redirect - exclude PDF files
 [[redirects]]
   from = "/*"
   to = "/index.html"
