@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { Github, Terminal, Folder } from 'lucide-react';
+import { Github, Terminal, Folder, ExternalLink } from 'lucide-react';
 
 interface ProjectCardProps {
     title: string;
     description: string;
     tags: string[];
-    links: { github: string };
+    links: { github: string; live?: string };
     type: string;
 }
 
@@ -63,6 +63,17 @@ const ProjectCard = ({ title, description, tags, links }: ProjectCardProps) => (
                         Source Code
                     </a>
                 )}
+                {links.live && (
+                    <a
+                        href={links.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors text-xs uppercase tracking-wider font-bold"
+                    >
+                        <ExternalLink size={14} />
+                        Live Demo
+                    </a>
+                )}
             </div>
         </div>
     </motion.div>
@@ -71,30 +82,32 @@ const ProjectCard = ({ title, description, tags, links }: ProjectCardProps) => (
 export const Projects = () => {
     const projects = [
         {
-            title: 'Spend Log',
-            type: 'Full Stack Application',
-            description: 'A full-stack web app for managing daily expenses and income. Includes secure authentication, tracking, budgeting, and interactive charts. Designed with a responsive UI for an efficient, user-friendly experience.',
-            tags: ['React JS', 'TailwindCSS', 'Node.js', 'Express.js', 'MongoDB'],
+            title: 'DevDesk',
+            type: 'Backend-Focused Support Ticket System',
+            description: 'DevDesk is a robust backend-focused support ticket system designed for efficient issue resolution. It features secure Role-Based Access Control (RBAC) via JWT, automated ticket workflows, and intelligent assignment management. Built on Node.js and PostgreSQL, it delivers a scalable architecture for handling complex support operations.',
+            tags: ['Node.js', 'Express.js', 'Prisma', 'PostgreSQL', 'JWT', 'Zod', 'REST API'],
             links: {
-                github: 'https://github.com/purushothaman-web/spend-log'
+                github: 'https://github.com/purushothaman-web/DevDesk'
             }
         },
         {
             title: 'JobTrackr',
             type: 'Full Stack Application',
-            description: 'A full-stack web application to streamline job applications. Helps users manage applications, track progress, and receive email reminders. Features include secure authentication with Google login, CSV export, responsive UI, and robust validation handling.',
+            description: 'JobTrackr streamlines every step of your career journey with a powerful, automated application management system. Featuring Google Authentication, progress tracking, and smart email reminders, it helps users stay organized. With built-in CSV exports and robust validation, JobTrackr ensures you never miss an opportunity.',
             tags: ['React JS', 'Tailwind CSS', 'Node.js', 'Express JS', 'Prisma', 'PostgreSQL'],
             links: {
-                github: 'https://github.com/purushothaman-web/JobTrackr'
+                github: 'https://github.com/purushothaman-web/JobTrackr',
+                live: 'https://jobtrackr-silk.vercel.app/'
             }
         },
         {
             title: 'ThiraiView',
             type: 'Full Stack Application',
-            description: 'A full-stack movie platform for exploring movies, posting reviews, and managing watchlists. Features include JWT-based authentication, user profiles with image uploads, and an interactive review system with likes and Verified credentials.',
+            description: 'ThiraiView revolutionizes movie discovery by matching films to your exact mood and preference. Powered by TMDB, it offers advanced tools like the Mood Explorer and Cast Mixer for deep-dive recommendations. Engage with a vibrant community through verified reviews and Movie DNA analysis for a truly personalized cinematic experience.',
             tags: ['React JS', 'TailwindCSS', 'Node.js', 'Express JS', 'Prisma', 'PostgreSQL'],
             links: {
-                github: 'https://github.com/purushothaman-web/ThiraiView'
+                github: 'https://github.com/purushothaman-web/ThiraiView',
+                live: 'https://thiraiview.vercel.app/'
             }
         }
     ];

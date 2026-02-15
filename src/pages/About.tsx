@@ -12,7 +12,7 @@ interface TimelineItemProps {
 const TimelineItem = ({ year, title, subtitle, description, type }: TimelineItemProps) => (
     <div className="group relative border-l-2 border-gray-100 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-600 pl-8 pb-12 last:pb-0 transition-colors duration-300">
         {/* Dot */}
-        <div className={`absolute -left-[6px] top-2 h-2.5 w-2.5 rounded-full transition-colors duration-300 ${type === 'work' ? 'bg-black dark:bg-white' : 'bg-gray-300 dark:bg-gray-700 group-hover:bg-gray-500 dark:group-hover:bg-gray-500'
+        <div className={`absolute -left-[6px] h-2.5 w-2.5 rounded-full transition-colors duration-300 ${type === 'work' ? 'bg-black dark:bg-white' : 'bg-gray-300 dark:bg-gray-700 group-hover:bg-gray-500 dark:group-hover:bg-gray-500'
             }`} />
 
         {/* Content */}
@@ -75,7 +75,7 @@ export const About = () => {
 
                 {/* Right Column: Minimal Timeline */}
                 <div className="pt-2">
-                    <div className="space-y-2">
+                    <div>
                         <TimelineItem
                             year="Feb 2025 - Present"
                             title="Web Developer"

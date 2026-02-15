@@ -74,7 +74,7 @@ export default function Navbar() {
                     <div className="flex items-center space-x-4 pl-4 border-l border-gray-200 dark:border-gray-800">
                         <ThemeToggle />
                         <a
-                            href="/Purushothaman_R_Web_Developer.pdf"
+                            href="https://drive.google.com/file/d/1aeViz7uwM3vV70w7euYgX8wvTPPV0H5Z/view?usp=sharing"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center space-x-2 px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
@@ -121,7 +121,7 @@ export default function Navbar() {
                             ))}
                             <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
                                 <a
-                                    href="https://drive.google.com/file/d/1bnATHVo5UpHS4mlvQxykbf1NZ1VUy05O/view?usp=sharing"
+                                    href="https://drive.google.com/file/d/1aeViz7uwM3vV70w7euYgX8wvTPPV0H5Z/view?usp=sharing"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center justify-center space-x-2 px-4 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium w-full"
