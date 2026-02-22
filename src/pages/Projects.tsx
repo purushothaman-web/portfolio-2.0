@@ -83,17 +83,18 @@ export const Projects = () => {
     const projects = [
         {
             title: 'DevDesk',
-            type: 'Backend-Focused Support Ticket System',
-            description: 'DevDesk is a robust backend-focused support ticket system designed for efficient issue resolution. It features secure Role-Based Access Control (RBAC) via JWT, automated ticket workflows, and intelligent assignment management. Built on Node.js and PostgreSQL, it delivers a scalable architecture for handling complex support operations.',
-            tags: ['Node.js', 'Express.js', 'Prisma', 'PostgreSQL', 'JWT', 'Zod', 'REST API'],
+            type: 'Multi-Tenant SaaS Helpdesk',
+            description: 'DevDesk is a full-stack, multi-tenant support ticketing platform designed with strict organizational data isolation. It features secure Role-Based Access Control (RBAC) across multiple tiers (Users, Agents, Admins, and Super Admins), automated workflows, and global analytical dashboards. Built on a scalable architecture, it efficiently manages complex B2B support operations.',
+            tags: ['React JS', 'Tailwind CSS', 'Node.js', 'Express.js', 'Prisma', 'PostgreSQL', 'Vite'],
             links: {
-                github: 'https://github.com/purushothaman-web/DevDesk'
+                github: 'https://github.com/purushothaman-web/DevDesk',
+                live: 'https://devdesk-ui.vercel.app/'
             }
         },
         {
             title: 'JobTrackr',
             type: 'Full Stack Application',
-            description: 'JobTrackr streamlines every step of your career journey with a powerful, automated application management system. Featuring Google Authentication, progress tracking, and smart email reminders, it helps users stay organized. With built-in CSV exports and robust validation, JobTrackr ensures you never miss an opportunity.',
+            description: 'JobTrackr streamlines every step of your career journey with a powerful, automated application management system. Featuring secure JWT authentication, progress tracking, and smart email reminders, it helps users stay perfectly organized. With built-in CSV exports and robust data validation, JobTrackr ensures you never miss a career opportunity.',
             tags: ['React JS', 'Tailwind CSS', 'Node.js', 'Express JS', 'Prisma', 'PostgreSQL'],
             links: {
                 github: 'https://github.com/purushothaman-web/JobTrackr',
