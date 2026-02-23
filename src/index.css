@@ -1,60 +1,60 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-accent: #e63946;
+  --color-accent-blue: #1d3557;
+  --color-bg-light: #fff9ed;
+  --color-grid: rgba(0, 0, 0, 0.03);
+}
+
 html {
   scroll-behavior: smooth;
-}
-
-@custom-variant dark (&:where(.dark, .dark *));
-
-:root {
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Scrollbar Variables - Light Mode Default */
-  --sb-track: #ffffff;
-  --sb-thumb: #d1d5db;
-  --sb-border: #ffffff;
-  --sb-hover: #06b6d4;
-  /* cyan-500 */
-}
-
-/* Dark Mode Overrides */
-.dark {
-  --sb-track: #0a0a0a;
-  --sb-thumb: #333333;
-  --sb-border: #0a0a0a;
-  --sb-hover: #22d3ee;
-  /* cyan-400 */
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  font-family: var(--font-sans);
+  color: #111111;
+  background-color: var(--color-bg-light);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--sb-track);
+  background: var(--color-bg-light);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--sb-thumb);
-  border-radius: 5px;
-  border: 2px solid var(--sb-border);
+  background: #cbd5e1;
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--sb-hover);
+  background: var(--color-accent-blue);
+}
+
+@utility editorial-card {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+  &:hover {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+}
+
+@utility editorial-border {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
+  &:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+  }
 }

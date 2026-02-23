@@ -10,9 +10,9 @@ export default function LoadingScreen() {
             setIsLoading(false);
         };
 
-        // If already loaded, hide immediately
+        // If already loaded, hide immediately via a tiny timeout to avoid synchronous setState during render
         if (document.readyState === 'complete') {
-            setIsLoading(false);
+            setTimeout(() => setIsLoading(false), 0);
         } else {
             window.addEventListener('load', handleLoad);
         }

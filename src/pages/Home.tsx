@@ -1,229 +1,154 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Github, Mail, Terminal, GitBranch, XCircle, AlertCircle } from 'lucide-react';
+import { ArrowRight, Github, Mail } from 'lucide-react';
 import { scrollToSection } from '../utils/scrollToSection';
 
-const roles = ["Web Developer", "React Developer", "UI/UX Enthusiast"];
+// Career start date: Feb 12, 2025. Increments every Feb 12.
+const getYearsOfExperience = (): number => {
+    const now = new Date();
+    const startYear = 2025;
+    const anniversaryThisYear = new Date(now.getFullYear(), 1, 12); // Feb 12 of current year
+    const yearsPassed = now.getFullYear() - startYear;
+    // If we haven't yet reached Feb 12 of the current year, subtract 1
+    return now >= anniversaryThisYear ? yearsPassed : yearsPassed - 1;
+};
 
 export default function Home() {
-    const [displayText, setDisplayText] = useState("");
-    const [roleIndex, setRoleIndex] = useState(0);
-    const [isDeleting, setIsDeleting] = useState(false);
-
-    useEffect(() => {
-        const currentRole = roles[roleIndex];
-        const typeSpeed = isDeleting ? 50 : 100;
-        const pauseTime = 2000;
-
-        const timer = setTimeout(() => {
-            if (!isDeleting && displayText === currentRole) {
-                // Finished typing, wait before deleting
-                setTimeout(() => setIsDeleting(true), pauseTime);
-            } else if (isDeleting && displayText === "") {
-                // Finished deleting, move to next role
-                setIsDeleting(false);
-                setRoleIndex((prev) => (prev + 1) % roles.length);
-            } else {
-                // Typing or deleting
-                const nextText = isDeleting
-                    ? currentRole.substring(0, displayText.length - 1)
-                    : currentRole.substring(0, displayText.length + 1);
-                setDisplayText(nextText);
-            }
-        }, typeSpeed);
-
-        return () => clearTimeout(timer);
-    }, [displayText, isDeleting, roleIndex]);
-
     return (
-        <div id="hero" className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-gray-50 dark:bg-gray-900 pt-20">
+        <div id="hero" className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-transparent pt-32 pb-20">
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
 
-                {/* Left Column: Typography & Content */}
-                <div className="space-y-8 text-center lg:text-left">
-
+                {/* Main Content Area */}
+                <div className="lg:col-span-8 space-y-10 text-center lg:text-left">
+                    
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-300 text-sm font-medium border border-gray-200 dark:border-gray-800"
+                        className="inline-flex items-center space-x-3 px-4 py-1.5 rounded-full border border-black/10 bg-white shadow-sm text-xs font-sans tracking-widest uppercase font-semibold text-gray-600"
                     >
-                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span>Available for new projects</span>
+                        <span className="w-2 h-2 rounded-full bg-[#e63946] animate-pulse"></span>
+                        <span>Purushothaman R &mdash; Full Stack Engineer</span>
                     </motion.div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.1 }}
-                            className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 dark:text-white"
+                            className="text-5xl md:text-7xl font-bold tracking-tight text-[#1d3557] font-sans leading-[1.1]"
                         >
-                            Building digital <br />
-                            <span className="text-gray-400 dark:text-gray-600">experiences.</span>
+                            Engineering the <span className="text-[#e63946] italic pr-2">hidden logic</span> <br className="hidden md:block" />
+                            that powers seamless experiences.
                         </motion.h1>
-
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            className="text-xl md:text-2xl font-medium text-gray-600 dark:text-gray-400 flex items-center justify-center lg:justify-start gap-2 h-8"
-                        >
-                            <Terminal size={24} className="text-cyan-600 dark:text-cyan-400" />
-                            <span>I am a</span>
-                            <span className="text-cyan-600 dark:text-cyan-400 font-bold min-w-[10px]">
-                                {displayText}
-                                <span className="animate-pulse ml-1 inline-block bg-cyan-600 dark:bg-cyan-400 w-2 h-6 align-middle"></span>
-                            </span>
-                        </motion.div>
                     </div>
 
-                    <motion.p
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                        className="max-w-xl mx-auto lg:mx-0 text-lg text-gray-500 dark:text-gray-400 leading-relaxed"
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="max-w-2xl mx-auto lg:mx-0 space-y-4 text-lg text-gray-600 leading-relaxed font-sans"
                     >
-                        Hi, I'm <span className="text-gray-900 dark:text-white font-semibold">Purushothaman R</span>.
-                        A Web Developer based in <span className="text-gray-900 dark:text-white font-medium">India</span>.
-                        I specialize in crafting high-performance applications with React, Node.js, and modern UI capabilities.
-                    </motion.p>
+                        <p>
+                            I began my career crafting pixel-perfect interfaces as a frontend developer. However, the deeper I dug into how web applications functioned, the more fascinated I became by the architecture beneath the surface.
+                        </p>
+                        <p>
+                            Today, I specialize in designing scalable backend infrastructures, reliable databases, and robust APIs—bridging the gap between strict server logic and premium client interfaces.
+                        </p>
+                    </motion.div>
 
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
                         className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4"
                     >
                         <button
                             onClick={() => scrollToSection('projects')}
-                            className="group px-8 py-3 bg-gray-900 dark:bg-white text-white dark:text-black rounded-lg font-bold transition-all hover:bg-gray-800 dark:hover:bg-gray-200 flex items-center space-x-2"
+                            className="group px-8 py-3.5 bg-[#1d3557] text-white rounded-xl font-sans font-semibold tracking-wide transition-all hover:bg-[#112240] hover:shadow-lg flex items-center space-x-3"
                         >
-                            <span>View Projects</span>
+                            <span>Read Case Studies</span>
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </button>
 
                         <button
                             onClick={() => scrollToSection('contact')}
-                            className="px-8 py-3 bg-transparent border border-gray-300 dark:border-gray-700 hover:border-gray-900 dark:hover:border-white text-gray-900 dark:text-white rounded-lg font-medium transition-colors flex items-center space-x-2"
+                            className="px-8 py-3.5 bg-white text-[#1d3557] rounded-xl font-sans font-medium transition-all editorial-border flex items-center space-x-3 hover:bg-gray-50 hover:shadow-sm"
                         >
                             <Mail size={18} />
-                            <span>Contact Me</span>
+                            <span>Get in Touch</span>
                         </button>
                     </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        className="pt-8 pb-8 flex items-center justify-center lg:justify-start gap-6 text-gray-400 dark:text-gray-500"
-                    >
-                        <a href="https://github.com/purushothaman-web" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors">
-                            <Github size={24} />
-                        </a>
-                        <a href="mailto:rpurushothaman500@gmail.com" className="hover:text-black dark:hover:text-white transition-colors">
-                            <Mail size={24} />
-                        </a>
-                        {/* Added a subtle line */}
-                        <div className="h-px w-12 bg-gray-200 dark:bg-gray-800"></div>
-                        <span className="text-sm">Based in India</span>
-                    </motion.div>
-
                 </div>
 
-                {/* Right Column: VS Code Style Editor */}
-                <div className="hidden lg:flex items-center justify-center relative w-full perspective-1000">
+                {/* Right Column: Highlight Card */}
+                <div className="hidden lg:flex lg:col-span-4 flex-col justify-center relative w-full h-full min-h-[400px]">
                     <motion.div
-                        initial={{ opacity: 0, rotateY: -10, rotateX: 5 }}
-                        animate={{ opacity: 1, rotateY: 0, rotateX: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="w-full max-w-lg bg-white dark:bg-[#1e1e1e] rounded-xl shadow-2xl border border-gray-200 dark:border-[#333] overflow-hidden font-mono text-sm leading-6 transition-colors duration-300"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                        className="relative w-full bg-white editorial-card rounded-2xl overflow-hidden flex flex-col z-10"
                     >
-                        {/* Window Header */}
-                        <div className="bg-gray-100 dark:bg-[#252526] px-4 py-3 flex items-center gap-2 border-b border-gray-200 dark:border-[#1e1e1e] transition-colors duration-300">
-                            <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                            <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-                            <div className="ml-4 text-gray-500 dark:text-gray-400 text-xs text-center flex-1 font-sans">developer.config.js</div>
-                        </div>
+                        {/* Card Top Stripe */}
+                        <div className="h-1 w-full bg-gradient-to-r from-[#1d3557] to-[#e63946]"></div>
 
-                        {/* Code Content */}
-                        <div className="p-6 text-gray-800 dark:text-gray-300 transition-colors duration-300">
-                            <div className="flex">
-                                <span className="text-gray-400 dark:text-gray-600 select-none w-8 text-right mr-4">1</span>
-                                <div>
-                                    <span className="text-[#0000ff] dark:text-[#569cd6]">const</span> <span className="text-[#001080] dark:text-[#4fc1ff]">developer</span> <span className="text-gray-600 dark:text-[#d4d4d4]">=</span> <span className="text-[#a80000] dark:text-[#ffd700]">{`{`}</span>
+                        <div className="p-8 flex flex-col gap-8">
+                            {/* Stat Row */}
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="p-4 bg-[#fff9ed] rounded-xl">
+                                    <div className="text-2xl font-bold text-[#1d3557]">3+</div>
+                                    <div className="text-xs text-gray-500 font-sans mt-1 leading-tight">Full-stack Projects Shipped</div>
+                                </div>
+                                <div className="p-4 bg-[#fff9ed] rounded-xl">
+                                    <div className="text-2xl font-bold text-[#1d3557]">{getYearsOfExperience()}+</div>
+                                    <div className="text-xs text-gray-500 font-sans mt-1 leading-tight">Years Dev Experience</div>
                                 </div>
                             </div>
-                            <div className="flex">
-                                <span className="text-gray-400 dark:text-gray-600 select-none w-8 text-right mr-4">2</span>
-                                <div className="pl-4">
-                                    <span className="text-[#001080] dark:text-[#9cdcfe]">name</span><span className="text-[#001080] dark:text-[#9cdcfe]">:</span> <span className="text-[#a31515] dark:text-[#ce9178]">'Purushothaman R'</span><span className="text-gray-600 dark:text-[#d4d4d4]">,</span>
-                                </div>
-                            </div>
-                            <div className="flex">
-                                <span className="text-gray-400 dark:text-gray-600 select-none w-8 text-right mr-4">3</span>
-                                <div className="pl-4">
-                                    <span className="text-[#001080] dark:text-[#9cdcfe]">role</span><span className="text-[#001080] dark:text-[#9cdcfe]">:</span> <span className="text-[#a31515] dark:text-[#ce9178]">'Full Stack Developer'</span><span className="text-gray-600 dark:text-[#d4d4d4]">,</span>
-                                </div>
-                            </div>
-                            <div className="flex">
-                                <span className="text-gray-400 dark:text-gray-600 select-none w-8 text-right mr-4">4</span>
-                                <div className="pl-4">
-                                    <span className="text-[#001080] dark:text-[#9cdcfe]">skills</span><span className="text-[#001080] dark:text-[#9cdcfe]">:</span> <span className="text-[#a80000] dark:text-[#ffd700]">[</span>
-                                </div>
-                            </div>
-                            <div className="flex">
-                                <span className="text-gray-400 dark:text-gray-600 select-none w-8 text-right mr-4">5</span>
-                                <div className="pl-8">
-                                    <span className="text-[#a31515] dark:text-[#ce9178]">'React'</span><span className="text-gray-600 dark:text-[#d4d4d4]">,</span> <span className="text-[#a31515] dark:text-[#ce9178]">'Node.js'</span><span className="text-gray-600 dark:text-[#d4d4d4]">,</span> <span className="text-[#a31515] dark:text-[#ce9178]">'PostgreSQL'</span>
-                                </div>
-                            </div>
-                            <div className="flex">
-                                <span className="text-gray-400 dark:text-gray-600 select-none w-8 text-right mr-4">6</span>
-                                <div className="pl-4">
-                                    <span className="text-[#a80000] dark:text-[#ffd700]">]</span><span className="text-gray-600 dark:text-[#d4d4d4]">,</span>
-                                </div>
-                            </div>
-                            <div className="flex">
-                                <span className="text-gray-400 dark:text-gray-600 select-none w-8 text-right mr-4">7</span>
-                                <div className="pl-4">
-                                    <span className="text-[#001080] dark:text-[#9cdcfe]">hireable</span><span className="text-[#001080] dark:text-[#9cdcfe]">:</span> <span className="text-[#0000ff] dark:text-[#569cd6]">true</span>
-                                </div>
-                            </div>
-                            <div className="flex">
-                                <span className="text-gray-400 dark:text-gray-600 select-none w-8 text-right mr-4">8</span>
-                                <div>
-                                    <span className="text-[#a80000] dark:text-[#ffd700]">{`}`}</span><span className="text-gray-600 dark:text-[#d4d4d4]">;</span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="bg-[#007acc] text-white text-[10px] px-2 py-1 flex items-center justify-between font-sans select-none">
-                            <div className="flex items-center gap-4">
-                                <div className="flex items-center gap-1">
-                                    <GitBranch size={10} />
-                                    <span>main*</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <XCircle size={10} />
-                                    <span>0</span>
-                                    <AlertCircle size={10} />
-                                    <span>0</span>
+                            {/* Stack Highlights */}
+                            <div className="space-y-3">
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Core Stack</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {['Node.js', 'Express', 'PostgreSQL', 'React', 'Prisma'].map(tag => (
+                                        <span key={tag} className="text-xs font-sans font-medium text-[#1d3557] bg-[#fff9ed] px-3 py-1 rounded-full border border-[#1d3557]/10">
+                                            {tag}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4">
-                                <span>Ln 7, Col 16</span>
-                                <span>Spaces: 2</span>
-                                <span>UTF-8</span>
-                                <span>JavaScript</span>
-                            </div>
+
+                            {/* Quote */}
+                            <p className="text-sm text-gray-500 font-sans italic leading-relaxed border-l-2 border-[#e63946] pl-4">
+                                "Building systems that are resilient by design and elegant by intention."
+                            </p>
                         </div>
                     </motion.div>
+                    
+                    {/* Decorative Background Element */}
+                    <div className="absolute top-12 -right-12 w-full aspect-[3/4] border border-[#1d3557]/10 rounded-2xl -z-10"></div>
                 </div>
 
             </div>
+
+            {/* Sub-footer Links */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="absolute bottom-8 left-0 right-0 max-w-7xl mx-auto px-6 flex items-center justify-between text-gray-400 font-sans text-sm"
+            >
+                <div className="flex items-center gap-6">
+                    <a href="https://github.com/purushothaman-web" target="_blank" rel="noopener noreferrer" className="hover:text-[#1d3557] transition-colors flex items-center gap-2">
+                        <Github size={18} />
+                        <span className="hidden sm:inline">GitHub Profile</span>
+                    </a>
+                </div>
+                <div className="flex items-center gap-4">
+                    <span className="tracking-widest uppercase text-xs font-semibold">Scroll to explore</span>
+                    <div className="w-8 h-[1px] bg-gray-300"></div>
+                </div>
+            </motion.div>
         </div>
     );
 }

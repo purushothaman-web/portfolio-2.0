@@ -1,62 +1,46 @@
 import { motion } from 'framer-motion';
-import { Layout, Command, Server, Activity, Terminal } from 'lucide-react';
-
+import { Database, Server, LayoutTemplate, Layers } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
 
 interface Skill {
     name: string;
-    level: number;
+    description?: string;
 }
 
 interface SkillGroupProps {
     title: string;
+    description: string;
     icon: LucideIcon;
     skills: Skill[];
     delay: number;
 }
 
-const SkillGroup = ({ title, icon: Icon, skills, delay }: SkillGroupProps) => (
+const SkillGroup = ({ title, description, icon: Icon, skills, delay }: SkillGroupProps) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.5, delay }}
-        className="bg-[#1e1e1e] rounded-lg border border-[#333] overflow-hidden"
+        className="bg-white editorial-card rounded-2xl flex flex-col h-full overflow-hidden"
     >
         {/* Header */}
-        <div className="bg-[#252526] px-4 py-3 border-b border-[#333] flex items-center justify-between">
-            <div className="flex items-center gap-2">
-                <Icon size={16} className="text-cyan-400" />
-                <span className="font-mono text-sm font-bold text-gray-200 uppercase tracking-wider">{title}</span>
+        <div className="bg-[#fff9ed] px-8 py-6 border-b border-black/5 flex flex-col gap-3">
+            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-[#1d3557] mb-2">
+                <Icon size={24} />
             </div>
-            <div className="flex items-center gap-2">
-                <span className="flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                </span>
-                <span className="text-[10px] font-mono text-green-500">RUNNING</span>
-            </div>
+            <h3 className="font-sans text-xl font-bold text-[#1d3557] tracking-tight">{title}</h3>
+            <p className="text-gray-500 text-sm font-sans leading-relaxed">{description}</p>
         </div>
 
         {/* Content */}
-        <div className="p-4">
-            <div className="grid grid-cols-1 gap-2">
-                {skills.map((skill, index) => (
-                    <div key={skill.name} className="flex items-center justify-between p-2 rounded hover:bg-[#2d2d2d] group transition-colors">
-                        <div className="flex items-center gap-3">
-                            <span className="font-mono text-xs text-gray-500 w-6 text-right">0{index + 1}</span>
-                            <span className="text-gray-300 font-mono text-sm group-hover:text-cyan-400 transition-colors">{skill.name}</span>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <div className="hidden sm:block w-24 h-1.5 bg-[#333] rounded-full overflow-hidden">
-                                <motion.div
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${skill.level}%` }}
-                                    transition={{ duration: 1, delay: delay + 0.5 + (index * 0.1) }}
-                                    className="h-full bg-cyan-600 dark:bg-cyan-500"
-                                />
-                            </div>
-                            <span className="font-mono text-xs text-gray-500">{skill.level}%</span>
-                        </div>
+        <div className="p-8 flex-grow bg-white">
+            <div className="flex flex-wrap gap-3">
+                {skills.map((skill) => (
+                    <div 
+                        key={skill.name} 
+                        className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-lg text-sm font-sans font-medium text-gray-700 hover:border-[#1d3557] hover:text-[#1d3557] transition-colors"
+                    >
+                        {skill.name}
                     </div>
                 ))}
             </div>
@@ -65,104 +49,82 @@ const SkillGroup = ({ title, icon: Icon, skills, delay }: SkillGroupProps) => (
 );
 
 export const Skills = () => {
-    const frontendSkills = [
-        { name: 'React.js', level: 95 },
-        { name: 'Tailwind CSS', level: 90 },
-        { name: 'JavaScript (ES6+)', level: 90 },
-        { name: 'HTML5/CSS3', level: 95 }
+    const dataSkills = [
+        { name: 'PostgreSQL' },
+        { name: 'MongoDB' },
+        { name: 'Prisma ORM' },
+        { name: 'Mongoose' },
+        { name: 'Redis' },
+        { name: 'Docker' }
     ];
 
-    const backendSkills = [
-        { name: 'Node.js', level: 88 },
-        { name: 'Express.js', level: 90 },
-        { name: 'MongoDB', level: 85 },
-        { name: 'Mongoose', level: 85 },
-        { name: 'PostgreSQL', level: 80 },
-        { name: 'Prisma ORM', level: 85 }
+    const logicSkills = [
+        { name: 'Node.js' },
+        { name: 'Express.js' },
+        { name: 'RESTful APIs' },
+        { name: 'Authentication (JWT)' },
+        { name: 'System Architecture' },
+        { name: 'Git & GitHub' }
     ];
 
-    const toolsSkills = [
-        { name: 'Git & GitHub', level: 90 },
-        { name: 'VS Code', level: 95 },
-        { name: 'Postman', level: 85 },
-        { name: 'Vite', level: 90 },
-        { name: 'NPM', level: 88 }
+    const clientSkills = [
+        { name: 'React.js' },
+        { name: 'Tailwind CSS' },
+        { name: 'JavaScript (ES6+)' },
+        { name: 'TypeScript' },
+        { name: 'Framer Motion' },
+        { name: 'Responsive Design' }
     ];
 
     return (
-        <div id="skills" className="min-h-screen py-24 px-6 max-w-5xl mx-auto bg-white dark:bg-gray-950">
-            <div className="space-y-8">
+        <div id="skills" className="min-h-screen py-32 px-6 max-w-7xl mx-auto bg-transparent relative">
+            <div className="absolute right-12 top-40 text-gray-100 select-none z-[-1] opacity-50">
+                <Layers size={400} strokeWidth={0.5} />
+            </div>
 
-                {/* Dashboard Header */}
+            <div className="space-y-16 relative z-10">
+
+                {/* Editorial Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-gray-200 dark:border-gray-800 pb-6"
+                    className="max-w-3xl space-y-6"
                 >
-                    <div className="space-y-2">
-                        <div className="inline-flex items-center space-x-2 text-sm font-mono text-cyan-600 dark:text-cyan-400">
-                            <Activity size={16} />
-                            <span>SYSTEM_DIAGNOSTICS</span>
-                        </div>
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">System Status</h1>
-                    </div>
-                    <div className="flex gap-6 font-mono text-sm text-gray-500">
-                        <div>
-                            <span className="block text-xs uppercase tracking-wider text-gray-400">Uptime</span>
-                            <span className="text-gray-900 dark:text-white">99.9%</span>
-                        </div>
-                        <div>
-                            <span className="block text-xs uppercase tracking-wider text-gray-400">Memory</span>
-                            <span className="text-green-500">Normal</span>
-                        </div>
-                        <div>
-                            <span className="block text-xs uppercase tracking-wider text-gray-400">Location</span>
-                            <span className="text-gray-900 dark:text-white">India</span>
-                        </div>
-                    </div>
+                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[#1d3557] font-sans">
+                        Technical Arsenal
+                    </h2>
+                    <div className="w-16 h-1 bg-[#e63946] rounded-full"></div>
+                    <p className="text-lg text-gray-600 font-sans leading-relaxed">
+                        My expertise is organized around the core pillars of modern web architecture. I build systems from the ground up—starting with solid data foundations, implementing robust business logic, and finishing with seamless client interfaces.
+                    </p>
                 </motion.div>
 
                 {/* Skills Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <SkillGroup
-                        title="Frontend_Svc"
-                        icon={Layout}
-                        skills={frontendSkills}
+                        title="Data & Infrastructure"
+                        description="Designing resilient schemas, managing state, and ensuring data integrity across relational and NoSQL databases."
+                        icon={Database}
+                        skills={dataSkills}
                         delay={0.1}
                     />
                     <SkillGroup
-                        title="Backend_Proc"
+                        title="Business Logic"
+                        description="Building the hidden connective tissue. Secure APIs, efficient routing, and scalable server-side processing."
                         icon={Server}
-                        skills={backendSkills}
+                        skills={logicSkills}
                         delay={0.2}
                     />
                     <SkillGroup
-                        title="Tools_Utils"
-                        icon={Command}
-                        skills={toolsSkills}
+                        title="Client Interface"
+                        description="Translating complex server interactions into intuitive, responsive, and pixel-perfect user experiences."
+                        icon={LayoutTemplate}
+                        skills={clientSkills}
                         delay={0.3}
                     />
                 </div>
-
-                {/* System Logs / Extra Info */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    className="bg-[#1e1e1e] rounded-lg border border-[#333] p-4 font-mono text-xs sm:text-sm text-gray-400"
-                >
-                    <div className="flex items-center gap-2 mb-2 text-gray-500">
-                        <Terminal size={14} />
-                        <span>Logs</span>
-                    </div>
-                    <div className="space-y-1">
-                        <p><span className="text-green-500">✓</span> Initializing skill stack...</p>
-                        <p><span className="text-green-500">✓</span> Loaded React ecosystem modules.</p>
-                        <p><span className="text-green-500">✓</span> Database connections established (Mongo/Postgres).</p>
-                        <p className="animate-pulse"><span className="text-cyan-500">ℹ</span> Ready for new challenges...</p>
-                    </div>
-                </motion.div>
 
             </div>
         </div>

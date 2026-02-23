@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Terminal, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Send, Mail, MapPin, CheckCircle2, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
@@ -16,7 +16,6 @@ export const Contact = () => {
         e.preventDefault();
         setStatus('sending');
 
-        // EmailJS Configuration
         const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
         const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
         const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -36,147 +35,147 @@ export const Contact = () => {
     };
 
     return (
-        <div id="contact" className="min-h-screen py-24 px-6 max-w-5xl mx-auto flex flex-col justify-center bg-white dark:bg-gray-950">
-            <div className="grid lg:grid-cols-2 gap-12 items-start">
-
-                {/* Left Column: Server Info */}
+        <div id="contact" className="min-h-screen py-32 px-6 max-w-7xl mx-auto flex flex-col justify-center bg-transparent relative">
+            
+            <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start relative z-10 w-full">
+                
+                {/* Left Column: Context & Info */}
                 <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="space-y-8"
+                    className="space-y-12"
                 >
-                    <div className="space-y-4">
-                        <div className="inline-flex items-center space-x-2 text-sm font-mono text-cyan-600 dark:text-cyan-400">
-                            <Terminal size={16} />
-                            <span>sudo ./initiate-connection.sh</span>
-                        </div>
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Let's Connect</h1>
-                        <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Initiate a secure transmission. I'm available for freelance projects, collaborations, or just a tech chat.
+                    <div className="space-y-6">
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[#1d3557] font-sans">
+                            Let's Build Something Together.
+                        </h2>
+                        <div className="w-16 h-1 bg-[#e63946] rounded-full"></div>
+                        <p className="text-lg text-gray-600 leading-relaxed font-sans">
+                            Whether you need a robust backend architecture, a full-stack web application, or just want to discuss engineering challenges—I'm always open to new opportunities.
                         </p>
                     </div>
 
-                    <div className="bg-[#1e1e1e] rounded-lg border border-[#333] overflow-hidden font-mono text-sm shadow-xl">
-                        <div className="bg-[#252526] px-4 py-2 border-b border-[#333] flex items-center justify-between">
-                            <span className="text-gray-400">contact_endpoints.json</span>
-                            <div className="flex gap-1.5">
-                                <div className="w-2.5 h-2.5 rounded-full bg-[#333]"></div>
-                                <div className="w-2.5 h-2.5 rounded-full bg-[#333]"></div>
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-[#1d3557]">
+                                <Mail size={20} />
+                            </div>
+                            <div>
+                                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Email</h4>
+                                <a href="mailto:rpurushothaman500@gmail.com" className="text-[#1d3557] font-semibold hover:text-[#e63946] transition-colors text-lg">rpurushothaman500@gmail.com</a>
                             </div>
                         </div>
-                        <div className="p-6 space-y-4 text-gray-300">
-                            <div>
-                                <span className="text-pink-400">"email"</span>: <span className="text-green-400">"rpurushothaman500@gmail.com"</span>,
+
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-[#1d3557]">
+                                <MapPin size={20} />
                             </div>
                             <div>
-                                <span className="text-pink-400">"phone"</span>: <span className="text-green-400">"+91 9688805006"</span>,
-                            </div>
-                            <div>
-                                <span className="text-pink-400">"location"</span>: <span className="text-green-400">"India"</span>,
-                            </div>
-                            <div>
-                                <span className="text-pink-400">"status"</span>: <span className="text-cyan-400">"Open for opportunities"</span>
+                                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Location</h4>
+                                <span className="text-gray-700 font-medium text-lg">Bangalore, India</span>
+                                <span className="text-gray-400 font-sans text-sm block">Originally from Vellore, TN</span>
                             </div>
                         </div>
                     </div>
                 </motion.div>
 
-                {/* Right Column: Transmission Form */}
+                {/* Right Column: Form */}
                 <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="relative"
+                    className="bg-white editorial-card rounded-3xl p-8 lg:p-12 relative overflow-hidden"
                 >
-                    {/* Terminal-like Form Container */}
-                    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-                        <div className="bg-gray-50 dark:bg-gray-800/50 px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center gap-3">
-                            <div className="w-3 h-3 rounded-full bg-red-400/80"></div>
-                            <div className="w-3 h-3 rounded-full bg-yellow-400/80"></div>
-                            <div className="w-3 h-3 rounded-full bg-green-400/80"></div>
-                            <span className="ml-2 text-xs font-mono text-gray-400">New Message Transmission</span>
+                    <h3 className="text-2xl font-bold text-[#1d3557] mb-8 font-sans">Send a Message</h3>
+
+                    <form ref={form} onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                        <div className="space-y-5">
+                            <div>
+                                <label className="block text-sm font-semibold text-[#1d3557] mb-2 font-sans">
+                                    Name
+                                </label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="Jane Doe"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl focus:border-[#1d3557] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1d3557]/10 px-4 py-3 transition-all font-sans text-gray-800 placeholder-gray-400"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-[#1d3557] mb-2 font-sans">
+                                    Email
+                                </label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="jane@example.com"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl focus:border-[#1d3557] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1d3557]/10 px-4 py-3 transition-all font-sans text-gray-800 placeholder-gray-400"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-[#1d3557] mb-2 font-sans">
+                                    Message
+                                </label>
+                                <textarea
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    rows={5}
+                                    placeholder="How can we collaborate?"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl focus:border-[#1d3557] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1d3557]/10 px-4 py-3 transition-all font-sans text-gray-800 placeholder-gray-400 resize-none"
+                                    required
+                                ></textarea>
+                            </div>
                         </div>
 
-                        <form ref={form} onSubmit={handleSubmit} className="p-8 space-y-6">
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-xs font-mono text-gray-500 uppercase tracking-wider mb-2">Identifier (Name)</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        placeholder="Enter your name"
-                                        className="w-full bg-gray-50 dark:bg-gray-950 border-b-2 border-gray-200 dark:border-gray-800 focus:border-cyan-500 px-0 py-2 outline-none transition-colors font-mono text-sm"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-mono text-gray-500 uppercase tracking-wider mb-2">Return Address (Email)</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        placeholder="Enter your email"
-                                        className="w-full bg-gray-50 dark:bg-gray-950 border-b-2 border-gray-200 dark:border-gray-800 focus:border-cyan-500 px-0 py-2 outline-none transition-colors font-mono text-sm"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-mono text-gray-500 uppercase tracking-wider mb-2">Payload (Message)</label>
-                                    <textarea
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        rows={4}
-                                        placeholder="Type your message..."
-                                        className="w-full bg-gray-50 dark:bg-gray-950 border-b-2 border-gray-200 dark:border-gray-800 focus:border-cyan-500 px-0 py-2 outline-none transition-colors font-mono text-sm resize-none"
-                                        required
-                                    ></textarea>
-                                </div>
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={status === 'sending' || status === 'success'}
-                                className={`w-full py-4 rounded-lg font-mono text-sm font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${status === 'success'
-                                    ? 'bg-green-500 text-white'
+                        <button
+                            type="submit"
+                            disabled={status === 'sending' || status === 'success'}
+                            className={`w-full py-4 rounded-xl font-sans font-semibold transition-all flex items-center justify-center gap-2 ${
+                                status === 'success'
+                                    ? 'bg-green-50 text-green-700 border border-green-200'
                                     : status === 'error'
-                                        ? 'bg-red-500 text-white'
-                                        : 'bg-gray-900 dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200'
-                                    }`}
-                            >
-                                {status === 'idle' && (
-                                    <>
-                                        <span>Execute Transmission</span>
-                                        <Send size={16} />
-                                    </>
-                                )}
-                                {status === 'sending' && (
-                                    <>
-                                        <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white dark:border-black"></span>
-                                        <span>Transmitting...</span>
-                                    </>
-                                )}
-                                {status === 'success' && (
-                                    <>
-                                        <CheckCircle2 size={16} />
-                                        <span>Transmission Complete</span>
-                                    </>
-                                )}
-                                {status === 'error' && (
-                                    <>
-                                        <AlertCircle size={16} />
-                                        <span>Transmission Failed</span>
-                                    </>
-                                )}
-                            </button>
-                        </form>
-                    </div>
+                                        ? 'bg-red-50 text-red-700 border border-red-200'
+                                        : 'bg-[#1d3557] text-white hover:bg-[#112240] hover:shadow-lg disabled:opacity-70'
+                            }`}
+                        >
+                            {status === 'idle' && (
+                                <>
+                                    <span>Send Message</span>
+                                    <Send size={18} />
+                                </>
+                            )}
+                            {status === 'sending' && (
+                                <>
+                                    <span className="animate-spin rounded-full h-5 w-5 border-2 border-[#1d3557]/30 border-t-white"></span>
+                                    <span>Sending...</span>
+                                </>
+                            )}
+                            {status === 'success' && (
+                                <>
+                                    <CheckCircle2 size={18} />
+                                    <span>Message Sent</span>
+                                </>
+                            )}
+                            {status === 'error' && (
+                                <>
+                                    <AlertCircle size={18} />
+                                    <span>Failed to send</span>
+                                </>
+                            )}
+                        </button>
+                    </form>
                 </motion.div>
-
+                
             </div>
         </div>
     );

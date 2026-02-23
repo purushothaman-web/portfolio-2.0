@@ -6,33 +6,24 @@ interface LogoProps {
     text?: string;
 }
 
-const Logo: React.FC<LogoProps> = ({ className = "w-8 h-8", textClassName, text = "Purushothaman R" }) => {
+const Logo: React.FC<LogoProps> = ({ className, textClassName, text = "Purushothaman R" }) => {
     return (
-        <div className="flex items-center gap-2 group cursor-pointer">
-            {/* Geometric SVG Icon */}
-            <svg
-                viewBox="0 0 100 100"
-                className={`${className} fill-current text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300`}
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path d="M50 5 L95 27.5 L95 72.5 L50 95 L5 72.5 L5 27.5 Z" stroke="currentColor" strokeWidth="8" fill="none" />
-                <text
-                    x="50"
-                    y="62"
-                    fontFamily="monospace"
-                    fontSize="40"
-                    fontWeight="bold"
-                    textAnchor="middle"
-                    fill="currentColor"
-                    className="select-none"
-                >
-                    PR
-                </text>
-            </svg>
+        <div className={`flex items-center gap-3 cursor-pointer group ${className || ''}`}>
+            {/* Editorial Monogram */}
+            <div className="relative flex-shrink-0">
+                <div className="w-10 h-10 bg-[#1d3557] rounded-xl flex items-center justify-center shadow-sm group-hover:bg-[#e63946] transition-colors duration-300">
+                    <span
+                        className="text-white font-sans font-bold text-sm tracking-wide select-none"
+                        style={{ letterSpacing: '0.05em' }}
+                    >
+                        PR
+                    </span>
+                </div>
+            </div>
 
             {/* Optional Text Label */}
             {textClassName && (
-                <span className={`font-bold tracking-tight ${textClassName}`}>
+                <span className={`font-sans font-semibold tracking-tight ${textClassName}`}>
                     {text}
                 </span>
             )}

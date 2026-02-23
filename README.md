@@ -1,87 +1,96 @@
-# Portfolio 2.0 | Purushothaman R
+# Purushothaman R — Portfolio 2.0
 
-![Project Preview](public/preview.png)
+> *"Engineering the hidden logic that powers seamless user experiences."*
 
-> A premium, high-performance developer portfolio built with React 19, Tailwind CSS v4, and Framer Motion. Designed with a distinct "Developer/Hacker" aesthetic featuring a VS Code-style hero section, system diagnostics dashboard, and interactive terminal.
+---
 
-## 🚀 Key Features
+## The Story Behind This Portfolio
 
-*   **Modern Tech Stack**: Built on the latest ecosystem (React 19, Vite, Tailwind v4).
-*   **Developer Aesthetic**:
-    *   **Hero Section**: Interactive VS Code simulation with typing effects.
-    *   **Footer**: "System Status Bar" mimicking a code editor environment.
-    *   **Projects**: Terminal-window styled cards with command-line visuals.
-    *   **Skills**: "System Diagnostics" dashboard with uptime and memory stats.
-*   **🖥️ Interactive CLI**: A hidden "Hacker Mode" terminal.
-    *   Press `Ctrl+K` or `~` (Tilde) to open.
-    *   Execute commands like `help`, `about`, `projects`, `ls`.
-*   **📱 PWA Support**: Fully installable as a native-like app with offline capabilities.
-*   **Secure Contact Form**: Integrated with **EmailJS** featuring a "Secure Transmission" UI.
-*   **Animations**: Smooth page transitions and entry effects using `framer-motion`.
-*   **Responsive**: Fully optimized for mobile, tablet, and desktop screens.
-*   **SEO Optimized**: Includes Open Graph tags, Twitter Cards, and semantic metadata.
+Every developer reaches a point where their online presence needs to match the work they're doing — not just list it. This portfolio is version 2.0 of that effort.
 
-## 🛠️ Tech Stack
+The first version was a hacker-aesthetic experiment: terminals, dark grids, blinking cursors. It was fun to build. But as my focus shifted from frontend tinkering to backend architecture and full-stack engineering, the presentation needed to evolve too. Version 2.0 is the result — an **editorial, narrative-driven** redesign built to tell a story, not just display a résumé.
 
-*   **Core**: [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-*   **Build Tool**: [Vite](https://vitejs.dev/)
-*   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-*   **PWA**: [Vite Plugin PWA](https://vite-pwa-org.netlify.app/)
-*   **Icons**: [Lucide React](https://lucide.dev/)
-*   **Animations**: [Framer Motion](https://www.framer.com/motion/)
-*   **Email Service**: [EmailJS](https://www.emailjs.com/)
+The design philosophy is simple: clean typography, intentional whitespace, and a layout that guides the reader through the engineering journey rather than overwhelming them with information.
 
-## 📦 Getting Started
+---
 
-### Prerequisites
+## What's Inside
 
-*   Node.js (v18 or higher)
-*   npm or yarn
+The site is a single-page application with six sections, each with a specific purpose:
 
-### Installation
+- **Home** — The hook. A bold typographic hero that states the value proposition immediately, paired with a stats card showing the core stack and years of experience (which auto-increments every February 12th, the career anniversary date).
 
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/purushothaman-web/portfolio-2.0.git
-    cd portfolio-2.0
-    ```
+- **About** — The story. A two-column editorial layout with a sticky bio card and a long-form narrative about the transition from frontend development to backend architecture.
 
-2.  **Install dependencies**
-    ```bash
-    npm install
-    ```
+- **Projects** — The evidence. Projects presented as architectural case studies — each one framed around the problem it solved, the design decisions made, and the measurable impact.
 
-3.  **Configure Environment Variables**
-    *   Copy the example environment file:
-        ```bash
-        cp .env.example .env
-        ```
-    *   Open `.env` and add your **EmailJS** credentials:
-        ```env
-        VITE_EMAILJS_SERVICE_ID=your_service_id
-        VITE_EMAILJS_TEMPLATE_ID=your_template_id
-        VITE_EMAILJS_PUBLIC_KEY=your_public_key
-        ```
+- **Skills** — The inventory. Skills organized by functional role (Data & Infrastructure, Business Logic, Client Interface) rather than an arbitrary list of logos.
 
-4.  **Run Development Server**
-    ```bash
-    npm run dev
-    ```
+- **Achievements** — The credentials. A numbered editorial list of certifications with inline skill tags, credential IDs, and direct verification links.
 
-## 🌐 Deployment
+- **Contact** — The open door. A minimal, welcoming contact section with a working email form powered by EmailJS.
 
-This project is optimized for deployment on **Vercel** or **Netlify**.
+---
 
-1.  Connect your GitHub repository.
-2.  Add your Environment Variables in the platform's settings.
-3.  Deploy!
+## The Technical Foundation
 
-## 📄 License
+This is not a CRA bootstrap or a template. Everything was built deliberately:
 
-Distributed under the MIT License. See `LICENSE` for more information.
+```
+React 19 + TypeScript   — UI and type safety
+Vite                    — Build tooling
+Tailwind CSS v4         — Styling via @theme configuration
+Framer Motion           — Scroll-aware animations
+Lucide React            — Icon system
+EmailJS                 — Contact form without a backend
+Vite Plugin PWA         — Installable as a native-like app
+```
 
-## 📬 Contact
+The scroll-based navigation uses a custom `IntersectionObserver` hook — no router, no hash routing library. Sections are observed as they enter the viewport and the active navbar link updates accordingly. Smooth scroll offsets account for the fixed navbar height automatically.
 
-**Purushothaman R** - [rpurushothaman500@gmail.com](mailto:rpurushothaman500@gmail.com)
+---
 
-Project Link: [https://github.com/purushothaman-web/portfolio-2.0](https://github.com/purushothaman-web/portfolio-2.0)
+## Running It Locally
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/purushothaman-web/portfolio-2.0.git
+cd portfolio-2.0
+npm install
+```
+
+The contact form requires EmailJS credentials. Create a `.env` file from the provided example:
+
+```bash
+cp .env.example .env
+```
+
+Then fill in your EmailJS service, template, and public key:
+
+```env
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+---
+
+## Deploying
+
+The project is pre-configured for **Netlify** (see `netlify.toml`) and works equally well on **Vercel**. Connect your GitHub repository, add the three EmailJS environment variables in the platform's settings panel, and deploy. The PWA manifest and sitemap are already in place.
+
+---
+
+## Contact
+
+**Purushothaman R**  
+Full Stack Engineer — Bangalore, KA (originally from Vellore, TN)  
+[rpurushothaman500@gmail.com](mailto:rpurushothaman500@gmail.com)  
+[github.com/purushothaman-web](https://github.com/purushothaman-web)

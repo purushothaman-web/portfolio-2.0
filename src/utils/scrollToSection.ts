@@ -17,7 +17,6 @@ export const scrollToSection = (sectionId: string, updateHash: boolean = true) =
             behavior: 'smooth'
         });
 
-        // Update URL hash without triggering scroll
         if (updateHash) {
             const hash = sectionId === 'hero' ? '' : `#${sectionId}`;
             window.history.pushState(null, '', hash || '/');
@@ -46,9 +45,7 @@ export const useActiveSection = (sectionIds: string[]): string => {
                 });
             },
             {
-                // Improved rootMargin for better detection
-                // Section is active when it's 20% from top and has 60% visibility
-                rootMargin: '-20% 0px -60% 0px',
+                rootMargin: '-10% 0px -50% 0px',
                 threshold: 0
             }
         );
@@ -74,16 +71,13 @@ export const useActiveSection = (sectionIds: string[]): string => {
  */
 export const useHashNavigation = (sectionIds: string[]) => {
     React.useEffect(() => {
-        // Handle initial page load with hash
         const hash = window.location.hash.slice(1);
         if (hash && sectionIds.includes(hash)) {
-            // Delay to ensure page is fully loaded
             setTimeout(() => {
                 scrollToSection(hash, false);
             }, 100);
         }
 
-        // Handle browser back/forward buttons
         const handlePopState = () => {
             const hash = window.location.hash.slice(1);
             const targetSection = hash || 'hero';
@@ -105,7 +99,6 @@ export const useHashNavigation = (sectionIds: string[]) => {
 export const useKeyboardNavigation = (sectionIds: string[], activeSection: string) => {
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            // Ignore if user is typing in an input/textarea
             if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
                 return;
             }

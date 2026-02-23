@@ -1,79 +1,82 @@
 import { motion } from 'framer-motion';
-import { Github, Terminal, Folder, ExternalLink } from 'lucide-react';
+import { Github, ArrowUpRight } from 'lucide-react';
 
 interface ProjectCardProps {
     title: string;
-    description: string;
+    type: string;
+    problem: string;
+    architecture: string;
+    impact: string;
     tags: string[];
     links: { github: string; live?: string };
-    type: string;
+    index: number;
 }
 
-const ProjectCard = ({ title, description, tags, links }: ProjectCardProps) => (
+const ProjectCard = ({ title, type, problem, architecture, impact, tags, links, index }: ProjectCardProps) => (
     <motion.div
-        whileHover={{ y: -5 }}
-        className="w-full bg-[#1e1e1e] rounded-lg shadow-xl overflow-hidden border border-[#333] flex flex-col h-full"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="group bg-white editorial-card rounded-3xl overflow-hidden flex flex-col lg:flex-row min-h-[400px]"
     >
-        {/* Terminal Header */}
-        <div className="bg-[#252526] px-4 py-2 flex items-center gap-2 border-b border-[#333]">
-            <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-            </div>
-            <div className="ml-4 text-gray-400 text-xs font-mono flex items-center gap-2">
-                <Folder size={12} className="text-blue-400" />
-                <span>~/projects/{title.toLowerCase().replace(/\s+/g, '-')}</span>
-            </div>
-        </div>
-
-        {/* Terminal Body */}
-        <div className="p-6 font-mono text-sm flex-1 flex flex-col">
-            <div className="mb-4">
-                <span className="text-green-400">➜</span> <span className="text-cyan-400">~</span> <span className="text-gray-300">cat description.txt</span>
-            </div>
-            <p className="text-gray-300 leading-relaxed mb-6 flex-1">
-                {description}
-            </p>
-
-            {/* Tags usually displayed as 'ls' command or similar, but here as colored tags */}
-            <div className="mb-6">
-                <div className="mb-2">
-                    <span className="text-green-400">➜</span> <span className="text-cyan-400">~</span> <span className="text-gray-300">echo $STACK</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
+        {/* Left Side: Context & Links */}
+        <div className="lg:w-2/5 bg-[#fff9ed] p-10 lg:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-black/5">
+            <div>
+                <span className="text-xs font-sans font-bold text-[#e63946] uppercase tracking-widest block mb-4">Case Study {String(index + 1).padStart(2, '0')}</span>
+                <h3 className="text-3xl lg:text-4xl font-bold tracking-tight text-[#1d3557] font-sans mb-4">{title}</h3>
+                <p className="text-sm font-sans text-gray-500 uppercase tracking-wider mb-8">{type}</p>
+                
+                <div className="flex flex-wrap gap-2 mb-10">
                     {tags.map(tag => (
-                        <span key={tag} className="px-2 py-1 bg-[#2d2d2d] text-cyan-300 rounded text-xs border border-[#444]">
+                        <span key={tag} className="px-3 py-1 bg-white text-gray-600 rounded-full text-xs font-sans font-medium border border-gray-100 shadow-sm">
                             {tag}
                         </span>
                     ))}
                 </div>
             </div>
 
-            {/* Footer Links - styled as buttons */}
-            <div className="pt-4 border-t border-[#333] flex items-center gap-4 mt-auto">
-                {links.github && (
-                    <a
-                        href={links.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-xs uppercase tracking-wider font-bold"
-                    >
-                        <Github size={14} />
-                        Source Code
-                    </a>
-                )}
+            <div className="flex items-center gap-4">
                 {links.live && (
                     <a
                         href={links.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors text-xs uppercase tracking-wider font-bold"
+                        className="flex items-center gap-2 bg-[#1d3557] text-white px-6 py-3 rounded-xl font-sans font-semibold transition-all hover:bg-[#112240] hover:shadow-lg text-sm"
                     >
-                        <ExternalLink size={14} />
-                        Live Demo
+                        <span>Live Deployment</span>
+                        <ArrowUpRight size={16} />
                     </a>
                 )}
+                {links.github && (
+                    <a
+                        href={links.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center p-3 rounded-xl bg-white text-gray-600 hover:text-[#1d3557] border border-gray-200 transition-colors shadow-sm"
+                        aria-label="GitHub Repository"
+                    >
+                        <Github size={20} />
+                    </a>
+                )}
+            </div>
+        </div>
+
+        {/* Right Side: Narrative */}
+        <div className="lg:w-3/5 p-10 lg:p-12 font-sans flex flex-col justify-center space-y-8">
+            <div className="space-y-2">
+                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">The Problem</h4>
+                <p className="text-gray-700 leading-relaxed">{problem}</p>
+            </div>
+            
+            <div className="space-y-2">
+                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Architecture & Solution</h4>
+                <p className="text-gray-700 leading-relaxed border-l-2 border-[#1d3557]/20 pl-4">{architecture}</p>
+            </div>
+
+            <div className="space-y-2">
+                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Impact</h4>
+                <p className="text-gray-700 leading-relaxed">{impact}</p>
             </div>
         </div>
     </motion.div>
@@ -84,8 +87,10 @@ export const Projects = () => {
         {
             title: 'DevDesk',
             type: 'Multi-Tenant SaaS Helpdesk',
-            description: 'DevDesk is a full-stack, multi-tenant support ticketing platform designed with strict organizational data isolation. It features secure Role-Based Access Control (RBAC) across multiple tiers (Users, Agents, Admins, and Super Admins), automated workflows, and global analytical dashboards. Built on a scalable architecture, it efficiently manages complex B2B support operations.',
-            tags: ['React JS', 'Tailwind CSS', 'Node.js', 'Express.js', 'Prisma', 'PostgreSQL', 'Vite'],
+            problem: 'Organizations struggle to manage B2B support tickets effectively while maintaining strict data isolation between different clients and enforcing varied permission levels for agents.',
+            architecture: 'Engineered a scalable Node.js/Express backend with Prisma and PostgreSQL. Implemented secure Role-Based Access Control (RBAC) across multiple tiers and automated workflow states to isolate organizational data robustly.',
+            impact: 'Delivered a high-performance support platform that securely segregates multi-tenant data, streamlining complex B2B ticket resolutions and providing global analytical oversight for administrators.',
+            tags: ['React', 'Node.js', 'Express', 'Prisma', 'PostgreSQL', 'RBAC'],
             links: {
                 github: 'https://github.com/purushothaman-web/DevDesk',
                 live: 'https://devdesk-ui.vercel.app/'
@@ -93,9 +98,11 @@ export const Projects = () => {
         },
         {
             title: 'JobTrackr',
-            type: 'Full Stack Application',
-            description: 'JobTrackr streamlines every step of your career journey with a powerful, automated application management system. Featuring secure JWT authentication, progress tracking, and smart email reminders, it helps users stay perfectly organized. With built-in CSV exports and robust data validation, JobTrackr ensures you never miss a career opportunity.',
-            tags: ['React JS', 'Tailwind CSS', 'Node.js', 'Express JS', 'Prisma', 'PostgreSQL'],
+            type: 'Career Management System',
+            problem: 'Job seekers often lose track of their applications, follow-up deadlines, and interview stages across dozens of varying platforms, leading to missed opportunities.',
+            architecture: 'Built a specialized CRM for applicants utilizing secure JWT authentication, structured PostgreSQL relational tables for progress tracking, and scheduled cron jobs for automated email reminders.',
+            impact: 'Created a centralized dashboard that automates organization, drastically reducing missed opportunities via smart alerts and providing CSV exports for offline data portability.',
+            tags: ['React', 'Node.js', 'Express', 'Prisma', 'PostgreSQL', 'Cron'],
             links: {
                 github: 'https://github.com/purushothaman-web/JobTrackr',
                 live: 'https://jobtrackr-silk.vercel.app/'
@@ -103,9 +110,11 @@ export const Projects = () => {
         },
         {
             title: 'ThiraiView',
-            type: 'Full Stack Application',
-            description: 'ThiraiView revolutionizes movie discovery by matching films to your exact mood and preference. Powered by TMDB, it offers advanced tools like the Mood Explorer and Cast Mixer for deep-dive recommendations. Engage with a vibrant community through verified reviews and Movie DNA analysis for a truly personalized cinematic experience.',
-            tags: ['React JS', 'TailwindCSS', 'Node.js', 'Express JS', 'Prisma', 'PostgreSQL'],
+            type: 'Dynamic Media Discovery',
+            problem: 'Users suffer from choice paralysis when browsing standard movie catalogs that lack personalized, mood-based filtering or deep metadata exploration.',
+            architecture: 'Integrated complex external data fetching from TMDB APIs with custom backend caching strategies and analytical aggregation to power features like the Mood Explorer and Movie DNA analysis.',
+            impact: 'Broke standard catalog limitations by offering hyper-personalized recommendations, driving community engagement through verified reviews and unique cast-mixing queries.',
+            tags: ['React', 'Node.js', 'Express', 'Prisma', 'PostgreSQL', 'REST API'],
             links: {
                 github: 'https://github.com/purushothaman-web/ThiraiView',
                 live: 'https://thiraiview.vercel.app/'
@@ -114,30 +123,30 @@ export const Projects = () => {
     ];
 
     return (
-        <div id="projects" className="min-h-screen py-24 px-6 bg-gray-50 dark:bg-gray-900">
+        <div id="projects" className="min-h-screen py-32 px-6 max-w-7xl mx-auto bg-transparent">
+            
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="space-y-12"
+                className="max-w-3xl space-y-6 mb-20"
             >
-                <div className="space-y-4">
-                    <div className="inline-flex items-center space-x-2 text-sm font-mono text-cyan-600 dark:text-cyan-400">
-                        <Terminal size={16} />
-                        <span>ls ./projects</span>
-                    </div>
-                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Featured Work</h1>
-                    <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
-                        A collection of full-stack web applications and experiments.
-                    </p>
-                </div>
-
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects.map((project, index) => (
-                        <ProjectCard key={index} {...project} />
-                    ))}
-                </div>
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[#1d3557] font-sans">
+                    Architecture Case Studies
+                </h2>
+                <div className="w-16 h-1 bg-[#e63946] rounded-full"></div>
+                <p className="text-lg text-gray-600 font-sans leading-relaxed">
+                    A curated selection of engineering work. Rather than just showing the interface, these case studies detail the problems faced, the architectural decisions made, and the resulting impact.
+                </p>
             </motion.div>
+
+            <div className="space-y-12">
+                {projects.map((project, index) => (
+                    <ProjectCard key={index} {...project} index={index} />
+                ))}
+            </div>
+            
         </div>
     );
 };
