@@ -21,7 +21,7 @@ const Footer = () => {
                     <div className="md:col-span-5 space-y-6">
                         <Logo />
                         <p className="text-gray-500 font-sans text-sm leading-relaxed max-w-xs">
-                            Full-stack engineer specializing in scalable backend systems and clean API architecture. Building systems that are resilient by design.
+                            Full-stack developer specializing in scalable backend systems and clean API architecture. Building systems that are resilient by design.
                         </p>
                         <div className="flex items-center gap-3">
                             <a

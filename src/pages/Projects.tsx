@@ -88,7 +88,7 @@ export const Projects = () => {
             title: 'DevDesk',
             type: 'Multi-Tenant SaaS Helpdesk',
             problem: 'Organizations struggle to manage B2B support tickets effectively while maintaining strict data isolation between different clients and enforcing varied permission levels for agents.',
-            architecture: 'Engineered a scalable Node.js/Express backend with Prisma and PostgreSQL. Implemented secure Role-Based Access Control (RBAC) across multiple tiers and automated workflow states to isolate organizational data robustly.',
+            architecture: 'Developed a scalable Node.js/Express backend with Prisma and PostgreSQL. Implemented secure Role-Based Access Control (RBAC) across multiple tiers and automated workflow states to isolate organizational data robustly.',
             impact: 'Delivered a high-performance support platform that securely segregates multi-tenant data, streamlining complex B2B ticket resolutions and providing global analytical oversight for administrators.',
             tags: ['React', 'Node.js', 'Express', 'Prisma', 'PostgreSQL', 'RBAC'],
             links: {
@@ -137,7 +137,7 @@ export const Projects = () => {
                 </h2>
                 <div className="w-16 h-1 bg-[#e63946] rounded-full"></div>
                 <p className="text-lg text-gray-600 font-sans leading-relaxed">
-                    A curated selection of engineering work. Rather than just showing the interface, these case studies detail the problems faced, the architectural decisions made, and the resulting impact.
+                    A curated selection of development work. Rather than just showing the interface, these case studies detail the problems faced, the architectural decisions made, and the resulting impact.
                 </p>
             </motion.div>
 

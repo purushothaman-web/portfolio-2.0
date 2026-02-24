@@ -53,7 +53,7 @@ export const Contact = () => {
                         </h2>
                         <div className="w-16 h-1 bg-[#e63946] rounded-full"></div>
                         <p className="text-lg text-gray-600 leading-relaxed font-sans">
-                            Whether you need a robust backend architecture, a full-stack web application, or just want to discuss engineering challenges—I'm always open to new opportunities.
+                            Whether you need a robust backend architecture, a full-stack web application, or just want to discuss development challenges—I'm always open to new opportunities.
                         </p>
                     </div>
 

@@ -34,7 +34,7 @@ export const About = () => {
                         </h2>
                         <div className="w-12 h-1 bg-[#e63946] rounded-full"></div>
                         <p className="text-gray-600 leading-relaxed font-sans text-lg">
-                            I am a highly motivated engineer who blends a passion for problem-solving with rigorous, clean architecture.
+                            I am a highly motivated developer who blends a passion for problem-solving with rigorous, clean architecture.
                         </p>
                     </div>
 
@@ -66,7 +66,7 @@ export const About = () => {
                     </div>
                 </div>
 
-                {/* Right Column: The Engineering Journey */}
+                {/* Right Column: The Development Journey */}
                 <div className="lg:col-span-8 flex flex-col justify-center space-y-16">
                     
                     {/* Story Section */}
@@ -77,7 +77,7 @@ export const About = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.5 }}
                         >
-                            My engineering journey began on the surface: crafting pixel-perfect, responsive interfaces as a frontend developer at my current company. I loved the immediate visual feedback of translating designs into interactive web components, ensuring users had a smooth, intuitive experience.
+                            My development journey began on the surface: crafting pixel-perfect, responsive interfaces as a frontend developer at my current company. I loved the immediate visual feedback of translating designs into interactive web components, ensuring users had a smooth, intuitive experience.
                         </motion.p>
                         <motion.p
                             initial={{ opacity: 0 }}

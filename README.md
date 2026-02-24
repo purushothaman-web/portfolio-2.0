@@ -1,6 +1,6 @@
 # Purushothaman R — Portfolio 2.0
 
-> *"Engineering the hidden logic that powers seamless user experiences."*
+> *"Developing the hidden logic that powers seamless user experiences."*
 
 ---
 
@@ -8,9 +8,9 @@
 
 Every developer reaches a point where their online presence needs to match the work they're doing — not just list it. This portfolio is version 2.0 of that effort.
 
-The first version was a hacker-aesthetic experiment: terminals, dark grids, blinking cursors. It was fun to build. But as my focus shifted from frontend tinkering to backend architecture and full-stack engineering, the presentation needed to evolve too. Version 2.0 is the result — an **editorial, narrative-driven** redesign built to tell a story, not just display a résumé.
+The first version was a hacker-aesthetic experiment: terminals, dark grids, blinking cursors. It was fun to build. But as my focus shifted from frontend tinkering to backend architecture and full-stack development, the presentation needed to evolve too. Version 2.0 is the result — an **editorial, narrative-driven** redesign built to tell a story, not just display a résumé.
 
-The design philosophy is simple: clean typography, intentional whitespace, and a layout that guides the reader through the engineering journey rather than overwhelming them with information.
+The design philosophy is simple: clean typography, intentional whitespace, and a layout that guides the reader through the development journey rather than overwhelming them with information.
 
 ---
 
@@ -91,6 +91,6 @@ The project is pre-configured for **Netlify** (see `netlify.toml`) and works equ
 ## Contact
 
 **Purushothaman R**  
-Full Stack Engineer — Bangalore, KA (originally from Vellore, TN)  
+Full Stack Developer — Bangalore, KA (originally from Vellore, TN)  
 [rpurushothaman500@gmail.com](mailto:rpurushothaman500@gmail.com)  
 [github.com/purushothaman-web](https://github.com/purushothaman-web)

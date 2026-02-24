@@ -28,7 +28,7 @@ export default function Home() {
                         className="inline-flex items-center space-x-3 px-4 py-1.5 rounded-full border border-black/10 bg-white shadow-sm text-xs font-sans tracking-widest uppercase font-semibold text-gray-600"
                     >
                         <span className="w-2 h-2 rounded-full bg-[#e63946] animate-pulse"></span>
-                        <span>Purushothaman R &mdash; Full Stack Engineer</span>
+                        <span>Purushothaman R &mdash; Full Stack Developer</span>
                     </motion.div>
 
                     <div className="space-y-6">
@@ -38,7 +38,7 @@ export default function Home() {
                             transition={{ duration: 0.5, delay: 0.1 }}
                             className="text-5xl md:text-7xl font-bold tracking-tight text-[#1d3557] font-sans leading-[1.1]"
                         >
-                            Engineering the <span className="text-[#e63946] italic pr-2">hidden logic</span> <br className="hidden md:block" />
+                            Developing the <span className="text-[#e63946] italic pr-2">hidden logic</span> <br className="hidden md:block" />
                             that powers seamless experiences.
                         </motion.h1>
                     </div>
