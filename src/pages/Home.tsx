@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Github, Mail, Linkedin } from 'lucide-react';
+import { ArrowRight, Mail, Linkedin } from 'lucide-react';
 import { scrollToSection } from '../utils/scrollToSection';
 
 const getYearsOfExperience = (): number => {
