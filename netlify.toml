@@ -2,8 +2,12 @@
   command = "npm run build"
   publish = "dist"
 
-[build.environment]
-  SECRETS_SCAN_OMIT_KEYS = "VITE_EMAILJS_SERVICE_ID,VITE_EMAILJS_TEMPLATE_ID,VITE_EMAILJS_PUBLIC_KEY"
+
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-vercel-backend.vercel.app/api/:splat"
+  status = 200
 
 [[redirects]]
   from = "/*"

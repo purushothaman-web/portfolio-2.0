@@ -1,14 +1,12 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Github, Mail } from 'lucide-react';
+import { ArrowRight, Github, Mail, Linkedin } from 'lucide-react';
 import { scrollToSection } from '../utils/scrollToSection';
 
-// Career start date: Feb 12, 2025. Increments every Feb 12.
 const getYearsOfExperience = (): number => {
     const now = new Date();
     const startYear = 2025;
-    const anniversaryThisYear = new Date(now.getFullYear(), 1, 12); // Feb 12 of current year
+    const anniversaryThisYear = new Date(now.getFullYear(), 1, 12);
     const yearsPassed = now.getFullYear() - startYear;
-    // If we haven't yet reached Feb 12 of the current year, subtract 1
     return now >= anniversaryThisYear ? yearsPassed : yearsPassed - 1;
 };
 
@@ -18,7 +16,6 @@ export default function Home() {
 
             <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
 
-                {/* Main Content Area */}
                 <div className="lg:col-span-8 space-y-10 text-center lg:text-left">
                     
                     <motion.div
@@ -82,7 +79,6 @@ export default function Home() {
 
                 </div>
 
-                {/* Right Column: Highlight Card */}
                 <div className="hidden lg:flex lg:col-span-4 flex-col justify-center relative w-full h-full min-h-[400px]">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -90,11 +86,9 @@ export default function Home() {
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                         className="relative w-full bg-white editorial-card rounded-2xl overflow-hidden flex flex-col z-10"
                     >
-                        {/* Card Top Stripe */}
                         <div className="h-1 w-full bg-gradient-to-r from-[#1d3557] to-[#e63946]"></div>
 
                         <div className="p-8 flex flex-col gap-8">
-                            {/* Stat Row */}
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="p-4 bg-[#fff9ed] rounded-xl">
                                     <div className="text-2xl font-bold text-[#1d3557]">3+</div>
@@ -106,7 +100,6 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            {/* Stack Highlights */}
                             <div className="space-y-3">
                                 <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Core Stack</p>
                                 <div className="flex flex-wrap gap-2">
@@ -118,20 +111,16 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            {/* Quote */}
                             <p className="text-sm text-gray-500 font-sans italic leading-relaxed border-l-2 border-[#e63946] pl-4">
                                 "Building systems that are resilient by design and elegant by intention."
                             </p>
                         </div>
                     </motion.div>
                     
-                    {/* Decorative Background Element */}
-                    <div className="absolute top-12 -right-12 w-full aspect-[3/4] border border-[#1d3557]/10 rounded-2xl -z-10"></div>
                 </div>
 
             </div>
 
-            {/* Sub-footer Links */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -139,9 +128,9 @@ export default function Home() {
                 className="absolute bottom-8 left-0 right-0 max-w-7xl mx-auto px-6 flex items-center justify-between text-gray-400 font-sans text-sm"
             >
                 <div className="flex items-center gap-6">
-                    <a href="https://github.com/purushothaman-web" target="_blank" rel="noopener noreferrer" className="hover:text-[#1d3557] transition-colors flex items-center gap-2">
-                        <Github size={18} />
-                        <span className="hidden sm:inline">GitHub Profile</span>
+                    <a href="https://linkedin.com/in/purushothaman-web/" target="_blank" rel="noopener noreferrer" className="hover:text-[#0077b5] transition-colors flex items-center gap-2">
+                        <Linkedin size={18} />
+                        <span className="hidden sm:inline">LinkedIn Profile</span>
                     </a>
                 </div>
                 <div className="flex items-center gap-4">

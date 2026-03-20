@@ -5,29 +5,43 @@ import Logo from '../ui/Logo';
 import { scrollToSection, useActiveSection, useHashNavigation, useKeyboardNavigation } from '../../utils/scrollToSection';
 
 const navLinks = [
-    { name: 'Home', anchor: 'hero' },
-    { name: 'About', anchor: 'about' },
-    { name: 'Projects', anchor: 'projects' },
-    { name: 'Skills', anchor: 'skills' },
+    { name: 'Home',         anchor: 'hero' },
+    { name: 'About',        anchor: 'about' },
+    { name: 'Projects',     anchor: 'projects' },
+    { name: 'Skills',       anchor: 'skills' },
+    { name: 'GitHub',       anchor: 'github' },
     { name: 'Achievements', anchor: 'achievements' },
-    { name: 'Contact', anchor: 'contact' },
+    { name: 'Contact',      anchor: 'contact' },
 ];
 
 const sectionIds = navLinks.map(link => link.anchor);
 
+interface GeoData {
+    city: string;
+    region: string;
+    country: string;
+    welcomeMessage: string;
+}
+
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [geo, setGeo] = useState<GeoData | null>(null);
     const activeSection = useActiveSection(sectionIds);
-    
+
     useHashNavigation(sectionIds);
     useKeyboardNavigation(sectionIds, activeSection);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
+        const handleScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handleScroll);
+        
+        // Fetch Geo-Analytics
+        fetch('/api/geo')
+            .then(res => res.json())
+            .then(data => setGeo(data))
+            .catch(() => {});
+
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -38,17 +52,34 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                ? 'bg-[#fff9ed]/90 backdrop-blur-md border-b border-black/5 py-4'
-                : 'bg-transparent py-6'
-                }`}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+                scrolled
+                    ? 'bg-[#fff9ed]/90 backdrop-blur-md border-b border-black/5 py-4'
+                    : 'bg-transparent py-6'
+            }`}
         >
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
-                {/* Logo */}
-                <button onClick={() => scrollToSection('hero')} aria-label="Home" className="focus:outline-none">
-                    <Logo />
-                </button>
+                {/* Logo & Welcome */}
+                <div className="flex items-center space-x-4">
+                    <button onClick={() => scrollToSection('hero')} aria-label="Home" className="focus:outline-none">
+                        <Logo />
+                    </button>
+                    {geo && (
+                        <motion.div 
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="hidden md:block pl-4 border-l border-black/10"
+                        >
+                            <p className="text-[10px] uppercase tracking-[0.2em] text-[#e63946] font-bold">
+                                Live from {geo.city}
+                            </p>
+                            <p className="text-[9px] text-gray-400 font-sans">
+                                {geo.welcomeMessage}
+                            </p>
+                        </motion.div>
+                    )}
+                </div>
 
                 {/* Desktop Navigation */}
                 <div className="hidden lg:flex items-center space-x-8">
@@ -57,16 +88,17 @@ export default function Navbar() {
                             <li key={link.anchor}>
                                 <button
                                     onClick={() => handleNavClick(link.anchor)}
-                                    className={`text-sm font-sans tracking-wide transition-all duration-300 relative py-1 ${activeSection === link.anchor
-                                        ? 'text-[#1d3557] font-semibold'
-                                        : 'text-gray-500 hover:text-black'
-                                        }`}
+                                    className={`text-sm font-sans tracking-wide transition-all duration-300 relative py-1 ${
+                                        activeSection === link.anchor
+                                            ? 'text-[#1d3557] font-semibold'
+                                            : 'text-gray-500 hover:text-black'
+                                    }`}
                                 >
                                     {link.name}
                                     {activeSection === link.anchor && (
-                                        <motion.div 
+                                        <motion.div
                                             layoutId="nav-indicator"
-                                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#e63946]" 
+                                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#e63946]"
                                         />
                                     )}
                                 </button>
@@ -112,10 +144,11 @@ export default function Navbar() {
                                 <button
                                     key={link.anchor}
                                     onClick={() => handleNavClick(link.anchor)}
-                                    className={`text-2xl font-light tracking-wide transition-colors text-left flex items-center ${activeSection === link.anchor
-                                        ? 'text-[#e63946] font-medium'
-                                        : 'text-gray-800'
-                                        }`}
+                                    className={`text-2xl font-light tracking-wide transition-colors text-left flex items-center ${
+                                        activeSection === link.anchor
+                                            ? 'text-[#e63946] font-medium'
+                                            : 'text-gray-800'
+                                    }`}
                                 >
                                     {link.name}
                                 </button>

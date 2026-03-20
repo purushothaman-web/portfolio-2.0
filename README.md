@@ -4,11 +4,14 @@
 
 ---
 
-## The Story Behind This Portfolio
+## Live Environment
+- **Primary Domain**: [purushoth.is-a.dev](https://purushoth.is-a.dev)
 
-Every developer reaches a point where their online presence needs to match the work they're doing — not just list it. This portfolio is version 2.0 of that effort.
+---
 
-The first version was a hacker-aesthetic experiment: terminals, dark grids, blinking cursors. It was fun to build. But as my focus shifted from frontend tinkering to backend architecture and full-stack development, the presentation needed to evolve too. Version 2.0 is the result — an **editorial, narrative-driven** redesign built to tell a story, not just display a résumé.
+## The Vision
+
+Every developer reaches a point where their online presence needs to match the work they're doing — not just list it. This portfolio is a **clean, full-stack narrative** built to tell a story through architecture, consistency, and professional communication.
 
 The design philosophy is simple: clean typography, intentional whitespace, and a layout that guides the reader through the development journey rather than overwhelming them with information.
 
@@ -16,65 +19,69 @@ The design philosophy is simple: clean typography, intentional whitespace, and a
 
 ## What's Inside
 
-The site is a single-page application with six sections, each with a specific purpose:
+The site is a full-stack application with seven key sections, each with a specific purpose:
 
-- **Home** — The hook. A bold typographic hero that states the value proposition immediately, paired with a stats card showing the core stack and years of experience (which auto-increments every February 12th, the career anniversary date).
-
-- **About** — The story. A two-column editorial layout with a sticky bio card and a long-form narrative about the transition from frontend development to backend architecture.
-
-- **Projects** — The evidence. Projects presented as architectural case studies — each one framed around the problem it solved, the design decisions made, and the measurable impact.
-
-- **Skills** — The inventory. Skills organized by functional role (Data & Infrastructure, Business Logic, Client Interface) rather than an arbitrary list of logos.
-
-- **Achievements** — The credentials. A numbered editorial list of certifications with inline skill tags, credential IDs, and direct verification links.
-
-- **Contact** — The open door. A minimal, welcoming contact section with a working email form powered by EmailJS.
+- **Home** — The hook. A bold typographic hero featuring a stats card and a direct **LinkedIn** call-to-action alongside GitHub.
+- **About** — The story. A two-column editorial layout with a long-form narrative about the transition from frontend development to backend architecture.
+- **GitHub Activity** — The evidence of consistency. A custom-built **GitHub Contribution Heatmap** that pulls live, global data through a high-performance backend scraper.
+- **Projects** — The architectural case studies. Projects framed around the problem they solved, the design decisions made, and the measurable impact.
+- **Skills** — The inventory. Skills organized by functional roles.
+- **Achievements** — The credentials. A numbered editorial list of certifications with verification links.
+- **Contact** — The open door. A professional contact section with a dedicated backend email service and LinkedIn integration.
 
 ---
 
 ## The Technical Foundation
 
-This is not a CRA bootstrap or a template. Everything was built deliberately:
+This project is built on a robust **full-stack architecture**:
 
 ```
+Frontend (Netlify):
 React 19 + TypeScript   — UI and type safety
 Vite                    — Build tooling
 Tailwind CSS v4         — Styling via @theme configuration
-Framer Motion           — Scroll-aware animations
-Lucide React            — Icon system
-EmailJS                 — Contact form without a backend
-Vite Plugin PWA         — Installable as a native-like app
+Framer Motion           — Cell-tracking tooltips and scroll animations
+
+Backend (Vercel):
+Node.js + Express       — API layer (Vite-proxied)
+Custom HTML Scraper     — Global GitHub contribution data fetching
+Nodemailer              — Custom contact form email service
 ```
 
-The scroll-based navigation uses a custom `IntersectionObserver` hook — no router, no hash routing library. Sections are observed as they enter the viewport and the active navbar link updates accordingly. Smooth scroll offsets account for the fixed navbar height automatically.
+---
+
+## Split Deployment Strategy
+
+This project is optimized for a **split deployment** to leverage the best features of both Netlify and Vercel:
+
+### 1. Backend (Vercel)
+The `api/` folder contains standalone Vercel Functions.
+- **Deployment**: Deploy the repository to Vercel. Vercel will automatically detect the `api` directory and host your serverless functions.
+- **Env Vars**: Set `GITHUB_TOKEN`, `GITHUB_USERNAME`, `SMTP_USER`, and `SMTP_PASS` in the Vercel dashboard.
+
+### 2. Frontend (Netlify)
+The React UI is hosted on Netlify and proxies API requests to Vercel.
+- **Proxy Setup**: In `netlify.toml`, update the `/api/*` redirect rule with your actual Vercel backend URL:
+  ```toml
+  [[redirects]]
+    from = "/api/*"
+    to = "https://your-vercel-backend.vercel.app/api/:splat"
+    status = 200
+  ```
+- **Deployment**: Connect your repo to Netlify. It will build the `dist` folder and use the redirects to communicate with the Vercel backend seamlessly.
 
 ---
 
 ## Running It Locally
 
-Clone the repository and install dependencies:
+Clone the repository and install dependencies for both the frontend and the `api` folder:
 
 ```bash
-git clone https://github.com/purushothaman-web/portfolio-2.0.git
-cd portfolio-2.0
 npm install
+cd api && npm install && cd ..
 ```
 
-The contact form requires EmailJS credentials. Create a `.env` file from the provided example:
-
-```bash
-cp .env.example .env
-```
-
-Then fill in your EmailJS service, template, and public key:
-
-```env
-VITE_EMAILJS_SERVICE_ID=your_service_id
-VITE_EMAILJS_TEMPLATE_ID=your_template_id
-VITE_EMAILJS_PUBLIC_KEY=your_public_key
-```
-
-Start the development server:
+The contact form requires SMTP credentials. Create an `api/.env` file from the provided `api/env.example` and start the development server:
 
 ```bash
 npm run dev
@@ -82,15 +89,10 @@ npm run dev
 
 ---
 
-## Deploying
-
-The project is pre-configured for **Netlify** (see `netlify.toml`) and works equally well on **Vercel**. Connect your GitHub repository, add the three EmailJS environment variables in the platform's settings panel, and deploy. The PWA manifest and sitemap are already in place.
-
----
-
 ## Contact
 
 **Purushothaman R**  
-Full Stack Developer — Bangalore, KA (originally from Vellore, TN)  
+Full Stack Developer — Bangalore, India  
 [rpurushothaman500@gmail.com](mailto:rpurushothaman500@gmail.com)  
+[linkedin.com/in/purushothaman-web](https://www.linkedin.com/in/purushothaman-web/)  
 [github.com/purushothaman-web](https://github.com/purushothaman-web)

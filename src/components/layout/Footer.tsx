@@ -1,4 +1,4 @@
-import { Github, Mail, MapPin, ArrowUpRight } from 'lucide-react';
+import { Github, Mail, MapPin, ArrowUpRight, Linkedin } from 'lucide-react';
 import Logo from '../ui/Logo';
 import { scrollToSection } from '../../utils/scrollToSection';
 
@@ -24,22 +24,31 @@ const Footer = () => {
                             Full-stack developer specializing in scalable backend systems and clean API architecture. Building systems that are resilient by design.
                         </p>
                         <div className="flex items-center gap-3">
-                            <a
-                                href="https://github.com/purushothaman-web"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2.5 rounded-xl bg-gray-50 text-gray-500 hover:text-[#1d3557] hover:bg-[#fff9ed] transition-all border border-gray-100"
-                                aria-label="GitHub"
-                            >
-                                <Github size={18} />
-                            </a>
-                            <a
-                                href="mailto:rpurushothaman500@gmail.com"
-                                className="p-2.5 rounded-xl bg-gray-50 text-gray-500 hover:text-[#e63946] hover:bg-[#fff9ed] transition-all border border-gray-100"
-                                aria-label="Email"
-                            >
-                                <Mail size={18} />
-                            </a>
+                             <a
+                                 href="https://github.com/purushothaman-web"
+                                 target="_blank"
+                                 rel="noopener noreferrer"
+                                 className="p-2.5 rounded-xl bg-gray-50 text-gray-500 hover:text-[#1d3557] hover:bg-[#fff9ed] transition-all border border-gray-100"
+                                 aria-label="GitHub"
+                             >
+                                 <Github size={18} />
+                             </a>
+                             <a
+                                 href="https://linkedin.com/in/purushothaman-web/"
+                                 target="_blank"
+                                 rel="noopener noreferrer"
+                                 className="p-2.5 rounded-xl bg-gray-50 text-gray-500 hover:text-[#0077b5] hover:bg-[#fff9ed] transition-all border border-gray-100"
+                                 aria-label="LinkedIn"
+                             >
+                                 <Linkedin size={18} />
+                             </a>
+                             <a
+                                 href="mailto:rpurushothaman500@gmail.com"
+                                 className="p-2.5 rounded-xl bg-gray-50 text-gray-500 hover:text-[#e63946] hover:bg-[#fff9ed] transition-all border border-gray-100"
+                                 aria-label="Email"
+                             >
+                                 <Mail size={18} />
+                             </a>
                         </div>
                     </div>
 
