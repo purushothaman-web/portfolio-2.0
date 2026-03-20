@@ -65,7 +65,7 @@ The React UI is hosted on Netlify and proxies API requests to Vercel.
   ```toml
   [[redirects]]
     from = "/api/*"
-    to = "https://your-vercel-backend.vercel.app/api/:splat"
+    to = "https://purushoth.vercel.app/api/:splat"
     status = 200
   ```
 - **Deployment**: Connect your repo to Netlify. It will build the `dist` folder and use the redirects to communicate with the Vercel backend seamlessly.
