@@ -46,8 +46,11 @@ export default function Navbar() {
     }, []);
 
     const handleNavClick = (anchor: string) => {
-        scrollToSection(anchor);
         setIsOpen(false);
+        // Small delay to allow state update and menu closure animation to begin
+        setTimeout(() => {
+            scrollToSection(anchor);
+        }, 100);
     };
 
     return (
@@ -69,7 +72,7 @@ export default function Navbar() {
                         <motion.div 
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="hidden md:block pl-4 border-l border-black/10"
+                            className="pl-4 border-l border-black/10"
                         >
                             <p className="text-[10px] uppercase tracking-[0.2em] text-[#e63946] font-bold">
                                 Live from {geo.city}

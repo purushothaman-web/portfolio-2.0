@@ -101,14 +101,14 @@ function StatPill({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.45, delay }}
-      className="flex items-center gap-4 bg-white rounded-2xl px-6 py-5 editorial-card"
+      className="flex items-center gap-3 sm:gap-4 bg-white rounded-2xl px-4 sm:px-6 py-4 sm:py-5 editorial-card min-w-0"
     >
       <div className="w-10 h-10 rounded-xl bg-[#fff9ed] flex items-center justify-center flex-shrink-0">
         <Icon size={18} className="text-[#1d3557]" />
       </div>
-      <div>
-        <div className="text-xl font-bold text-[#1d3557] font-sans leading-none">{value}</div>
-        <div className="text-xs font-sans font-semibold text-gray-400 uppercase tracking-wider mt-1">{label}</div>
+      <div className="min-w-0">
+        <div className="text-lg sm:text-xl font-bold text-[#1d3557] font-sans leading-none truncate">{value}</div>
+        <div className="text-[10px] sm:text-xs font-sans font-semibold text-gray-400 uppercase tracking-wider mt-1 truncate">{label}</div>
       </div>
     </motion.div>
   );

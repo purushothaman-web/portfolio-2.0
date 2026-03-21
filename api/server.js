@@ -39,6 +39,15 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// ─── Mail Configuration (Global) ──────────────────────────────────────────────
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS, // Gmail App Password
+  },
+});
+
 // ─── GitHub Helpers ──────────────────────────────────────────────────────────
 const githubFetch = async (path) => {
   const headers = { 'Accept': 'application/vnd.github+json' };
@@ -70,7 +79,7 @@ const graphqlFetch = async (query, variables = {}) => {
 // Health check
 app.get('/health', (_req, res) => res.json({ ok: true, ts: Date.now() }));
 
-// Single GitHub endpoint to match Vercel function behavior
+// Single GitHub endpoint
 app.get('/api/github', async (req, res) => {
   const type = req.query.type;
   const username = GITHUB_USERNAME;
@@ -143,22 +152,11 @@ app.get('/api/github', async (req, res) => {
     try {
       const result = await graphqlFetch(query, { username });
       const calendar = result.data?.user?.contributionsCollection?.contributionCalendar;
-      
       if (!calendar) throw new Error('Could not fetch contribution calendar');
-
       const contributions = calendar.weeks.flatMap(w => 
-        w.contributionDays.map(d => ({
-          date: d.date,
-          count: d.contributionCount
-        }))
+        w.contributionDays.map(d => ({ date: d.date, count: d.contributionCount }))
       );
-
-      const payload = { 
-        contributions, 
-        total: calendar.totalContributions, 
-        username 
-      };
-
+      const payload = { contributions, total: calendar.totalContributions, username };
       setCache(cacheKey, payload);
       return res.json(payload);
     } catch (err) {
@@ -167,10 +165,10 @@ app.get('/api/github', async (req, res) => {
     }
   }
 
-  return res.status(400).json({ error: 'Missing ?type= param. Use "profile" or "contributions".' });
+  return res.status(400).json({ error: 'Missing ?type= param.' });
 });
 
-// Dynamic OG Image Generator (@napi-rs/canvas)
+// Dynamic OG Image Generator
 app.get('/api/og', async (req, res) => {
   const { title = 'Purushothaman R', desc = 'Full Stack Developer' } = req.query;
   const width = 1200;
@@ -207,7 +205,7 @@ app.get('/api/og', async (req, res) => {
   res.send(buffer);
 });
 
-// Geo-Analytics (ipapi.co)
+// Geo-Analytics
 app.get('/api/geo', async (req, res) => {
   const forwarded = req.headers['x-forwarded-for'];
   const ip = typeof forwarded === 'string' ? forwarded.split(',')[0] : req.socket.remoteAddress;
@@ -215,7 +213,6 @@ app.get('/api/geo', async (req, res) => {
   try {
     const ipToLookup = (!ip || ip === '127.0.0.1' || ip === '::1') ? '' : ip;
     const url = ipToLookup ? `https://ipapi.co/${ipToLookup}/json/` : `https://ipapi.co/json/`;
-    
     const response = await fetch(url);
     if (!response.ok) throw new Error('GeoIP fetch failed');
     const data = await response.json();
@@ -230,37 +227,26 @@ app.get('/api/geo', async (req, res) => {
   } catch (err) {
     console.error('GeoIP lookup failed, using fallback:', err.message);
     res.json({ 
-      city: 'somewhere awesome',
-      region: 'Planet Earth',
-      country: 'the Universe',
+      city: 'somewhere awesome', region: 'Planet Earth', country: 'the Universe',
       welcomeMessage: 'Welcome! It is great to have you here.',
       fallback: true
     });
   }
 });
 
-// Contact form (nodemailer)
+// Contact form
 app.post('/api/contact', async (req, res) => {
   const { name, email, message } = req.body;
   if (!name || !email || !message) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
-  // Simple email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return res.status(400).json({ error: 'Invalid email address' });
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS, // Gmail App Password
-      },
-    });
-
     await transporter.sendMail({
       from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
@@ -280,12 +266,58 @@ app.post('/api/contact', async (req, res) => {
         </div>
       `,
     });
-
     res.json({ ok: true });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to send email' });
   }
+});
+
+// System Architecture Map
+app.get('/api/system/map', async (_req, res) => {
+  const status = {
+    isLive: true,
+    verifiedAt: new Date().toISOString(),
+    services: {
+      github: false,
+      mail: false
+    }
+  };
+
+  // 1. Verify Mail Transporter (Graceful failure)
+  try {
+    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+      await transporter.verify();
+      status.services.mail = true;
+    }
+  } catch (err) {
+    console.warn('Mail Service Status: Not configured or offline');
+  }
+
+  // 2. Verify GitHub Connectivity (Graceful failure)
+  try {
+    const githubCheck = await fetch('https://api.github.com', { method: 'HEAD' });
+    status.services.github = githubCheck.ok;
+  } catch (err) {
+    console.warn('GitHub API Status: Connectivity restricted');
+  }
+
+  res.json({
+    status,
+    nodes: [
+      { id: 'client', label: 'Client App', type: 'frontend', tech: 'React + Vite', desc: 'The entry point for visitors. Handles all routing and high-performance UI rendering.' },
+      { id: 'server', label: 'Portfolio API', type: 'backend', tech: 'Node.js + Express', desc: 'The brain of the system. Manages security, data aggregation, and external service orchestration.' },
+      { id: 'github', label: 'GitHub API', type: 'external', tech: 'REST/GraphQL', desc: 'Provides live contribution data and repository metrics through secure authorized fetches.' },
+      { id: 'geo', label: 'Geo Service', type: 'external', tech: 'ipapi.co', desc: 'Analyzes visitor IP addresses to provide a personalized, localized experience.' },
+      { id: 'mail', label: 'Mail Service', type: 'external', tech: 'Nodemailer', desc: 'Handles secure contact form transmissions using SMTP with app-specific authorization.' }
+    ],
+    edges: [
+      { from: 'client', to: 'server', label: 'REST Requests' },
+      { from: 'server', to: 'github', label: 'Secure Auth' },
+      { from: 'server', to: 'geo', label: 'IP Lookup' },
+      { from: 'server', to: 'mail', label: 'SMTP Transfer' }
+    ]
+  });
 });
 
 app.listen(PORT, () => {

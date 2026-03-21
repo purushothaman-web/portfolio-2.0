@@ -4,7 +4,6 @@ import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 interface Certificate {
     title: string;
     issuer: string;
-    year: string;
     id: string;
     skills: string[];
     link: string;
@@ -14,7 +13,6 @@ const certificates: Certificate[] = [
     {
         title: "PostgreSQL Bootcamp: Complete Beginner to Advanced",
         issuer: "Udemy",
-        year: "2024",
         id: "UC-54f0ab24-93af-4701-ae48-39867cb49fe5",
         skills: ["PostgreSQL", "SQL", "Database Design", "Performance Tuning"],
         link: "https://www.udemy.com/certificate/UC-54f0ab24-93af-4701-ae48-39867cb49fe5/"
@@ -22,7 +20,6 @@ const certificates: Certificate[] = [
     {
         title: "GIT, GitLab, GitHub Fundamentals for Developers",
         issuer: "Udemy",
-        year: "2024",
         id: "UC-1c951159-be53-489b-af95-4f1a6a2f418b",
         skills: ["Git", "GitHub", "GitLab", "Version Control", "CI/CD"],
         link: "https://www.udemy.com/certificate/UC-1c951159-be53-489b-af95-4f1a6a2f418b/"
@@ -30,7 +27,6 @@ const certificates: Certificate[] = [
     {
         title: "Node.js: All You Need to Know with Practical Project",
         issuer: "Udemy",
-        year: "2024",
         id: "UC-d3be7243-0f59-4de5-853c-8eec9a1d3fa0",
         skills: ["Node.js", "Express.js", "REST APIs", "Backend Development"],
         link: "https://www.udemy.com/certificate/UC-d3be7243-0f59-4de5-853c-8eec9a1d3fa0/"
@@ -38,7 +34,6 @@ const certificates: Certificate[] = [
     {
         title: "TailwindCSS from A to Z: Master TailwindCSS Quickly",
         issuer: "Udemy",
-        year: "2024",
         id: "UC-f187ef90-a032-4010-8ae6-704fc6871b06",
         skills: ["Tailwind CSS", "Responsive Design", "Utility-First CSS"],
         link: "https://www.udemy.com/certificate/UC-f187ef90-a032-4010-8ae6-704fc6871b06/"
@@ -46,7 +41,6 @@ const certificates: Certificate[] = [
     {
         title: "MongoDB: The Complete MongoDB Developers Course",
         issuer: "Udemy",
-        year: "2024",
         id: "UC-0793ecce-73e7-411a-8781-839a02245ea8",
         skills: ["MongoDB", "NoSQL", "Data Modeling", "Database Architecture"],
         link: "https://www.udemy.com/certificate/UC-0793ecce-73e7-411a-8781-839a02245ea8/"
@@ -90,11 +84,6 @@ export const Achievements = () => {
                                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Platform</span>
                                 <span className="text-sm font-semibold text-gray-700">Udemy</span>
                             </div>
-                            <div className="h-px bg-gray-100 w-full" />
-                            <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Year</span>
-                                <span className="text-sm font-semibold text-gray-700">2024</span>
-                            </div>
                         </div>
                     </motion.div>
 
@@ -127,7 +116,7 @@ export const Achievements = () => {
                                                 <div className="flex items-center gap-2 mt-1">
                                                     <CheckCircle2 size={13} className="text-green-500" />
                                                     <span className="text-xs font-sans text-gray-500">
-                                                        Accredited by <span className="font-semibold text-gray-700">{cert.issuer}</span> &middot; {cert.year}
+                                                        Accredited by <span className="font-semibold text-gray-700">{cert.issuer}</span>
                                                     </span>
                                                 </div>
                                             </div>

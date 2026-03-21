@@ -54,8 +54,7 @@ export const Skills = () => {
         { name: 'MongoDB' },
         { name: 'Prisma ORM' },
         { name: 'Mongoose' },
-        { name: 'Redis' },
-        { name: 'Docker' }
+        { name: 'Redis' }
     ];
 
     const logicSkills = [

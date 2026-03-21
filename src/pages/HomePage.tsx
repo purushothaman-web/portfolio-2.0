@@ -2,6 +2,7 @@ import Home from './Home';
 import { About } from './About';
 import { Projects } from './Projects';
 import { Skills } from './Skills';
+import { SystemArchitecture } from '../components/sections/SystemArchitecture';
 import { GitHubActivity } from '../components/sections/GitHubActivity';
 import { Achievements } from './Achievements';
 import { Contact } from './Contact';
@@ -13,6 +14,7 @@ export default function HomePage() {
             <About />
             <Projects />
             <Skills />
+            <SystemArchitecture />
             <GitHubActivity />
             <Achievements />
             <Contact />
