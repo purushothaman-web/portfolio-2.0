@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Database, Server, LayoutTemplate, Layers } from 'lucide-react';
+import { Database, Server, LayoutTemplate } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
 
 interface Skill {
@@ -77,10 +77,6 @@ export const Skills = () => {
 
     return (
         <div id="skills" className="min-h-screen py-32 px-6 max-w-7xl mx-auto bg-transparent relative">
-            <div className="absolute right-12 top-40 text-gray-100 select-none z-[-1] opacity-50">
-                <Layers size={400} strokeWidth={0.5} />
-            </div>
-
             <div className="space-y-16 relative z-10">
 
                 {/* Editorial Header */}
