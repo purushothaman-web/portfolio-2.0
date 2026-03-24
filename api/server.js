@@ -205,35 +205,6 @@ app.get('/api/og', async (req, res) => {
   res.send(buffer);
 });
 
-// Geo-Analytics
-app.get('/api/geo', async (req, res) => {
-  const forwarded = req.headers['x-forwarded-for'];
-  const ip = typeof forwarded === 'string' ? forwarded.split(',')[0] : req.socket.remoteAddress;
-
-  try {
-    const ipToLookup = (!ip || ip === '127.0.0.1' || ip === '::1') ? '' : ip;
-    const url = ipToLookup ? `https://ipapi.co/${ipToLookup}/json/` : `https://ipapi.co/json/`;
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('GeoIP fetch failed');
-    const data = await response.json();
-
-    return res.json({
-      city: data.city || 'somewhere awesome',
-      region: data.region || 'Planet Earth',
-      country: data.country_name || 'the Universe',
-      welcomeMessage: `Welcome! Greetings to you in ${data.city || 'your city'} from Bangalore.`,
-      ip: data.ip
-    });
-  } catch (err) {
-    console.error('GeoIP lookup failed, using fallback:', err.message);
-    res.json({ 
-      city: 'somewhere awesome', region: 'Planet Earth', country: 'the Universe',
-      welcomeMessage: 'Welcome! It is great to have you here.',
-      fallback: true
-    });
-  }
-});
-
 // Contact form
 app.post('/api/contact', async (req, res) => {
   const { name, email, message } = req.body;
@@ -308,13 +279,11 @@ app.get('/api/system/map', async (_req, res) => {
       { id: 'client', label: 'Client App', type: 'frontend', tech: 'React + Vite', desc: 'The entry point for visitors. Handles all routing and high-performance UI rendering.' },
       { id: 'server', label: 'Portfolio API', type: 'backend', tech: 'Node.js + Express', desc: 'The brain of the system. Manages security, data aggregation, and external service orchestration.' },
       { id: 'github', label: 'GitHub API', type: 'external', tech: 'REST/GraphQL', desc: 'Provides live contribution data and repository metrics through secure authorized fetches.' },
-      { id: 'geo', label: 'Geo Service', type: 'external', tech: 'ipapi.co', desc: 'Analyzes visitor IP addresses to provide a personalized, localized experience.' },
       { id: 'mail', label: 'Mail Service', type: 'external', tech: 'Nodemailer', desc: 'Handles secure contact form transmissions using SMTP with app-specific authorization.' }
     ],
     edges: [
       { from: 'client', to: 'server', label: 'REST Requests' },
       { from: 'server', to: 'github', label: 'Secure Auth' },
-      { from: 'server', to: 'geo', label: 'IP Lookup' },
       { from: 'server', to: 'mail', label: 'SMTP Transfer' }
     ]
   });

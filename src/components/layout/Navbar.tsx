@@ -16,17 +16,11 @@ const navLinks = [
 
 const sectionIds = navLinks.map(link => link.anchor);
 
-interface GeoData {
-    city: string;
-    region: string;
-    country: string;
-    welcomeMessage: string;
-}
+
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [geo, setGeo] = useState<GeoData | null>(null);
     const activeSection = useActiveSection(sectionIds);
 
     useHashNavigation(sectionIds);
@@ -35,12 +29,6 @@ export default function Navbar() {
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handleScroll);
-        
-        // Fetch Geo-Analytics
-        fetch('/api/geo')
-            .then(res => res.json())
-            .then(data => setGeo(data))
-            .catch(() => {});
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -68,20 +56,6 @@ export default function Navbar() {
                     <button onClick={() => scrollToSection('hero')} aria-label="Home" className="focus:outline-none">
                         <Logo />
                     </button>
-                    {geo && (
-                        <motion.div 
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="pl-4 border-l border-black/10"
-                        >
-                            <p className="text-[10px] uppercase tracking-[0.2em] text-[#e63946] font-bold">
-                                Live from {geo.city}
-                            </p>
-                            <p className="text-[9px] text-gray-400 font-sans">
-                                {geo.welcomeMessage}
-                            </p>
-                        </motion.div>
-                    )}
                 </div>
 
                 {/* Desktop Navigation */}
