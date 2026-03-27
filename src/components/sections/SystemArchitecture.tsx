@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Server, Monitor, Github, MapPin, Send, Info, Cpu, Globe, Zap } from 'lucide-react';
+import { Server, Monitor, Github, Send, Info, Cpu, Globe, Zap } from 'lucide-react';
 
 interface Node {
     id: string;
@@ -113,7 +113,6 @@ export const SystemArchitecture = () => {
                                     <PathWithPackets d="M 150 300 C 250 300, 300 300, 400 300" delay={0} />
                                     {/* Server to External */}
                                     <PathWithPackets d="M 400 300 C 500 300, 550 150, 650 150" delay={0.5} />
-                                    <PathWithPackets d="M 400 300 C 500 300, 550 300, 650 300" delay={1} />
                                     <PathWithPackets d="M 400 300 C 500 300, 550 450, 650 450" delay={1.5} />
                                 </g>
 
@@ -133,11 +132,6 @@ export const SystemArchitecture = () => {
                                     x={650} y={150} icon="github" label="GitHub" 
                                     isSelected={selectedNode?.id === 'github'}
                                     onClick={() => setSelectedNode(data.nodes.find(n => n.id === 'github')!)}
-                                />
-                                <NodeGroup 
-                                    x={650} y={300} icon="map" label="Geo" 
-                                    isSelected={selectedNode?.id === 'geo'}
-                                    onClick={() => setSelectedNode(data.nodes.find(n => n.id === 'geo')!)}
                                 />
                                 <NodeGroup 
                                     x={650} y={450} icon="send" label="Mailing" 
@@ -289,7 +283,6 @@ const getSVGIcon = (type: string, size: number) => {
         case 'monitor': return <Monitor size={size} />;
         case 'server': return <Server size={size} />;
         case 'github': return <Github size={size} />;
-        case 'map': return <MapPin size={size} />;
         case 'send': return <Send size={size} />;
         default: return <Info size={size} />;
     }
@@ -300,7 +293,6 @@ const getNodeIconComponent = (id: string) => {
         case 'client': return <Monitor size={32} />;
         case 'server': return <Server size={32} />;
         case 'github': return <Github size={32} />;
-        case 'geo': return <MapPin size={32} />;
         case 'mail': return <Send size={32} />;
         default: return <Info size={32} />;
     }
