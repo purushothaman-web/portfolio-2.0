@@ -20,7 +20,8 @@ interface SkillDomainProps {
 function getRoadmapIdForSkill(skillName: string): string | null {
     const lower = skillName.toLowerCase();
     if (lower.includes('javascript') || lower.includes('esnext')) return 'javascript';
-    if (lower.includes('react') || lower.includes('next')) return 'react';
+    if (lower.includes('next')) return 'nextjs';
+    if (lower.includes('react')) return 'react';
     if (lower.includes('typescript')) return 'typescript';
     if (lower.includes('tailwind')) return 'tailwind';
     if (lower.includes('framer') || lower.includes('motion')) return 'framer-motion';
