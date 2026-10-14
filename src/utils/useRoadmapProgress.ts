@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const LOCAL_STORAGE_KEY = 'purushothaman_roadmap_progress_v1';
 const UPSTASH_KEY = 'purushothaman_portfolio_roadmap_progress';
@@ -26,7 +26,6 @@ export function useRoadmapProgress() {
     });
 
     const [syncStatus, setSyncStatus] = useState<SyncStatus>('offline');
-    const isInitialMount = useRef(true);
 
     // Upstash credentials from Vite env
     const upstashUrl = import.meta.env.VITE_UPSTASH_REDIS_REST_URL as string | undefined;

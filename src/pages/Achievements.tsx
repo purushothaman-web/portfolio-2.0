@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowUpRight, CheckCircle2, Award, BookOpen, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, Award, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface Certificate {
     title: string;

@@ -1,6 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, ExternalLink, Sparkles, Building2, CheckCircle2, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { Github, ExternalLink, Sparkles, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 interface Project {
     id: string;

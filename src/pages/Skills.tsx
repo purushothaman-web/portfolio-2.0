@@ -293,7 +293,6 @@ export const Skills = () => {
             <SkillRoadmapDrawer
                 skillId={selectedRoadmapId}
                 onClose={() => setSelectedRoadmapId(null)}
-                onSelectSkill={(id) => setSelectedRoadmapId(id)}
             />
 
         </section>

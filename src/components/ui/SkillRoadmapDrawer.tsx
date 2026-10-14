@@ -25,13 +25,11 @@ import { useRoadmapProgress } from '../../utils/useRoadmapProgress';
 interface SkillRoadmapDrawerProps {
     skillId: string | null;
     onClose: () => void;
-    onSelectSkill?: (id: string) => void;
 }
 
 export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
     skillId,
-    onClose,
-    onSelectSkill
+    onClose
 }) => {
     const roadmap: SkillRoadmap | undefined = skillId ? SKILL_ROADMAPS[skillId] : undefined;
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -80,7 +78,7 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
 
     return (
         <AnimatePresence>
-            <div className="fixed inset-0 z-[9999] flex justify-end">
+            <div className="fixed inset-0 z-9999 flex justify-end">
                 {/* Backdrop */}
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -98,7 +96,7 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
                     exit={{ x: '100%' }}
                     transition={{ type: 'spring', damping: 30, stiffness: 300 }}
                     className={`relative z-10 flex flex-col bg-white text-slate-900 shadow-2xl border-l border-slate-200 transition-all duration-300 ${
-                        isFullscreen ? 'w-full h-full max-w-none' : 'w-full md:w-[720px] lg:w-[840px] h-full'
+                        isFullscreen ? 'w-full h-full max-w-none' : 'w-full md:w-180 lg:w-210 h-full'
                     }`}
                 >
                     {/* Top Header */}
