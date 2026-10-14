@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { SkillRoadmap, Checkpoint, SKILL_ROADMAPS } from '../../data/skillRoadmaps';
 import { useRoadmapProgress } from '../../utils/useRoadmapProgress';
+import { SkillIcon } from './SkillIcon';
 
 interface SkillRoadmapDrawerProps {
     skillId: string | null;
@@ -102,11 +103,8 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
                     {/* Top Header */}
                     <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80 sticky top-0 z-20 backdrop-blur-md">
                         <div className="flex items-center space-x-3.5">
-                            <div 
-                                className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-white text-xs shadow-xs"
-                                style={{ backgroundColor: roadmap.accentColor }}
-                            >
-                                <Code2 size={18} />
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center p-2 bg-slate-100 border border-slate-200/80 shadow-2xs shrink-0">
+                                <SkillIcon name={roadmap.skillName} size={22} />
                             </div>
                             <div>
                                 <div className="flex items-center space-x-2">
@@ -218,12 +216,12 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
                     </div>
 
                     {/* Main Body (Horizontal layout if fullscreen, vertical if drawer) */}
-                    <div className="flex-1 overflow-y-auto flex flex-col lg:flex-row">
+                    <div className="flex-1 overflow-hidden flex flex-col lg:flex-row min-h-0">
                         
                         {/* Left Checkpoint Stepper Navigation */}
-                        <div className="w-full lg:w-72 border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/50 p-4 space-y-2 shrink-0">
+                        <div className="w-full lg:w-72 border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/50 p-4 space-y-2 shrink-0 overflow-y-auto max-h-52 sm:max-h-64 lg:max-h-none">
                             <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-2 py-1 font-sans">
-                                5-Minute Checkpoints
+                                5-Minute Checkpoints ({checkpoints.length})
                             </div>
                             <div className="space-y-1.5">
                                 {checkpoints.map((cp, idx) => {
@@ -431,30 +429,6 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
                                             </motion.div>
                                         )}
                                     </AnimatePresence>
-                                </div>
-
-                                {/* Part 4: Official Deep Dive Link */}
-                                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between text-left">
-                                    <div className="space-y-0.5">
-                                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                                            Authoritative Deep Dive
-                                        </div>
-                                        <div className="text-xs font-semibold text-slate-800">
-                                            {activeCheckpoint.docLink.title}
-                                        </div>
-                                        <div className="text-[11px] text-slate-500">
-                                            {activeCheckpoint.docLink.description}
-                                        </div>
-                                    </div>
-                                    <a
-                                        href={activeCheckpoint.docLink.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="shrink-0 ml-4 px-3 py-2 rounded-lg bg-white border border-slate-200 text-blue-600 hover:text-blue-700 text-xs font-semibold flex items-center gap-1.5 shadow-2xs hover:shadow-xs transition-all"
-                                    >
-                                        <span>Read Official Docs</span>
-                                        <ExternalLink size={12} />
-                                    </a>
                                 </div>
 
                             </div>

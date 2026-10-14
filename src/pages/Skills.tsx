@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Server, LayoutTemplate, Database, Wrench, Sparkles, Zap, BookOpen } from 'lucide-react';
+import { Server, LayoutTemplate, Database, Wrench, Sparkles, Zap } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
 import { SkillRoadmapDrawer } from '../components/ui/SkillRoadmapDrawer';
+import { SkillIcon } from '../components/ui/SkillIcon';
 
 interface SkillDomainProps {
     title: string;
@@ -18,10 +19,17 @@ interface SkillDomainProps {
 
 function getRoadmapIdForSkill(skillName: string): string | null {
     const lower = skillName.toLowerCase();
+    if (lower.includes('javascript') || lower.includes('esnext')) return 'javascript';
     if (lower.includes('react') || lower.includes('next')) return 'react';
     if (lower.includes('typescript')) return 'typescript';
-    if (lower.includes('node') || lower.includes('express')) return 'nodejs';
-    if (lower.includes('postgres') || lower.includes('prisma') || lower.includes('indexing')) return 'postgresql';
+    if (lower.includes('tailwind')) return 'tailwind';
+    if (lower.includes('framer') || lower.includes('motion')) return 'framer-motion';
+    if (lower.includes('node') || lower.includes('express') || lower.includes('rest api')) return 'nodejs';
+    if (lower.includes('postgres') || lower.includes('indexing')) return 'postgresql';
+    if (lower.includes('prisma')) return 'prisma';
+    if (lower.includes('mongo')) return 'mongodb';
+    if (lower.includes('git')) return 'git';
+    if (lower.includes('architecture') || lower.includes('system design')) return 'system-design';
     return null;
 }
 
@@ -63,32 +71,21 @@ const SkillDomain = ({
             </div>
         </div>
 
-        {/* Skill Pills */}
+        {/* Skill Pills (Clean, elegant look with official brand SVG logos) */}
         <div className="pt-4 border-t border-slate-100 flex flex-wrap gap-2">
             {skills.map((skill) => {
                 const roadmapId = getRoadmapIdForSkill(skill);
-                if (roadmapId) {
-                    return (
-                        <button
-                            key={skill}
-                            onClick={() => onSelectRoadmap(roadmapId)}
-                            title="Click to view 5-Minute Micro-Roadmap, code traps & canonical docs"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50/70 border border-blue-200 text-xs font-medium text-blue-900 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all cursor-pointer group/pill shadow-2xs"
-                        >
-                            <span>{skill}</span>
-                            <span className="text-[10px] px-1 py-0.5 rounded bg-white/90 text-blue-700 group-hover/pill:bg-blue-700 group-hover/pill:text-white font-mono font-bold transition-colors">
-                                5m Drill ↗
-                            </span>
-                        </button>
-                    );
-                }
                 return (
-                    <span
+                    <button
                         key={skill}
-                        className="px-3 py-1 rounded-lg bg-slate-50/80 border border-slate-200/60 text-xs font-medium text-slate-700 hover:bg-slate-100 transition-all cursor-default"
+                        onClick={() => {
+                            if (roadmapId) onSelectRoadmap(roadmapId);
+                        }}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-xs font-medium text-slate-700 hover:bg-white hover:text-slate-900 hover:border-slate-300 hover:shadow-2xs transition-all cursor-pointer group/pill"
                     >
-                        {skill}
-                    </span>
+                        <SkillIcon name={skill} size={15} />
+                        <span>{skill}</span>
+                    </button>
                 );
             })}
         </div>
@@ -100,8 +97,8 @@ const CORE_STACK = [
     { name: 'Node.js & Express', role: 'REST APIs & Server Logic', roadmapId: 'nodejs' },
     { name: 'TypeScript', role: 'Type-Safe Code & Better DX', roadmapId: 'typescript' },
     { name: 'PostgreSQL & Prisma', role: 'Relational Schemas & Migrations', roadmapId: 'postgresql' },
-    { name: 'Tailwind CSS v4', role: 'Responsive Layouts & Styling', roadmapId: null },
-    { name: 'Git & GitHub', role: 'Version Control & Workflow', roadmapId: null }
+    { name: 'Tailwind CSS v4', role: 'Responsive Layouts & Styling', roadmapId: 'tailwind' },
+    { name: 'Git & GitHub', role: 'Version Control & Workflow', roadmapId: 'git' }
 ];
 
 export const Skills = () => {
@@ -110,7 +107,7 @@ export const Skills = () => {
     return (
         <section id="skills" className="py-14 sm:py-16 px-6 max-w-7xl mx-auto bg-transparent">
             
-            {/* Section Header */}
+            {/* Section Header (Completely clean and natural without spoiled hints) */}
             <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -118,24 +115,16 @@ export const Skills = () => {
                 transition={{ duration: 0.5 }}
                 className="mb-8 sm:mb-10 space-y-3 text-left"
             >
-                <div className="flex flex-wrap items-center gap-2.5">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[11px] font-sans font-semibold text-blue-700">
-                        <Sparkles size={12} className="text-blue-600" />
-                        <span>04 // TOOLBOX &amp; STACK</span>
-                    </div>
-
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-[11px] font-sans font-medium text-emerald-800">
-                        <BookOpen size={12} className="text-emerald-600" />
-                        <span>Interactive 5-Min Micro-Roadmaps Available</span>
-                    </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[11px] font-sans font-semibold text-blue-700">
+                    <Sparkles size={12} className="text-blue-600" />
+                    <span>04 // TOOLBOX &amp; STACK</span>
                 </div>
 
                 <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 font-sans">
                     Technologies &amp; Everyday Tools
                 </h2>
                 <p className="text-slate-600 font-sans text-base max-w-2xl mt-2">
-                    A clear overview of the languages, frameworks, and databases I rely on to turn ideas into fast, production-ready web applications. 
-                    <span className="text-blue-600 font-medium"> Click on any stack pill</span> to inspect its 5-minute practical checkpoints, senior vs junior code traps, and canonical official docs.
+                    A clear overview of the languages, frameworks, and databases I rely on to turn ideas into fast, production-ready web applications.
                 </p>
             </motion.div>
 
@@ -153,37 +142,27 @@ export const Skills = () => {
                         <span>The Everyday Core Stack</span>
                     </div>
                     <span className="text-xs text-slate-500 font-sans hidden sm:inline">
-                        Click any technology to open its interactive roadmap
+                        Technologies I write daily in production
                     </span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
                     {CORE_STACK.map((item, i) => {
-                        const hasRoadmap = Boolean(item.roadmapId);
                         return (
                             <button
                                 key={i}
                                 onClick={() => {
                                     if (item.roadmapId) setSelectedRoadmapId(item.roadmapId);
                                 }}
-                                disabled={!hasRoadmap}
-                                className={`p-3.5 rounded-xl border text-left transition-all ${
-                                    hasRoadmap
-                                        ? 'bg-slate-50/80 border-slate-200/70 hover:bg-white hover:border-blue-400 hover:shadow-xs cursor-pointer group'
-                                        : 'bg-slate-50/40 border-slate-100 cursor-default opacity-85'
-                                }`}
+                                className="p-3.5 rounded-xl border border-slate-200/70 bg-slate-50/80 hover:bg-white hover:border-slate-300 hover:shadow-xs transition-all text-left cursor-pointer group"
                             >
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <SkillIcon name={item.name} size={18} />
                                     <div className="font-bold text-slate-900 text-xs sm:text-sm font-sans truncate group-hover:text-blue-600 transition-colors">
                                         {item.name}
                                     </div>
-                                    {hasRoadmap && (
-                                        <span className="text-[10px] text-blue-600 font-mono opacity-0 group-hover:opacity-100 transition-opacity">
-                                            ↗
-                                        </span>
-                                    )}
                                 </div>
-                                <div className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">
+                                <div className="text-[11px] text-slate-500 mt-1 line-clamp-1">
                                     {item.role}
                                 </div>
                             </button>
