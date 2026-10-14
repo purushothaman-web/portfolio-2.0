@@ -1,143 +1,211 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Mail, Linkedin } from 'lucide-react';
+import { ArrowRight, Mail, Linkedin, Github, Check, Copy, ExternalLink, Zap, Shield, Sparkles } from 'lucide-react';
 import { scrollToSection } from '../utils/scrollToSection';
-
-const getYearsOfExperience = (): number => {
-    const now = new Date();
-    const startYear = 2025;
-    const anniversaryThisYear = new Date(now.getFullYear(), 1, 12);
-    const yearsPassed = now.getFullYear() - startYear;
-    return now >= anniversaryThisYear ? yearsPassed : yearsPassed - 1;
-};
+import InteractiveDualConsole from '../components/ui/InteractiveDualConsole';
 
 export default function Home() {
+    const [copiedEmail, setCopiedEmail] = useState(false);
+
+    const handleCopyEmail = () => {
+        navigator.clipboard.writeText('rpurushothaman500@gmail.com');
+        setCopiedEmail(true);
+        setTimeout(() => setCopiedEmail(false), 2000);
+    };
+
     return (
-        <div id="hero" className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-transparent pt-32 pb-20">
+        <section id="hero" className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden bg-white/60 pt-12 pb-12">
+            {/* Subtle Architectural Grid Background */}
+            <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-size-[24px_24px]" />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
+            <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+                <div className="grid lg:grid-cols-12 gap-12 lg:gap-14 items-center">
 
-                <div className="lg:col-span-8 space-y-10 text-center lg:text-left">
-                    
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="inline-flex items-center space-x-3 px-4 py-1.5 rounded-full border border-black/10 bg-white shadow-sm text-xs font-sans tracking-widest uppercase font-semibold text-gray-600"
-                    >
-                        <span className="w-2 h-2 rounded-full bg-[#e63946] animate-pulse"></span>
-                        <span>Purushothaman R &mdash; Full Stack Developer</span>
-                    </motion.div>
+                    {/* Left Column: Human Story, Typography & Social Dock (7 cols) */}
+                    <div className="lg:col-span-7 space-y-8 text-left">
 
-                    <div className="space-y-6">
-                        <motion.h1
+                        {/* Top Availability Status Pill */}
+                        <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
-                            className="text-5xl md:text-7xl font-bold tracking-tight text-[#1d3557] font-sans leading-[1.1]"
+                            transition={{ duration: 0.4 }}
+                            className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-emerald-200/80 bg-emerald-50/70 text-[12px] font-sans font-medium text-emerald-800 shadow-2xs"
                         >
-                            Developing the <span className="text-[#e63946] italic pr-2">hidden logic</span> <br className="hidden md:block" />
-                            that powers seamless experiences.
-                        </motion.h1>
+                            <span className="flex h-2 w-2 relative">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                            </span>
+                            <span>Available for full-time roles & projects</span>
+                            <span className="text-emerald-300">·</span>
+                            <span className="text-emerald-700/80 font-normal">Bangalore & Remote</span>
+                        </motion.div>
+
+                        {/* Main High-Impact Display Headline */}
+                        <div className="space-y-4">
+                            <motion.h1
+                                initial={{ opacity: 0, y: 14 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.1 }}
+                                className="text-4xl sm:text-6xl lg:text-[4.1rem] font-bold tracking-tight text-slate-900 font-sans leading-[1.1]"
+                            >
+                                I build modern websites and web apps that{' '}
+                                <span className="text-blue-600 underline decoration-blue-200 decoration-wavy decoration-2 underline-offset-8">
+                                    look great
+                                </span>{' '}
+                                and{' '}
+                                <span className="text-slate-900">
+                                    run fast.
+                                </span>
+                            </motion.h1>
+
+                            {/* Plain-Language Subtitle (Easy for anyone to understand) */}
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.5, delay: 0.2 }}
+                                className="text-base sm:text-lg text-slate-600 leading-relaxed font-sans max-w-2xl"
+                            >
+                                Hi, I&apos;m <strong>Purushothaman</strong> — a Full Stack Developer. I bridge design and engineering: creating smooth, responsive interfaces on the outside, and building secure, reliable systems on the inside.
+                            </motion.p>
+                        </div>
+
+                        {/* Primary CTAs */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                            className="flex flex-wrap items-center gap-4 pt-1"
+                        >
+                            <motion.button
+                                id="hero-view-projects-btn"
+                                onClick={() => scrollToSection('projects')}
+                                whileHover={{ y: -1.5 }}
+                                whileTap={{ y: 1 }}
+                                transition={{ type: 'spring', stiffness: 500, damping: 28 }}
+                                className="relative overflow-hidden px-6 py-3.5 bg-slate-900 text-white rounded-xl font-sans font-semibold text-sm tracking-wide transition-all shadow-[0_4px_14px_rgba(15,23,42,0.18)] hover:shadow-[0_8px_22px_rgba(15,23,42,0.28)] flex items-center space-x-2.5 cursor-pointer group before:absolute before:inset-0 before:-translate-x-full hover:before:translate-x-full before:bg-linear-to-r before:from-transparent before:via-white/20 before:to-transparent before:transition-transform before:duration-700 before:ease-out"
+                            >
+                                <span>Explore Projects</span>
+                                <ArrowRight size={16} className="transition-transform duration-200 ease-out group-hover:translate-x-1" />
+                            </motion.button>
+
+                            <motion.button
+                                id="hero-contact-me-btn"
+                                onClick={() => scrollToSection('contact')}
+                                whileHover={{ y: -1.5 }}
+                                whileTap={{ y: 1 }}
+                                transition={{ type: 'spring', stiffness: 500, damping: 28 }}
+                                className="relative overflow-hidden px-6 py-3.5 bg-white text-slate-800 rounded-xl font-sans font-semibold text-sm transition-all border border-slate-200/90 shadow-xs hover:shadow-[0_8px_20px_rgba(15,23,42,0.08)] flex items-center space-x-2.5 cursor-pointer group before:absolute before:inset-0 before:-translate-x-full hover:before:translate-x-full before:bg-linear-to-r before:from-transparent before:via-blue-500/10 before:to-transparent before:transition-transform before:duration-700 before:ease-out"
+                            >
+                                <Mail size={16} className="text-blue-600 transition-transform duration-200 group-hover:-rotate-12 group-hover:translate-x-0.5" />
+                                <span>Get in Touch</span>
+                            </motion.button>
+                        </motion.div>
+
+                        {/* Direct Social & Contact Dock (GitHub, LinkedIn, Gmail) */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 0.4 }}
+                            className="pt-4 pb-2 border-t border-slate-200/80"
+                        >
+                            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 font-sans">
+                                Direct Contact & Profiles
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-3">
+                                {/* GitHub Link */}
+                                <a
+                                    id="hero-github-link"
+                                    href="https://github.com/purushothaman-web"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-800 border border-slate-200/60 text-xs font-medium transition-all group"
+                                >
+                                    <Github size={15} className="text-slate-900" />
+                                    <span>GitHub</span>
+                                    <ExternalLink size={12} className="text-slate-400 group-hover:text-slate-700 transition-colors" />
+                                </a>
+
+                                {/* LinkedIn Link */}
+                                <a
+                                    id="hero-linkedin-link"
+                                    href="https://linkedin.com/in/purushothaman-web/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-50/80 hover:bg-blue-100 text-blue-900 border border-blue-200/60 text-xs font-medium transition-all group"
+                                >
+                                    <Linkedin size={15} className="text-blue-600" />
+                                    <span>LinkedIn</span>
+                                    <ExternalLink size={12} className="text-blue-400 group-hover:text-blue-700 transition-colors" />
+                                </a>
+
+                                {/* Gmail Quick Copy / Direct Mail */}
+                                <div className="inline-flex items-center rounded-xl bg-slate-100 border border-slate-200/60 p-0.5 text-xs">
+                                    <a
+                                        id="hero-gmail-link"
+                                        href="mailto:rpurushothaman500@gmail.com"
+                                        className="px-3 py-1.5 text-slate-700 hover:text-slate-900 font-medium flex items-center gap-1.5 transition-colors"
+                                    >
+                                        <Mail size={14} className="text-rose-500" />
+                                        <span>rpurushothaman500@gmail.com</span>
+                                    </a>
+                                    <button
+                                        id="hero-copy-email-btn"
+                                        onClick={handleCopyEmail}
+                                        title="Copy email to clipboard"
+                                        className="px-2 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-900 transition-all border border-slate-200 shadow-2xs flex items-center gap-1 cursor-pointer"
+                                    >
+                                        {copiedEmail ? (
+                                            <>
+                                                <Check size={12} className="text-emerald-600" />
+                                                <span className="text-[11px] font-semibold text-emerald-600">Copied!</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Copy size={12} />
+                                                <span className="text-[11px]">Copy</span>
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Plain English Value Badges */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 0.5 }}
+                            className="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-sans"
+                        >
+                            <span className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-200/60">
+                                <Zap size={13} className="text-amber-500" />
+                                <strong>Fast & Responsive</strong>
+                            </span>
+                            <span className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-200/60">
+                                <Shield size={13} className="text-emerald-500" />
+                                <strong>Secure Backends</strong>
+                            </span>
+                            <span className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-200/60">
+                                <Sparkles size={13} className="text-blue-500" />
+                                <strong>Clean UI Craft</strong>
+                            </span>
+                        </motion.div>
+
                     </div>
 
+                    {/* Right Column: The "Two Sides of an App" Interactive Dual-Console (5 cols) */}
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="max-w-2xl mx-auto lg:mx-0 space-y-4 text-lg text-gray-600 leading-relaxed font-sans"
-                    >
-                        <p>
-                            I began my career crafting pixel-perfect interfaces as a frontend developer. However, the deeper I dug into how web applications functioned, the more fascinated I became by the architecture beneath the surface.
-                        </p>
-                        <p>
-                            Today, I specialize in designing scalable backend infrastructures, reliable databases, and robust APIs—bridging the gap between strict server logic and premium client interfaces.
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                        className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4"
-                    >
-                        <button
-                            onClick={() => scrollToSection('projects')}
-                            className="group px-8 py-3.5 bg-[#1d3557] text-white rounded-xl font-sans font-semibold tracking-wide transition-all hover:bg-[#112240] hover:shadow-lg flex items-center space-x-3"
-                        >
-                            <span>Read Case Studies</span>
-                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                        </button>
-
-                        <button
-                            onClick={() => scrollToSection('contact')}
-                            className="px-8 py-3.5 bg-white text-[#1d3557] rounded-xl font-sans font-medium transition-all editorial-border flex items-center space-x-3 hover:bg-gray-50 hover:shadow-sm"
-                        >
-                            <Mail size={18} />
-                            <span>Get in Touch</span>
-                        </button>
-                    </motion.div>
-
-                </div>
-
-                <div className="hidden lg:flex lg:col-span-4 flex-col justify-center relative w-full h-full min-h-[400px]">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
+                        initial={{ opacity: 0, scale: 0.96 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                        className="relative w-full bg-white editorial-card rounded-2xl overflow-hidden flex flex-col z-10"
+                        transition={{ duration: 0.6, delay: 0.25 }}
+                        className="lg:col-span-5 w-full flex justify-center"
                     >
-                        <div className="h-1 w-full bg-gradient-to-r from-[#1d3557] to-[#e63946]"></div>
-
-                        <div className="p-8 flex flex-col gap-8">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="p-4 bg-[#fff9ed] rounded-xl">
-                                    <div className="text-2xl font-bold text-[#1d3557]">3+</div>
-                                    <div className="text-xs text-gray-500 font-sans mt-1 leading-tight">Full-stack Projects Shipped</div>
-                                </div>
-                                <div className="p-4 bg-[#fff9ed] rounded-xl">
-                                    <div className="text-2xl font-bold text-[#1d3557]">{getYearsOfExperience()}+</div>
-                                    <div className="text-xs text-gray-500 font-sans mt-1 leading-tight">Years Dev Experience</div>
-                                </div>
-                            </div>
-
-                            <div className="space-y-3">
-                                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Core Stack</p>
-                                <div className="flex flex-wrap gap-2">
-                                    {['Node.js', 'Express', 'PostgreSQL', 'React', 'Prisma'].map(tag => (
-                                        <span key={tag} className="text-xs font-sans font-medium text-[#1d3557] bg-[#fff9ed] px-3 py-1 rounded-full border border-[#1d3557]/10">
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <p className="text-sm text-gray-500 font-sans italic leading-relaxed border-l-2 border-[#e63946] pl-4">
-                                "Building systems that are resilient by design and elegant by intention."
-                            </p>
-                        </div>
+                        <InteractiveDualConsole />
                     </motion.div>
-                    
-                </div>
 
+                </div>
             </div>
-
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="absolute bottom-8 left-0 right-0 max-w-7xl mx-auto px-6 flex items-center justify-between text-gray-400 font-sans text-sm"
-            >
-                <div className="flex items-center gap-6">
-                    <a href="https://linkedin.com/in/purushothaman-web/" target="_blank" rel="noopener noreferrer" className="hover:text-[#0077b5] transition-colors flex items-center gap-2">
-                        <Linkedin size={18} />
-                        <span className="hidden sm:inline">LinkedIn Profile</span>
-                    </a>
-                </div>
-                <div className="flex items-center gap-4">
-                    <span className="tracking-widest uppercase text-xs font-semibold">Scroll to explore</span>
-                    <div className="w-8 h-[1px] bg-gray-300"></div>
-                </div>
-            </motion.div>
-        </div>
+        </section>
     );
 }

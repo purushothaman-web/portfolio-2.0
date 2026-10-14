@@ -1,157 +1,269 @@
 import { motion } from 'framer-motion';
-import { Briefcase, MapPin, GraduationCap } from 'lucide-react';
+import { Briefcase, MapPin, GraduationCap, Sparkles, Zap, ShieldCheck, CheckCircle2 } from 'lucide-react';
+
+const getExperienceDuration = (): string => {
+    // Current role start: Feb 2025
+    const start = new Date(2025, 1, 1);
+    const now = new Date();
+    let years = now.getFullYear() - start.getFullYear();
+    let months = now.getMonth() - start.getMonth();
+    if (months < 0) { years--; months += 12; }
+    if (years === 0) return `${months} mo`;
+    if (months === 0) return `${years} yr`;
+    return `${years} yr ${months} mo`;
+};
 
 export const About = () => {
     return (
-        <div id="about" className="min-h-screen py-32 px-6 max-w-6xl mx-auto bg-transparent">
+        <section id="about" className="py-14 sm:py-16 px-6 max-w-7xl mx-auto bg-transparent">
+            
+            {/* Section Header */}
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="grid lg:grid-cols-12 gap-16 lg:gap-24"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="mb-8 sm:mb-10 space-y-3 text-left"
             >
-                {/* Left Column: Fixed Bio Overview */}
-                <div className="lg:col-span-4 space-y-12 lg:sticky lg:top-32 h-fit">
-                    {/* Profile Photo */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="relative w-full rounded-2xl overflow-hidden editorial-card"
-                    >
-                        <img
-                            src="/photo.webp"
-                            alt="Purushothaman R"
-                            className="w-full object-cover object-top aspect-[4/5]"
-                        />
-                        {/* Brand accent stripe */}
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1d3557] to-[#e63946]" />
-                    </motion.div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[11px] font-sans font-semibold text-blue-700">
+                    <Sparkles size={12} className="text-blue-600" />
+                    <span>02 // ABOUT ME</span>
+                </div>
+                <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 font-sans">
+                    A quick look at who I am &amp; what I do.
+                </h2>
+                <p className="text-slate-600 font-sans text-base max-w-2xl">
+                    Simple, practical web development focused on clear design, fast load times, and solid engineering.
+                </p>
+            </motion.div>
 
-                    <div className="space-y-6">
-                        <h2 className="text-3xl font-bold tracking-tight text-[#1d3557] font-sans">
-                            The Architect Behind the Interface.
-                        </h2>
-                        <div className="w-12 h-1 bg-[#e63946] rounded-full"></div>
-                        <p className="text-gray-600 leading-relaxed font-sans text-lg">
-                            I am a highly motivated developer who blends a passion for problem-solving with rigorous, clean architecture.
+            {/* Main Layout Assembly */}
+            <div className="space-y-6">
+
+                {/* 1. Integrated Profile & Story Card (Hero Bento Banner) */}
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="rounded-2xl bg-white border border-slate-200/80 p-6 sm:p-8 shadow-xs text-left space-y-6"
+                >
+                    {/* Author & Avatar Lockup */}
+                    <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-100">
+                        <div className="flex items-center gap-4">
+                            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-white shadow-sm ring-2 ring-slate-100 shrink-0 bg-slate-100">
+                                <img
+                                    src="/photo.webp"
+                                    alt="Purushothaman R"
+                                    className="w-full h-full object-cover object-top"
+                                />
+                            </div>
+                            <div>
+                                <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-sans flex items-center gap-2">
+                                    <span>Purushothaman R</span>
+                                </h3>
+                                <p className="text-xs sm:text-sm font-medium text-slate-600 font-sans mt-0.5">
+                                    Full Stack Developer &middot; React, Node.js &amp; TypeScript
+                                </p>
+                                <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+                                    <MapPin size={13} className="text-blue-600 shrink-0" />
+                                    <span>Bangalore, India &middot; Open to Remote &amp; Hybrid</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Availability Badge */}
+                        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-xs font-semibold text-emerald-800">
+                            <span className="flex h-2 w-2 relative">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                            </span>
+                            <span>Available for new opportunities</span>
+                        </div>
+                    </div>
+
+                    {/* Story Paragraphs */}
+                    <div className="space-y-3">
+                        <h4 className="text-xl sm:text-2xl font-bold text-slate-900 font-sans tracking-tight">
+                            I like building software that actually helps people get things done.
+                        </h4>
+                        <p className="text-slate-600 font-sans text-sm sm:text-base leading-relaxed">
+                            I got into web development because I love the craft of building things from scratch. I started on the frontend, designing clean layouts and interactive elements so that using an app feels effortless.
+                        </p>
+                        <p className="text-slate-600 font-sans text-sm sm:text-base leading-relaxed">
+                            Over time, I expanded naturally into backend development — creating the APIs, databases, and authentication systems that keep everything running smoothly behind the scenes.
                         </p>
                     </div>
 
-                    <div className="p-8 bg-white editorial-card rounded-2xl flex flex-col gap-6">
-                        <div>
-                            <span className="text-xs font-sans font-bold text-gray-400 uppercase tracking-wider block mb-2">Current Role</span>
-                            <div className="flex items-start gap-3">
-                                <Briefcase className="text-[#1d3557] mt-1 flex-shrink-0" size={20} />
-                                <div>
-                                    <h3 className="font-bold text-[#1d3557] text-lg font-sans">Web Developer</h3>
-                                    <p className="text-gray-600 text-sm">Rapsol Technologies Pvt Ltd</p>
-                                    <p className="text-gray-400 text-xs mt-1">Feb 2025 &mdash; Present</p>
-                                </div>
-                            </div>
+                    {/* Quick Highlight Metrics Strip */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
+                        <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/60 text-left">
+                            <div className="text-xl sm:text-2xl font-bold text-slate-900 font-sans">2+ Yrs</div>
+                            <div className="text-xs font-medium text-slate-500 mt-0.5">Hands-on Experience</div>
                         </div>
-
-                        <div className="h-px bg-gray-100 w-full" />
-
-                        <div>
-                            <span className="text-xs font-sans font-bold text-gray-400 uppercase tracking-wider block mb-2">Base of Operations</span>
-                            <div className="flex items-center gap-3">
-                                <MapPin className="text-[#1d3557] flex-shrink-0" size={20} />
-                                <div>
-                                    <span className="text-gray-600 font-sans font-medium block">Bangalore, KA</span>
-                                    <span className="text-gray-400 font-sans text-sm">Originally from Vellore, TN</span>
-                                </div>
-                            </div>
+                        <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-200/60 text-left">
+                            <div className="text-xl sm:text-2xl font-bold text-blue-700 font-sans">Full Stack</div>
+                            <div className="text-xs font-medium text-blue-600 mt-0.5">React &middot; Node.js &middot; TS</div>
+                        </div>
+                        <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/60 text-left">
+                            <div className="text-xl sm:text-2xl font-bold text-slate-900 font-sans">Enterprise</div>
+                            <div className="text-xs font-medium text-slate-500 mt-0.5">Instigar ERP Modules</div>
                         </div>
                     </div>
-                </div>
 
-                {/* Right Column: The Development Journey */}
-                <div className="lg:col-span-8 flex flex-col justify-center space-y-16">
+                    {/* Skill Tags */}
+                    <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        {['React 19', 'Next.js', 'Node.js', 'Express', 'TypeScript', 'PostgreSQL', 'Tailwind CSS'].map((tech) => (
+                            <span
+                                key={tech}
+                                className="px-3 py-1 rounded-lg bg-slate-50 border border-slate-200/60 text-xs font-medium text-slate-700"
+                            >
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* 2. Secondary Bento Row (Work Experience & What I Value) */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
                     
-                    {/* Story Section */}
-                    <div className="space-y-8 text-lg text-gray-700 font-sans leading-relaxed">
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            My development journey began on the surface: crafting pixel-perfect, responsive interfaces as a frontend developer at my current company. I loved the immediate visual feedback of translating designs into interactive web components, ensuring users had a smooth, intuitive experience.
-                        </motion.p>
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
-                        >
-                            However, as the applications I built grew in complexity, I found myself increasingly drawn to what was happening <span className="font-semibold italic text-[#1d3557]">behind the scenes</span>. I wanted to understand how data was structured, how requests were routed, and how systems could be optimized to serve thousands of users without buckling under pressure.
-                        </motion.p>
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.98 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            className="p-8 my-10 border-l-4 border-[#e63946] bg-white editorial-card rounded-r-2xl"
-                        >
-                            <p className="text-xl font-medium text-[#1d3557] italic leading-relaxed">
-                                "The shift to backend architecture wasn't just a change in tech stack; it was a shift in mindset. I transitioned from asking 'How should this look?' to 'How can this scale, remain secure, and execute flawlessly?'"
-                            </p>
-                        </motion.div>
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
-                        >
-                            That curiosity triggered my deep dive into the backend. I immersed myself in Node.js, Express, and rigorous database design with PostgreSQL and MongoDB. Today, my dual perspective allows me to architect robust, secure server infrastructures while perfectly anticipating the needs of the client-side interface that will consume them.
-                        </motion.p>
-                    </div>
-
-                    {/* Education Timeline */}
-                    <motion.div 
-                        initial={{ opacity: 0, y: 20 }}
+                    {/* Work Experience Card (md:col-span-6) */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 16 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="pt-12 border-t border-gray-200"
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="md:col-span-6 rounded-2xl bg-white border border-slate-200/80 p-6 shadow-xs space-y-4 flex flex-col justify-between text-left"
                     >
-                        <h3 className="text-xs font-sans font-bold text-gray-400 uppercase tracking-widest mb-8 flex items-center gap-3">
-                            <GraduationCap size={16} className="text-[#e63946]" />
-                            Academic Foundation
-                        </h3>
+                        <div>
+                            <div className="flex items-center justify-between mb-3">
+                                <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans">
+                                    <Briefcase size={15} className="text-blue-600" />
+                                    <span>Current Experience</span>
+                                </div>
+                                <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">
+                                    {getExperienceDuration()}
+                                </span>
+                            </div>
 
-                        <div className="space-y-8 relative before:absolute before:inset-0 before:ml-[11px] before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
-                            {/* Education Item 1 */}
-                            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                                <div className="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-[#e63946] text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10"></div>
-                                <div className="w-[calc(100%-3rem)] md:w-[calc(50%-1.5rem)] bg-white editorial-card p-6 rounded-2xl">
-                                    <div className="flex items-center justify-between space-x-2 mb-1">
-                                        <div className="font-bold text-[#1d3557]">Bachelor of Computer Applications</div>
-                                        <time className="font-mono text-xs font-medium text-[#e63946]">2017 - 2020</time>
-                                    </div>
-                                    <div className="text-gray-500 text-sm mb-2">Dr. MGR Chockalingam Arts and Science College</div>
-                                    <div className="text-gray-600 text-sm">Graduated with 70.29%. Specialized in Web Technologies, Software Engineering, and Database Management Systems.</div>
+                            <h4 className="text-lg font-bold text-slate-900 font-sans">
+                                Web Developer
+                            </h4>
+                            <div className="text-sm font-medium text-slate-700 mb-2">
+                                Rapsol Technologies Pvt Ltd &middot; Bangalore
+                            </div>
+                            <p className="text-sm text-slate-600 leading-relaxed font-sans">
+                                Developing core business modules for <strong>Instigar ERP</strong>, including student admissions, CRM lead workflows, and timetable scheduling. Building practical tools used in day-to-day operations.
+                            </p>
+                        </div>
+
+                        <div className="pt-4 border-t border-slate-100 text-xs text-slate-500 font-mono flex items-center justify-between">
+                            <span>Feb 2025 &mdash; Present</span>
+                            <span className="text-emerald-600 font-semibold flex items-center gap-1">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                Active Role
+                            </span>
+                        </div>
+                    </motion.div>
+
+                    {/* What I Value Card (md:col-span-6) */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 16 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.15 }}
+                        className="md:col-span-6 rounded-2xl bg-white border border-slate-200/80 p-6 shadow-xs space-y-4 text-left"
+                    >
+                        <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans">
+                            <Sparkles size={15} className="text-amber-500" />
+                            <span>What I Value</span>
+                        </div>
+
+                        <div className="space-y-3.5 font-sans">
+                            <div className="flex items-start gap-3">
+                                <div className="p-1.5 rounded-lg bg-blue-50 text-blue-600 mt-0.5">
+                                    <Zap size={15} />
+                                </div>
+                                <div>
+                                    <h5 className="text-sm font-bold text-slate-900">Speed &amp; Usability</h5>
+                                    <p className="text-xs text-slate-600 leading-relaxed mt-0.5">
+                                        Interfaces that load fast and work seamlessly without confusing users.
+                                    </p>
                                 </div>
                             </div>
 
-                            {/* Education Item 2 */}
-                            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                                <div className="flex items-center justify-center w-6 h-6 rounded-full border-4 border-white bg-gray-300 text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:bg-[#1d3557] transition-colors"></div>
-                                <div className="w-[calc(100%-3rem)] md:w-[calc(50%-1.5rem)] bg-white editorial-card p-6 rounded-2xl">
-                                    <div className="flex items-center justify-between space-x-2 mb-1">
-                                        <div className="font-bold text-[#1d3557]">Higher Secondary Certificate</div>
-                                        <time className="font-mono text-xs font-medium text-gray-500">2017</time>
-                                    </div>
-                                    <div className="text-gray-500 text-sm mb-2">Government Hr. Sec. School</div>
-                                    <div className="text-gray-600 text-sm">Focused on Science and Mathematics. Developed core analytical logic.</div>
+                            <div className="flex items-start gap-3">
+                                <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-600 mt-0.5">
+                                    <ShieldCheck size={15} />
+                                </div>
+                                <div>
+                                    <h5 className="text-sm font-bold text-slate-900">Clean &amp; Reliable Code</h5>
+                                    <p className="text-xs text-slate-600 leading-relaxed mt-0.5">
+                                        Writing code that is well-structured, easy to test, and built to last.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-start gap-3">
+                                <div className="p-1.5 rounded-lg bg-rose-50 text-rose-600 mt-0.5">
+                                    <CheckCircle2 size={15} />
+                                </div>
+                                <div>
+                                    <h5 className="text-sm font-bold text-slate-900">Direct Problem Solving</h5>
+                                    <p className="text-xs text-slate-600 leading-relaxed mt-0.5">
+                                        Focusing on what actually delivers value instead of unnecessary complexity.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </motion.div>
 
                 </div>
-            </motion.div>
-        </div>
+
+                {/* 3. Education Card (md:col-span-12) */}
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="rounded-2xl bg-white border border-slate-200/80 p-6 shadow-xs text-left"
+                >
+                    <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans mb-4">
+                        <GraduationCap size={16} className="text-blue-600" />
+                        <span>Education</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/60 flex items-start justify-between gap-4">
+                            <div>
+                                <h5 className="text-sm font-bold text-slate-900">Bachelor of Computer Applications (BCA)</h5>
+                                <p className="text-xs text-slate-600 mt-0.5">Dr. MGR Chockalingam Arts and Science College</p>
+                                <span className="text-[11px] text-slate-400 mt-1 inline-block font-mono">
+                                    Computer Science &middot; Web Technologies &middot; Databases
+                                </span>
+                            </div>
+                            <span className="text-xs font-bold font-mono text-slate-500 whitespace-nowrap bg-white px-2.5 py-1 rounded-md border border-slate-200/60">
+                                2017 &ndash; 2020
+                            </span>
+                        </div>
+
+                        <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/60 flex items-start justify-between gap-4">
+                            <div>
+                                <h5 className="text-sm font-bold text-slate-900">Higher Secondary Certificate (HSC)</h5>
+                                <p className="text-xs text-slate-600 mt-0.5">Government Hr. Sec. School</p>
+                                <span className="text-[11px] text-slate-400 mt-1 inline-block font-mono">
+                                    Computer Science &amp; Mathematics
+                                </span>
+                            </div>
+                            <span className="text-xs font-bold font-mono text-slate-500 whitespace-nowrap bg-white px-2.5 py-1 rounded-md border border-slate-200/60">
+                                2017
+                            </span>
+                        </div>
+                    </div>
+                </motion.div>
+
+            </div>
+
+        </section>
     );
 };

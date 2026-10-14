@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "Outfit", "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
   
-  --color-accent: #e63946;
-  --color-accent-blue: #1d3557;
-  --color-bg-light: #fff9ed;
+  --color-accent: #2563eb;
+  --color-accent-blue: #0f172a;
+  --color-accent-slate: #334155;
+  --color-bg-light: #fafafa;
   --color-grid: rgba(0, 0, 0, 0.03);
 }
 
@@ -19,13 +20,14 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: var(--font-sans);
-  color: #111111;
+  color: #0f172a;
   background-color: var(--color-bg-light);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {
@@ -34,27 +36,30 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 0;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-blue);
+  background: #94a3b8;
 }
 
 @utility editorial-card {
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-  transition: all 0.3s ease;
+  background-color: #ffffff;
+  border: 1px solid rgba(14, 27, 46, 0.06);
+  box-shadow: 0 4px 20px -2px rgba(14, 27, 46, 0.03), 0 2px 6px -1px rgba(14, 27, 46, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   &:hover {
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    border-color: rgba(14, 27, 46, 0.12);
+    box-shadow: 0 12px 30px -4px rgba(14, 27, 46, 0.06), 0 4px 12px -2px rgba(14, 27, 46, 0.03);
     transform: translateY(-2px);
   }
 }
 
 @utility editorial-border {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s ease;
+  border: 1px solid rgba(14, 27, 46, 0.1);
+  transition: all 0.25s ease;
   &:hover {
-    border-color: rgba(0, 0, 0, 0.3);
+    border-color: rgba(14, 27, 46, 0.3);
+    background-color: #ffffff;
   }
 }

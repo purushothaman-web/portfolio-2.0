@@ -1,12 +1,21 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Mail, MapPin, CheckCircle2, AlertCircle, Loader2, Linkedin } from 'lucide-react';
+import { Send, Mail, MapPin, CheckCircle2, AlertCircle, Loader2, Linkedin, Github, Copy, Check, Clock, ArrowUpRight } from 'lucide-react';
 
 export const Contact = () => {
     const form = useRef<HTMLFormElement>(null);
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
     const [errorMsg, setErrorMsg] = useState('');
+    const [copied, setCopied] = useState(false);
+
+    const emailAddress = 'rpurushothaman500@gmail.com';
+
+    const handleCopyEmail = () => {
+        navigator.clipboard.writeText(emailAddress);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -35,153 +44,249 @@ export const Contact = () => {
             form.current?.reset();
             setTimeout(() => setStatus('idle'), 6000);
         } catch (err) {
-            setErrorMsg(err instanceof Error ? err.message : 'Failed to send. Try emailing directly.');
+            setErrorMsg(err instanceof Error ? err.message : 'Message could not be sent. Please use direct email.');
             setStatus('error');
             setTimeout(() => setStatus('idle'), 7000);
         }
     };
 
     return (
-        <div id="contact" className="min-h-screen py-32 px-6 max-w-7xl mx-auto flex flex-col justify-center bg-transparent relative">
+        <section id="contact" className="py-14 sm:py-16 px-6 max-w-7xl mx-auto">
+            {/* Header */}
+            <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="mb-8 sm:mb-10 space-y-4 max-w-3xl"
+            >
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
+                    <Mail size={13} className="text-blue-600" />
+                    <span>Get in Touch</span>
+                </div>
+                <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 font-sans">
+                    Let's Build Something Great Together
+                </h2>
+                <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-sans">
+                    Have an open full-time position, freelance project, or just want to talk tech? Drop a note below or reach out directly — I typically reply within 24 hours.
+                </p>
+            </motion.div>
 
-            <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start relative z-10 w-full">
-
-                {/* Left Column */}
+            {/* Two-Column Grid: Equal Height & Aligned Baselines */}
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+                {/* Left Column: Direct Contact Info (5 cols) */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="space-y-12"
+                    className="lg:col-span-5 flex flex-col justify-between h-full gap-5"
                 >
-                    <div className="space-y-6">
-                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[#1d3557] font-sans">
-                            Let's Build Something Together.
-                        </h2>
-                        <div className="w-16 h-1 bg-[#e63946] rounded-full" />
-                        <p className="text-lg text-gray-600 leading-relaxed font-sans">
-                            Whether you need a robust backend architecture, a full-stack web application, or just want to discuss development challenges—I'm always open to new opportunities.
-                        </p>
+                    {/* Fast Copy Email Card */}
+                    <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-4">
+                        <div>
+                            <span className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                                Direct Email
+                            </span>
+                            <a
+                                href={`mailto:${emailAddress}`}
+                                className="text-base sm:text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors break-all font-sans"
+                            >
+                                {emailAddress}
+                            </a>
+                        </div>
+
+                        <motion.button
+                            type="button"
+                            onClick={handleCopyEmail}
+                            whileHover={{ y: -1 }}
+                            whileTap={{ y: 1 }}
+                            transition={{ type: 'spring', stiffness: 500, damping: 28 }}
+                            className="relative overflow-hidden w-full py-2.5 px-4 rounded-xl bg-slate-900 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_2px_8px_rgba(15,23,42,0.12)] hover:shadow-[0_6px_16px_rgba(15,23,42,0.2)] group/copy before:absolute before:inset-0 before:-translate-x-full hover:before:translate-x-full before:bg-linear-to-r before:from-transparent before:via-white/20 before:to-transparent before:transition-transform before:duration-700 before:ease-out"
+                        >
+                            {copied ? (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 3 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="flex items-center gap-1.5"
+                                >
+                                    <Check size={14} className="text-emerald-400" />
+                                    <span>Email Copied to Clipboard</span>
+                                </motion.div>
+                            ) : (
+                                <>
+                                    <Copy size={14} className="text-slate-300 group-hover/copy:text-white group-hover/copy:-rotate-12 transition-all duration-200" />
+                                    <span>Copy Email Address</span>
+                                </>
+                            )}
+                        </motion.button>
                     </div>
 
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-[#1d3557]">
-                                <Mail size={20} />
+                    {/* Social & Location Pill Card */}
+                    <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex-1 flex flex-col justify-between text-sm space-y-3">
+                        <div className="flex items-center gap-3.5">
+                            <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                                <MapPin size={18} />
                             </div>
                             <div>
-                                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Email</h4>
+                                <div className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-wider">Location</div>
+                                <div className="font-semibold text-slate-800 font-sans">Bangalore, India &middot; Open to Remote</div>
+                            </div>
+                        </div>
+
+                        <div className="h-px bg-slate-100 w-full" />
+
+                        <div className="flex items-center gap-3.5">
+                            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                                <Clock size={18} />
+                            </div>
+                            <div>
+                                <div className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-wider">Availability</div>
+                                <div className="font-semibold text-slate-800 font-sans">Immediate &middot; Full-Time / Contract</div>
+                            </div>
+                        </div>
+
+                        <div className="h-px bg-slate-100 w-full" />
+
+                        <div className="flex items-center gap-3.5">
+                            <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                <Linkedin size={18} />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                                <div className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-wider">LinkedIn</div>
                                 <a
-                                    href="mailto:rpurushothaman500@gmail.com"
-                                    className="text-[#1d3557] font-semibold hover:text-[#e63946] transition-colors text-lg"
+                                    href="https://linkedin.com/in/purushothaman-web/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="font-medium text-slate-700 hover:text-blue-600 transition-colors truncate flex items-center gap-1 text-xs group/link"
                                 >
-                                    rpurushothaman500@gmail.com
+                                    <span>in/purushothaman-web</span>
+                                    <ArrowUpRight size={12} className="text-slate-400 group-hover/link:text-blue-600 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all" />
                                 </a>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-[#1d3557]">
-                                <MapPin size={20} />
-                            </div>
-                            <div>
-                                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Location</h4>
-                                <span className="text-gray-700 font-medium text-lg">Bangalore, India</span>
-                                <span className="text-gray-400 font-sans text-sm block">Originally from Vellore, TN</span>
-                            </div>
-                        </div>
+                        <div className="h-px bg-slate-100 w-full" />
 
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-[#1d3557]">
-                                <Linkedin size={20} />
+                        <div className="flex items-center gap-3.5">
+                            <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                <Github size={18} />
                             </div>
-                            <div>
-                                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">LinkedIn</h4>
+                            <div className="min-w-0 flex-1">
+                                <div className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-wider">GitHub</div>
                                 <a
-                                    href="https://www.linkedin.com/in/purushothaman-web/"
+                                    href="https://github.com/purushothaman-web"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-[#1d3557] font-semibold hover:text-[#0077b5] transition-colors text-lg"
+                                    className="font-medium text-slate-700 hover:text-blue-600 transition-colors truncate flex items-center gap-1 text-xs group/link"
                                 >
-                                    purushothaman-web
+                                    <span>@purushothaman-web</span>
+                                    <ArrowUpRight size={12} className="text-slate-400 group-hover/link:text-blue-600 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all" />
                                 </a>
                             </div>
                         </div>
                     </div>
                 </motion.div>
 
-                {/* Right Column: Form */}
+                {/* Right Column: Contact Message Form (7 cols) */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="bg-white editorial-card rounded-3xl p-8 lg:p-12 relative overflow-hidden"
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="lg:col-span-7 bg-white border border-slate-200/90 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col h-full"
                 >
-                    <h3 className="text-2xl font-bold text-[#1d3557] mb-8 font-sans">Send a Message</h3>
+                    <form ref={form} onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between space-y-4">
+                        <div className="space-y-4 flex-1 flex flex-col">
+                            <div className="space-y-1.5">
+                                <label htmlFor="name" className="text-xs font-semibold text-slate-700 block font-sans">
+                                    Your Name
+                                </label>
+                                <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    required
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="What's your name?"
+                                    className="w-full px-4 py-2.5 rounded-xl bg-slate-50/70 border border-slate-200/80 focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all font-sans text-sm text-slate-900 placeholder:text-slate-400"
+                                />
+                            </div>
 
-                    <form ref={form} onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label className="block text-sm font-semibold text-[#1d3557] mb-2 font-sans">Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                placeholder="Jane Doe"
-                                required
-                                className="w-full bg-gray-50 border border-gray-200 rounded-xl focus:border-[#1d3557] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1d3557]/10 px-4 py-3 transition-all font-sans text-gray-800 placeholder-gray-400"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-semibold text-[#1d3557] mb-2 font-sans">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="jane@example.com"
-                                required
-                                className="w-full bg-gray-50 border border-gray-200 rounded-xl focus:border-[#1d3557] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1d3557]/10 px-4 py-3 transition-all font-sans text-gray-800 placeholder-gray-400"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-semibold text-[#1d3557] mb-2 font-sans">Message</label>
-                            <textarea
-                                name="message"
-                                value={formData.message}
-                                onChange={handleChange}
-                                rows={5}
-                                placeholder="How can we collaborate?"
-                                required
-                                className="w-full bg-gray-50 border border-gray-200 rounded-xl focus:border-[#1d3557] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1d3557]/10 px-4 py-3 transition-all font-sans text-gray-800 placeholder-gray-400 resize-none"
-                            />
+                            <div className="space-y-1.5">
+                                <label htmlFor="email" className="text-xs font-semibold text-slate-700 block font-sans">
+                                    Email Address
+                                </label>
+                                <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="name@company.com"
+                                    className="w-full px-4 py-2.5 rounded-xl bg-slate-50/70 border border-slate-200/80 focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all font-sans text-sm text-slate-900 placeholder:text-slate-400"
+                                />
+                            </div>
+
+                            <div className="space-y-1.5 flex-1 flex flex-col">
+                                <label htmlFor="message" className="text-xs font-semibold text-slate-700 block font-sans">
+                                    Message
+                                </label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    rows={4}
+                                    required
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    placeholder="Tell me about the project, role, or questions you have..."
+                                    className="w-full flex-1 min-h-30 px-4 py-3 rounded-xl bg-slate-50/70 border border-slate-200/80 focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all font-sans text-sm text-slate-900 placeholder:text-slate-400 resize-none"
+                                />
+                            </div>
                         </div>
 
-                        {/* Error message */}
-                        {status === 'error' && errorMsg && (
-                            <p className="text-sm text-red-600 font-sans">{errorMsg}</p>
-                        )}
+                        <div className="space-y-3 pt-1">
+                            <motion.button
+                                type="submit"
+                                disabled={status === 'sending'}
+                                whileHover={{ y: -1.5 }}
+                                whileTap={{ y: 1 }}
+                                transition={{ type: 'spring', stiffness: 500, damping: 28 }}
+                                className="relative overflow-hidden w-full py-3.5 px-6 rounded-xl bg-slate-900 text-white font-sans font-semibold text-sm flex items-center justify-center gap-2.5 transition-all duration-200 disabled:opacity-50 cursor-pointer shadow-[0_4px_14px_rgba(15,23,42,0.18)] hover:shadow-[0_8px_22px_rgba(15,23,42,0.28)] group/send before:absolute before:inset-0 before:-translate-x-full hover:before:translate-x-full before:bg-linear-to-r before:from-transparent before:via-white/20 before:to-transparent before:transition-transform before:duration-700 before:ease-out"
+                            >
+                                {status === 'sending' ? (
+                                    <>
+                                        <Loader2 size={16} className="animate-spin" />
+                                        <span>Sending Message...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>Send Message</span>
+                                        <Send size={15} className="transition-transform duration-200 ease-out group-hover/send:translate-x-1 group-hover/send:-translate-y-1" />
+                                    </>
+                                )}
+                            </motion.button>
 
-                        <button
-                            type="submit"
-                            disabled={status === 'sending' || status === 'success'}
-                            className={`w-full py-4 rounded-xl font-sans font-semibold transition-all flex items-center justify-center gap-2.5 ${
-                                status === 'success'
-                                    ? 'bg-green-50 text-green-700 border border-green-200 cursor-default'
-                                    : status === 'error'
-                                        ? 'bg-red-50 text-red-700 border border-red-200'
-                                        : 'bg-[#1d3557] text-white hover:bg-[#112240] hover:shadow-lg disabled:opacity-60'
-                            }`}
-                        >
-                            {status === 'idle'    && <><span>Send Message</span><Send size={17} /></>}
-                            {status === 'sending' && <><Loader2 size={17} className="animate-spin" /><span>Sending…</span></>}
-                            {status === 'success' && <><CheckCircle2 size={17} /><span>Message Sent!</span></>}
-                            {status === 'error'   && <><AlertCircle size={17} /><span>Try again</span></>}
-                        </button>
+                            {/* Status Messages */}
+                            {status === 'success' && (
+                                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-sans flex items-center gap-2.5">
+                                    <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                                    <span>Thank you! Your message was sent successfully. I'll get back to you shortly.</span>
+                                </div>
+                            )}
+
+                            {status === 'error' && (
+                                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs font-sans flex items-center gap-2.5">
+                                    <AlertCircle size={16} className="text-red-600 shrink-0" />
+                                    <span>{errorMsg}</span>
+                                </div>
+                            )}
+                        </div>
                     </form>
                 </motion.div>
             </div>
-        </div>
+        </section>
     );
 };

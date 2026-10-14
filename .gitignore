@@ -27,3 +27,6 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+
+# Internal tools & temporary artifacts
+.playwright-mcp/

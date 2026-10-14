@@ -16,8 +16,6 @@ const navLinks = [
 
 const sectionIds = navLinks.map(link => link.anchor);
 
-
-
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -35,7 +33,6 @@ export default function Navbar() {
 
     const handleNavClick = (anchor: string) => {
         setIsOpen(false);
-        // Small delay to allow state update and menu closure animation to begin
         setTimeout(() => {
             scrollToSection(anchor);
         }, 100);
@@ -45,37 +42,37 @@ export default function Navbar() {
         <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                 scrolled
-                    ? 'bg-[#fff9ed]/90 backdrop-blur-md border-b border-black/5 py-4'
-                    : 'bg-transparent py-6'
+                    ? 'bg-white/85 backdrop-blur-md border-b border-slate-200/80 shadow-xs py-3.5'
+                    : 'bg-transparent py-5'
             }`}
         >
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
-                {/* Logo & Welcome */}
+                {/* Logo & Brand Link */}
                 <div className="flex items-center space-x-4">
-                    <button onClick={() => scrollToSection('hero')} aria-label="Home" className="focus:outline-none">
+                    <button onClick={() => scrollToSection('hero')} aria-label="Home" className="focus:outline-none cursor-pointer">
                         <Logo />
                     </button>
                 </div>
 
-                {/* Desktop Navigation */}
+                {/* Desktop Navigation Links */}
                 <div className="hidden lg:flex items-center space-x-8">
-                    <ul className="flex space-x-8">
+                    <ul className="flex space-x-7">
                         {navLinks.map((link) => (
                             <li key={link.anchor}>
                                 <button
                                     onClick={() => handleNavClick(link.anchor)}
-                                    className={`text-sm font-sans tracking-wide transition-all duration-300 relative py-1 ${
+                                    className={`text-sm font-sans tracking-wide transition-all duration-200 relative py-1 cursor-pointer ${
                                         activeSection === link.anchor
-                                            ? 'text-[#1d3557] font-semibold'
-                                            : 'text-gray-500 hover:text-black'
+                                            ? 'text-slate-900 font-bold'
+                                            : 'text-slate-600 hover:text-blue-600 font-medium'
                                     }`}
                                 >
                                     {link.name}
                                     {activeSection === link.anchor && (
                                         <motion.div
                                             layoutId="nav-indicator"
-                                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#e63946]"
+                                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 rounded-full"
                                         />
                                     )}
                                 </button>
@@ -83,24 +80,29 @@ export default function Navbar() {
                         ))}
                     </ul>
 
-                    <div className="flex items-center pl-8 border-l border-gray-200">
-                        <a
+                    {/* Resume CTA */}
+                    <div className="flex items-center pl-7 border-l border-slate-200">
+                        <motion.a
                             href="https://drive.google.com/file/d/1aeViz7uwM3vV70w7euYgX8wvTPPV0H5Z/view?usp=sharing"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center space-x-2 px-5 py-2.5 bg-white text-black editorial-card rounded-full text-xs font-sans font-semibold uppercase tracking-wider hover:text-[#e63946]"
+                            whileHover={{ y: -1 }}
+                            whileTap={{ y: 0.5 }}
+                            transition={{ type: 'spring', stiffness: 500, damping: 28 }}
+                            className="relative overflow-hidden flex items-center space-x-2 px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-sans font-semibold tracking-wide shadow-[0_2px_8px_rgba(15,23,42,0.12)] hover:shadow-[0_6px_16px_rgba(15,23,42,0.22)] transition-all cursor-pointer group before:absolute before:inset-0 before:-translate-x-full hover:before:translate-x-full before:bg-linear-to-r before:from-transparent before:via-white/20 before:to-transparent before:transition-transform before:duration-700 before:ease-out"
                         >
-                            <FileText size={14} />
+                            <FileText size={13} className="transition-transform duration-200 group-hover:-rotate-12" />
                             <span>Resume</span>
-                        </a>
+                        </motion.a>
                     </div>
                 </div>
 
-                {/* Mobile Menu Button */}
+                {/* Mobile Menu Trigger */}
                 <div className="lg:hidden flex items-center space-x-4">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="p-2 border border-black/10 rounded-full bg-white text-black focus:outline-none"
+                        aria-label="Toggle Navigation Menu"
+                        className="p-2 border border-slate-200 rounded-xl bg-white text-slate-800 hover:bg-slate-50 focus:outline-none cursor-pointer shadow-2xs"
                     >
                         {isOpen ? <X size={20} /> : <Menu size={20} />}
                     </button>
@@ -114,32 +116,33 @@ export default function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="lg:hidden bg-[#fff9ed] border-b border-black/10 overflow-hidden shadow-2xl absolute w-full"
+                        className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 overflow-hidden shadow-xl absolute w-full"
                     >
-                        <div className="px-6 py-8 space-y-6 flex flex-col font-sans">
+                        <div className="px-6 py-7 space-y-5 flex flex-col font-sans">
                             {navLinks.map((link) => (
                                 <button
                                     key={link.anchor}
                                     onClick={() => handleNavClick(link.anchor)}
-                                    className={`text-2xl font-light tracking-wide transition-colors text-left flex items-center ${
+                                    className={`text-xl font-normal tracking-wide transition-colors text-left flex items-center ${
                                         activeSection === link.anchor
-                                            ? 'text-[#e63946] font-medium'
-                                            : 'text-gray-800'
+                                            ? 'text-blue-600 font-bold'
+                                            : 'text-slate-800 hover:text-blue-600'
                                     }`}
                                 >
                                     {link.name}
                                 </button>
                             ))}
-                            <div className="pt-8 mt-4 border-t border-black/10">
-                                <a
+                            <div className="pt-6 mt-2 border-t border-slate-100">
+                                <motion.a
                                     href="https://drive.google.com/file/d/1aeViz7uwM3vV70w7euYgX8wvTPPV0H5Z/view?usp=sharing"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center justify-center space-x-2 px-4 py-4 bg-[#1d3557] rounded-xl text-white shadow-xl text-sm font-semibold uppercase tracking-wider w-full"
+                                    whileTap={{ y: 0.5 }}
+                                    className="relative overflow-hidden flex items-center justify-center space-x-2 px-4 py-3.5 bg-slate-900 rounded-xl text-white shadow-md text-sm font-semibold tracking-wide w-full cursor-pointer before:absolute before:inset-0 before:-translate-x-full hover:before:translate-x-full before:bg-linear-to-r before:from-transparent before:via-white/20 before:to-transparent before:transition-transform before:duration-700 before:ease-out"
                                 >
-                                    <FileText size={18} />
+                                    <FileText size={16} />
                                     <span>Download Resume</span>
-                                </a>
+                                </motion.a>
                             </div>
                         </div>
                     </motion.div>
