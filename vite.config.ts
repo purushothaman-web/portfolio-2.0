@@ -10,7 +10,10 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.svg', 'favicon.png', 'robots.txt', 'sitemap.xml', 'apple-touch-icon.png'],
+      workbox: {
+        navigateFallbackDenylist: [/^\/api/, /^\/sitemap\.xml/, /^\/robots\.txt/, /\.xml$/]
+      },
       manifest: {
         name: 'Purushothaman R | Portfolio',
         short_name: 'Purushothaman',
