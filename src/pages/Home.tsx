@@ -35,9 +35,9 @@ export default function Home() {
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                             </span>
-                            <span>Available for full-time roles & projects</span>
+                            <span>Available for freelance contracts &amp; full-time roles</span>
                             <span className="text-emerald-300">·</span>
-                            <span className="text-emerald-700/80 font-normal">Bangalore & Remote</span>
+                            <span className="text-emerald-700/80 font-normal">South India (Bangalore / Chennai) &amp; Remote</span>
                         </motion.div>
 
                         {/* Main High-Impact Display Headline */}
@@ -65,7 +65,7 @@ export default function Home() {
                                 transition={{ duration: 0.5, delay: 0.2 }}
                                 className="text-base sm:text-lg text-slate-600 leading-relaxed font-sans max-w-2xl"
                             >
-                                Hi, I&apos;m <strong>Purushothaman</strong> — a Full Stack Developer. I bridge design and engineering: creating smooth, responsive interfaces on the outside, and building secure, reliable systems on the inside.
+                                Hi, I&apos;m <strong>Purushothaman</strong> — a Full Stack Developer &amp; Freelance Software Engineer based in South India. I bridge design and engineering: creating smooth, responsive interfaces on the outside, and building secure, scalable systems on the inside.
                             </motion.p>
                         </div>
 
