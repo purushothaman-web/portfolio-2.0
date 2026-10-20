@@ -142,6 +142,16 @@ export const SkillIcon: React.FC<SkillIconProps> = ({ name, className = '', size
         );
     }
 
+    // 14. Supabase (Official Emerald Bolt)
+    if (lower.includes('supabase')) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" className={`shrink-0 ${className}`}>
+                <rect width="24" height="24" rx="5" fill="#181818" />
+                <path d="M13.2 2.5a.8.8 0 0 0-1.4.56v6.94H4.5a.8.8 0 0 0-.6 1.33l7.3 8.77a.8.8 0 0 0 1.4-.56V12.6h7.3a.8.8 0 0 0 .6-1.33L13.2 2.5z" fill="#3ECF8E" />
+            </svg>
+        );
+    }
+
     // 14. Git & GitHub
     if (lower.includes('github') || lower.includes('git & github')) {
         return (
@@ -247,6 +257,7 @@ export const SkillIcon: React.FC<SkillIconProps> = ({ name, className = '', size
             </svg>
         );
     }
+
 
     // 24. JWT Authentication (Official JSON Web Tokens Rainbow Ring)
     if (lower.includes('jwt') || lower.includes('auth')) {
@@ -397,6 +408,16 @@ export const SkillIcon: React.FC<SkillIconProps> = ({ name, className = '', size
             <svg width={size} height={size} viewBox="0 0 24 24" className={`shrink-0 ${className}`}>
                 <rect width="24" height="24" rx="5" fill="#1d4ed8" />
                 <path d="M13 2L4 13h6l-2 9 10-12h-6l3-8z" fill="#facc15" />
+            </svg>
+        );
+    }
+
+    // 37. System Architecture & Design - Distributed Server Nodes in Indigo
+    if (lower.includes('system design') || lower.includes('architecture')) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" className={`shrink-0 ${className}`}>
+                <rect width="24" height="24" rx="5" fill="#6366f1" />
+                <path d="M7 8h10M7 12h10M7 16h10M4 8h.01M4 12h.01M4 16h.01" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
         );
     }

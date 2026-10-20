@@ -25,16 +25,21 @@ import { SkillIcon } from './SkillIcon';
 
 interface SkillRoadmapDrawerProps {
     skillId: string | null;
+    focusedCheckpointId?: string | null;
+    topicTitle?: string | null;
     onClose: () => void;
 }
 
 export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
     skillId,
+    focusedCheckpointId,
+    topicTitle,
     onClose
 }) => {
     const roadmap: SkillRoadmap | undefined = skillId ? SKILL_ROADMAPS[skillId] : undefined;
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [activeCheckpointIndex, setActiveCheckpointIndex] = useState(0);
+    const [currentFocusId, setCurrentFocusId] = useState<string | null | undefined>(focusedCheckpointId);
     const [isSolutionRevealed, setIsSolutionRevealed] = useState(false);
     const [copiedSnippetId, setCopiedSnippetId] = useState<string | null>(null);
 
@@ -46,11 +51,21 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
         isCloudConfigured
     } = useRoadmapProgress();
 
-    // Reset checkpoint selection when skill changes
+    // Reset checkpoint selection when skill or focus changes
     useEffect(() => {
-        setActiveCheckpointIndex(0);
+        setCurrentFocusId(focusedCheckpointId);
+        if (focusedCheckpointId && roadmap) {
+            const foundIdx = roadmap.checkpoints.findIndex(c => c.id === focusedCheckpointId);
+            if (foundIdx !== -1) {
+                setActiveCheckpointIndex(foundIdx);
+            } else {
+                setActiveCheckpointIndex(0);
+            }
+        } else {
+            setActiveCheckpointIndex(0);
+        }
         setIsSolutionRevealed(false);
-    }, [skillId]);
+    }, [skillId, focusedCheckpointId, roadmap]);
 
     // Handle Escape key to close
     useEffect(() => {
@@ -104,19 +119,25 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
                     <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80 sticky top-0 z-20 backdrop-blur-md">
                         <div className="flex items-center space-x-3.5">
                             <div className="w-10 h-10 rounded-xl flex items-center justify-center p-2 bg-slate-100 border border-slate-200/80 shadow-2xs shrink-0">
-                                <SkillIcon name={roadmap.skillName} size={22} />
+                                <SkillIcon name={currentFocusId ? (topicTitle || activeCheckpoint?.title || roadmap.skillName) : roadmap.skillName} size={22} />
                             </div>
                             <div>
                                 <div className="flex items-center space-x-2">
                                     <h2 className="text-base sm:text-lg font-bold tracking-tight text-slate-900 font-sans">
-                                        {roadmap.skillName}
+                                        {currentFocusId ? (topicTitle || activeCheckpoint?.title) : roadmap.skillName}
                                     </h2>
-                                    <span className="text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200/60">
-                                        5-Min Micro-Roadmap
+                                    <span className={`text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-md border ${
+                                        currentFocusId 
+                                            ? 'bg-indigo-50 text-indigo-700 border-indigo-200/60' 
+                                            : 'bg-blue-50 text-blue-700 border-blue-200/60'
+                                    }`}>
+                                        {currentFocusId ? 'Focused Topic' : '5-Min Micro-Roadmap'}
                                     </span>
                                 </div>
                                 <p className="text-xs text-slate-500 font-sans mt-0.5 hidden sm:block">
-                                    {roadmap.tagline}
+                                    {currentFocusId 
+                                        ? `Dedicated micro-lesson extracted from the ${roadmap.skillName} curriculum.` 
+                                        : roadmap.tagline}
                                 </p>
                             </div>
                         </div>
@@ -170,22 +191,38 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
                         </div>
                     </div>
 
-                    {/* Progress Bar Strip */}
-                    <div className="bg-slate-50 border-b border-slate-100 px-6 py-2.5 flex items-center justify-between text-xs font-sans">
-                        <div className="flex items-center space-x-2">
-                            <span className="font-semibold text-slate-700">Mastery Progress:</span>
-                            <span className="font-mono font-bold text-blue-600">{progressPct}%</span>
-                            <span className="text-slate-400">({checkpoints.filter(c => isCompleted(c.id)).length} of {checkpoints.length} mastered)</span>
+                    {/* Progress Bar Strip or Focused Topic Breadcrumb Strip */}
+                    {currentFocusId ? (
+                        <div className="bg-indigo-50/50 border-b border-indigo-100/70 px-6 py-2.5 flex items-center justify-between text-xs font-sans">
+                            <div className="flex items-center space-x-2 text-slate-700">
+                                <span className="font-medium text-slate-500">Master Curriculum:</span>
+                                <span className="font-bold text-indigo-900">{roadmap.skillName}</span>
+                            </div>
+                            <button
+                                onClick={() => setCurrentFocusId(null)}
+                                className="text-xs font-semibold text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1 cursor-pointer"
+                            >
+                                <span>Explore Full {roadmap.checkpoints.length}-Step Roadmap</span>
+                                <ChevronRight size={13} />
+                            </button>
                         </div>
-                        <div className="w-32 sm:w-48 h-2 rounded-full bg-slate-200/80 overflow-hidden">
-                            <motion.div 
-                                initial={false}
-                                animate={{ width: `${progressPct}%` }}
-                                transition={{ duration: 0.4 }}
-                                className="h-full bg-linear-to-r from-blue-600 to-emerald-500 rounded-full"
-                            />
+                    ) : (
+                        <div className="bg-slate-50 border-b border-slate-100 px-6 py-2.5 flex items-center justify-between text-xs font-sans">
+                            <div className="flex items-center space-x-2">
+                                <span className="font-semibold text-slate-700">Mastery Progress:</span>
+                                <span className="font-mono font-bold text-blue-600">{progressPct}%</span>
+                                <span className="text-slate-400">({checkpoints.filter(c => isCompleted(c.id)).length} of {checkpoints.length} mastered)</span>
+                            </div>
+                            <div className="w-32 sm:w-48 h-2 rounded-full bg-slate-200/80 overflow-hidden">
+                                <motion.div 
+                                    initial={false}
+                                    animate={{ width: `${progressPct}%` }}
+                                    transition={{ duration: 0.4 }}
+                                    className="h-full bg-linear-to-r from-blue-600 to-emerald-500 rounded-full"
+                                />
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Curated External Official Documentation Bar */}
                     <div className="px-6 py-3 border-b border-slate-100 bg-white">
@@ -194,7 +231,10 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
                             <span>Curated Canonical Documentation (No Bookmark Hoarding)</span>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                            {roadmap.officialDocs.map((doc, idx) => (
+                            {((currentFocusId && activeCheckpoint?.docLink)
+                                ? [{ ...activeCheckpoint.docLink, badge: 'Focused Guide' }, ...roadmap.officialDocs]
+                                : roadmap.officialDocs
+                            ).map((doc, idx) => (
                                 <a
                                     key={idx}
                                     href={doc.url}
@@ -218,58 +258,61 @@ export const SkillRoadmapDrawer: React.FC<SkillRoadmapDrawerProps> = ({
                     {/* Main Body (Horizontal layout if fullscreen, vertical if drawer) */}
                     <div className="flex-1 overflow-hidden flex flex-col lg:flex-row min-h-0">
                         
-                        {/* Left Checkpoint Stepper Navigation */}
-                        <div className="w-full lg:w-72 border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/50 p-4 space-y-2 shrink-0 overflow-y-auto max-h-52 sm:max-h-64 lg:max-h-none">
-                            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-2 py-1 font-sans">
-                                5-Minute Checkpoints ({checkpoints.length})
-                            </div>
-                            <div className="space-y-1.5">
-                                {checkpoints.map((cp, idx) => {
-                                    const completed = isCompleted(cp.id);
-                                    const isActive = idx === activeCheckpointIndex;
-                                    return (
-                                        <button
-                                            key={cp.id}
-                                            onClick={() => {
-                                                setActiveCheckpointIndex(idx);
-                                                setIsSolutionRevealed(false);
-                                            }}
-                                            className={`w-full text-left p-3 rounded-xl text-xs font-sans transition-all flex items-start gap-2.5 cursor-pointer ${
-                                                isActive 
-                                                    ? 'bg-white shadow-xs border border-blue-200/90 text-blue-900 font-semibold' 
-                                                    : 'text-slate-600 hover:bg-slate-100/80 border border-transparent'
-                                            }`}
-                                        >
-                                            <div 
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    toggleCheckpoint(cp.id);
+                        {/* Left Checkpoint Stepper Navigation (HIDDEN in Focused Single-Topic Mode!) */}
+                        {!currentFocusId && (
+                            <div className="w-full lg:w-72 border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/50 p-4 space-y-2 shrink-0 overflow-y-auto max-h-52 sm:max-h-64 lg:max-h-none">
+                                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-2 py-1 font-sans">
+                                    5-Minute Checkpoints ({checkpoints.length})
+                                </div>
+                                <div className="space-y-1.5">
+                                    {checkpoints.map((cp, idx) => {
+                                        const completed = isCompleted(cp.id);
+                                        const isActive = idx === activeCheckpointIndex;
+                                        return (
+                                            <button
+                                                key={cp.id}
+                                                onClick={() => {
+                                                    setActiveCheckpointIndex(idx);
+                                                    setIsSolutionRevealed(false);
                                                 }}
-                                                className="mt-0.5 shrink-0"
-                                                title={completed ? "Mark incomplete" : "Mark completed"}
+                                                className={`w-full text-left p-3 rounded-xl text-xs font-sans transition-all flex items-start gap-2.5 cursor-pointer ${
+                                                    isActive 
+                                                        ? 'bg-white shadow-xs border border-blue-200/90 text-blue-900 font-semibold' 
+                                                        : 'text-slate-600 hover:bg-slate-100/80 border border-transparent'
+                                                }`}
                                             >
-                                                {completed ? (
-                                                    <CheckCircle2 size={16} className="text-emerald-600 fill-emerald-50" />
-                                                ) : (
-                                                    <Circle size={16} className="text-slate-300 hover:text-slate-500" />
+                                                <div 
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        toggleCheckpoint(cp.id);
+                                                    }}
+                                                    className="mt-0.5 shrink-0"
+                                                    title={completed ? "Mark incomplete" : "Mark completed"}
+                                                >
+                                                    {completed ? (
+                                                        <CheckCircle2 size={16} className="text-emerald-600 fill-emerald-50" />
+                                                    ) : (
+                                                        <Circle size={16} className="text-slate-300 hover:text-slate-500" />
+                                                    )}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="truncate">
+                                                        {idx + 1}. {cp.title}
+                                                    </div>
+                                                    <div className="text-[10px] text-slate-400 mt-0.5">
+                                                        ~{cp.estMinutes} mins practical
+                                                    </div>
+                                                </div>
+                                                {isActive && (
+                                                    <ChevronRight size={14} className="text-blue-600 shrink-0 mt-0.5" />
                                                 )}
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="truncate">
-                                                    {idx + 1}. {cp.title}
-                                                </div>
-                                                <div className="text-[10px] text-slate-400 mt-0.5">
-                                                    ~{cp.estMinutes} mins practical
-                                                </div>
-                                            </div>
-                                            {isActive && (
-                                                <ChevronRight size={14} className="text-blue-600 shrink-0 mt-0.5" />
-                                            )}
-                                        </button>
-                                    );
-                                })}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        </div>
+                        )}
+
 
                         {/* Right Content Workspace */}
                         {activeCheckpoint && (
