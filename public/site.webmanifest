@@ -4,8 +4,13 @@
   "description": "Full Stack Developer specializing in scalable backend systems and clean API architecture.",
   "icons": [
     {
-      "src": "/favicon.png",
+      "src": "/favicon.svg",
       "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "48x48",
       "type": "image/png"
     },
     {
