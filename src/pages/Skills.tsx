@@ -5,6 +5,12 @@ import { LucideIcon } from 'lucide-react';
 import { SkillRoadmapDrawer } from '../components/ui/SkillRoadmapDrawer';
 import { SkillIcon } from '../components/ui/SkillIcon';
 
+export interface SkillTarget {
+    skillId: string;
+    focusedCheckpointId?: string;
+    topicTitle?: string;
+}
+
 interface SkillDomainProps {
     title: string;
     category: string;
@@ -14,23 +20,102 @@ interface SkillDomainProps {
     iconColor: string;
     skills: string[];
     delay: number;
-    onSelectRoadmap: (roadmapId: string) => void;
+    onSelectTarget: (target: SkillTarget) => void;
 }
 
-function getRoadmapIdForSkill(skillName: string): string | null {
+function getRoadmapTargetForSkill(skillName: string): SkillTarget | null {
     const lower = skillName.toLowerCase();
-    if (lower.includes('javascript') || lower.includes('esnext')) return 'javascript';
-    if (lower.includes('next')) return 'nextjs';
-    if (lower.includes('react')) return 'react';
-    if (lower.includes('typescript')) return 'typescript';
-    if (lower.includes('tailwind')) return 'tailwind';
-    if (lower.includes('framer') || lower.includes('motion')) return 'framer-motion';
-    if (lower.includes('node') || lower.includes('express') || lower.includes('rest api')) return 'nodejs';
-    if (lower.includes('postgres') || lower.includes('indexing')) return 'postgresql';
-    if (lower.includes('prisma')) return 'prisma';
-    if (lower.includes('mongo')) return 'mongodb';
-    if (lower.includes('git')) return 'git';
-    if (lower.includes('architecture') || lower.includes('system design')) return 'system-design';
+
+    // 1. JWT Authentication (Dedicated Pure JWT Content - NOT full Node/Express)
+    if (lower.includes('jwt')) {
+        return { skillId: 'jwt' };
+    }
+
+    // 2. System Design & Architecture
+    if (lower.includes('system design') || lower.includes('system architecture') || lower.includes('architecture')) {
+        return { skillId: 'system-design' };
+    }
+
+    // 3. React 19 & Client Sub-skills
+    if (lower.includes('state management')) {
+        return { skillId: 'react', focusedCheckpointId: 'react-3', topicTitle: 'Scalable State Management Patterns' };
+    }
+    if (lower.includes('react')) return { skillId: 'react' };
+
+    // 4. Next.js
+    if (lower.includes('next')) return { skillId: 'nextjs' };
+
+    // 5. TypeScript
+    if (lower.includes('typescript')) return { skillId: 'typescript' };
+
+    // 6. JavaScript
+    if (lower.includes('javascript') || lower.includes('esnext')) return { skillId: 'javascript' };
+
+    // 7. Tailwind CSS
+    if (lower.includes('tailwind')) return { skillId: 'tailwind' };
+
+    // 8. Framer Motion
+    if (lower.includes('framer') || lower.includes('motion')) return { skillId: 'framer-motion' };
+
+    // 9. Express & Sub-skills (Focused checkpoints)
+    if (lower.includes('role-based') || lower.includes('rbac')) {
+        return { skillId: 'express', focusedCheckpointId: 'express-5', topicTitle: 'Role-Based Access Control (RBAC)' };
+    }
+    if (lower.includes('zod')) {
+        return { skillId: 'express', focusedCheckpointId: 'express-3', topicTitle: 'Request Validation with Zod' };
+    }
+    if (lower.includes('middleware')) {
+        return { skillId: 'express', focusedCheckpointId: 'express-1', topicTitle: 'Middleware Pipeline Architecture' };
+    }
+    if (lower.includes('rest api')) {
+        return { skillId: 'express', focusedCheckpointId: 'express-7', topicTitle: 'RESTful API Architecture & Status Codes' };
+    }
+    if (lower.includes('express')) return { skillId: 'express' };
+
+    // 10. Node.js Runtime & Sub-skills (Focused checkpoints)
+    if (lower.includes('nodemailer') || lower.includes('email')) {
+        return { skillId: 'nodejs', focusedCheckpointId: 'nodejs-8', topicTitle: 'Transactional Emails with Nodemailer' };
+    }
+    if (lower.includes('socket')) {
+        return { skillId: 'nodejs', focusedCheckpointId: 'nodejs-7', topicTitle: 'Real-Time WebSockets with Socket.IO' };
+    }
+    if (lower.includes('cron')) {
+        return { skillId: 'nodejs', focusedCheckpointId: 'nodejs-9', topicTitle: 'Scheduled Cron Jobs & Sweepers' };
+    }
+    if (lower.includes('secrets') || lower.includes('.env')) {
+        return { skillId: 'nodejs', focusedCheckpointId: 'nodejs-11', topicTitle: 'Environment Secrets & Process Hardening' };
+    }
+    if (lower.includes('node')) return { skillId: 'nodejs' };
+
+    // 11. Databases: PostgreSQL, NeonDB, Supabase
+    if (lower.includes('indexing')) {
+        return { skillId: 'postgresql', focusedCheckpointId: 'postgresql-1', topicTitle: 'B-Tree Schema Indexing & EXPLAIN' };
+    }
+    if (lower.includes('relational data modeling') || lower.includes('relational')) {
+        return { skillId: 'postgresql', focusedCheckpointId: 'postgresql-2', topicTitle: 'Relational Data Modeling & Normalization' };
+    }
+    if (lower.includes('neon')) return { skillId: 'neondb' };
+    if (lower.includes('supabase')) return { skillId: 'supabase' };
+    if (lower.includes('postgres')) return { skillId: 'postgresql' };
+
+    // 12. Prisma ORM & Sub-skills (Focused checkpoints)
+    if (lower.includes('migration')) {
+        return { skillId: 'prisma', focusedCheckpointId: 'prisma-3', topicTitle: 'Database Migrations & Schema Drift' };
+    }
+    if (lower.includes('multi-tenant')) {
+        return { skillId: 'prisma', focusedCheckpointId: 'prisma-7', topicTitle: 'Multi-Tenant Data Isolation' };
+    }
+    if (lower.includes('prisma')) return { skillId: 'prisma' };
+
+    // 13. MongoDB
+    if (lower.includes('mongo')) return { skillId: 'mongodb' };
+
+    // 14. Git & Workflow Sub-skills
+    if (lower.includes('git')) return { skillId: 'git' };
+    if (lower.includes('linux') || lower.includes('shell') || lower.includes('bash')) {
+        return { skillId: 'git', focusedCheckpointId: 'git-10', topicTitle: 'Linux Shell & CLI Automation' };
+    }
+
     return null;
 }
 
@@ -43,7 +128,7 @@ const SkillDomain = ({
     iconColor, 
     skills, 
     delay,
-    onSelectRoadmap
+    onSelectTarget
 }: SkillDomainProps) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -75,14 +160,20 @@ const SkillDomain = ({
         {/* Skill Pills (Clean, elegant look with official brand SVG logos) */}
         <div className="pt-4 border-t border-slate-100 flex flex-wrap gap-2">
             {skills.map((skill) => {
-                const roadmapId = getRoadmapIdForSkill(skill);
+                const target = getRoadmapTargetForSkill(skill);
+                const isInteractive = target !== null;
                 return (
                     <button
                         key={skill}
                         onClick={() => {
-                            if (roadmapId) onSelectRoadmap(roadmapId);
+                            if (target) onSelectTarget(target);
                         }}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-xs font-medium text-slate-700 hover:bg-white hover:text-slate-900 hover:border-slate-300 hover:shadow-2xs transition-all cursor-pointer group/pill"
+                        disabled={!isInteractive}
+                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                            isInteractive
+                                ? 'bg-slate-50/80 border border-slate-200/70 text-slate-700 hover:bg-white hover:text-slate-900 hover:border-slate-300 hover:shadow-2xs cursor-pointer group/pill'
+                                : 'bg-slate-50/40 border border-slate-200/50 text-slate-500 cursor-default opacity-85'
+                        }`}
                     >
                         <SkillIcon name={skill} size={15} />
                         <span>{skill}</span>
@@ -103,7 +194,7 @@ const CORE_STACK = [
 ];
 
 export const Skills = () => {
-    const [selectedRoadmapId, setSelectedRoadmapId] = useState<string | null>(null);
+    const [selectedTarget, setSelectedTarget] = useState<SkillTarget | null>(null);
 
     return (
         <section id="skills" className="py-14 sm:py-16 px-6 max-w-7xl mx-auto bg-transparent">
@@ -153,7 +244,7 @@ export const Skills = () => {
                             <button
                                 key={i}
                                 onClick={() => {
-                                    if (item.roadmapId) setSelectedRoadmapId(item.roadmapId);
+                                    if (item.roadmapId) setSelectedTarget({ skillId: item.roadmapId });
                                 }}
                                 className="p-3.5 rounded-xl border border-slate-200/70 bg-slate-50/80 hover:bg-white hover:border-slate-300 hover:shadow-xs transition-all text-left cursor-pointer group"
                             >
@@ -183,7 +274,7 @@ export const Skills = () => {
                     icon={LayoutTemplate}
                     iconBg="bg-blue-50"
                     iconColor="text-blue-600"
-                    onSelectRoadmap={(id) => setSelectedRoadmapId(id)}
+                    onSelectTarget={(target) => setSelectedTarget(target)}
                     skills={[
                         'React 19',
                         'TypeScript',
@@ -207,8 +298,9 @@ export const Skills = () => {
                     icon={Server}
                     iconBg="bg-indigo-50"
                     iconColor="text-indigo-600"
-                    onSelectRoadmap={(id) => setSelectedRoadmapId(id)}
+                    onSelectTarget={(target) => setSelectedTarget(target)}
                     skills={[
+                        'System Design & Architecture',
                         'Node.js',
                         'Express.js',
                         'REST API Architecture',
@@ -231,12 +323,13 @@ export const Skills = () => {
                     icon={Database}
                     iconBg="bg-emerald-50"
                     iconColor="text-emerald-600"
-                    onSelectRoadmap={(id) => setSelectedRoadmapId(id)}
+                    onSelectTarget={(target) => setSelectedTarget(target)}
                     skills={[
                         'PostgreSQL',
                         'Prisma ORM',
-                        'MongoDB (Mongoose)',
+                        'Supabase',
                         'NeonDB (Serverless)',
+                        'MongoDB (Mongoose)',
                         'Relational Data Modeling',
                         'Multi-Tenant Scoping',
                         'Database Migrations',
@@ -253,7 +346,7 @@ export const Skills = () => {
                     icon={Wrench}
                     iconBg="bg-amber-50"
                     iconColor="text-amber-600"
-                    onSelectRoadmap={(id) => setSelectedRoadmapId(id)}
+                    onSelectTarget={(target) => setSelectedTarget(target)}
                     skills={[
                         'Git & GitHub',
                         'Postman (API Testing)',
@@ -271,8 +364,10 @@ export const Skills = () => {
 
             {/* Interactive Skill Roadmap Drawer */}
             <SkillRoadmapDrawer
-                skillId={selectedRoadmapId}
-                onClose={() => setSelectedRoadmapId(null)}
+                skillId={selectedTarget?.skillId || null}
+                focusedCheckpointId={selectedTarget?.focusedCheckpointId}
+                topicTitle={selectedTarget?.topicTitle}
+                onClose={() => setSelectedTarget(null)}
             />
 
         </section>
