@@ -74,6 +74,72 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (cached) return res.json(cached);
 
     try {
+      if (process.env.GITHUB_TOKEN) {
+        try {
+          const graphQuery = `
+            query {
+              viewer {
+                name
+                login
+                bio
+                avatarUrl
+                followers { totalCount }
+                repositories(first: 50, ownerAffiliations: [OWNER], isFork: false, orderBy: {field: UPDATED_AT, direction: DESC}) {
+                  totalCount
+                  nodes {
+                    name
+                    stargazerCount
+                    languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+                      edges {
+                        size
+                        node {
+                          name
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          `;
+          const graphResult = await graphqlFetch(graphQuery);
+          const viewer = graphResult.data?.viewer;
+          if (viewer) {
+            const repos = viewer.repositories?.nodes || [];
+            const totalStars = repos.reduce((n: number, r: { stargazerCount?: number }) => n + (r.stargazerCount || 0), 0);
+            const langMap: Record<string, number> = {};
+            repos.forEach((r: { languages?: { edges?: Array<{ size: number; node: { name: string } }> } }) => {
+              r.languages?.edges?.forEach((e) => {
+                if (e.node?.name && e.size) {
+                  langMap[e.node.name] = (langMap[e.node.name] || 0) + e.size;
+                }
+              });
+            });
+            const topLanguages = Object.entries(langMap)
+              .sort(([, a], [, b]) => b - a)
+              .slice(0, 5)
+              .map(([lang, count]) => ({ lang, count }));
+
+            const payload = {
+              name: viewer.name ?? viewer.login,
+              login: viewer.login,
+              bio: viewer.bio,
+              avatar: viewer.avatarUrl,
+              followers: viewer.followers?.totalCount ?? 0,
+              publicRepos: viewer.repositories?.totalCount ?? repos.length,
+              totalStars,
+              topLanguages,
+              profileUrl: `https://github.com/${viewer.login}`,
+            };
+
+            setCache(cacheKey, payload);
+            return res.json(payload);
+          }
+        } catch (gqlErr) {
+          console.warn('GraphQL profile fetch failed, falling back to REST:', gqlErr);
+        }
+      }
+
       const [user, repos] = await Promise.all([
         ghFetch(`/users/${USERNAME}`),
         ghFetch(`/users/${USERNAME}/repos?per_page=100&sort=updated`),

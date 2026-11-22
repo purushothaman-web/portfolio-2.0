@@ -51,12 +51,13 @@ const CELL_CLASSES: Record<number, string> = {
 const LANGUAGE_META: Record<string, { color: string; bg: string }> = {
   JavaScript: { color: '#eab308', bg: 'bg-amber-50 text-amber-700 border-amber-200' },
   TypeScript: { color: '#2563eb', bg: 'bg-blue-50 text-blue-700 border-blue-200' },
+  Java: { color: '#b07219', bg: 'bg-orange-50 text-orange-800 border-orange-200' },
   HTML: { color: '#ea580c', bg: 'bg-orange-50 text-orange-700 border-orange-200' },
   CSS: { color: '#0284c7', bg: 'bg-sky-50 text-sky-700 border-sky-200' },
   Python: { color: '#16a34a', bg: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
 };
 
-const DEFAULT_LANG_COLORS = ['#2563eb', '#059669', '#d97706', '#7c3aed', '#db2777'];
+const DEFAULT_LANG_COLORS = ['#2563eb', '#b07219', '#eab308', '#ea580c', '#0284c7'];
 
 const FALLBACK_PROFILE: GitHubProfile = {
   name: 'Purushothaman R',
@@ -67,10 +68,11 @@ const FALLBACK_PROFILE: GitHubProfile = {
   publicRepos: 18,
   totalStars: 5,
   topLanguages: [
-    { lang: 'JavaScript', count: 12 },
-    { lang: 'TypeScript', count: 8 },
-    { lang: 'HTML', count: 5 },
-    { lang: 'CSS', count: 4 },
+    { lang: 'TypeScript', count: 8785690 },
+    { lang: 'Java', count: 2769168 },
+    { lang: 'JavaScript', count: 1346397 },
+    { lang: 'HTML', count: 209185 },
+    { lang: 'CSS', count: 99379 },
   ],
   profileUrl: 'https://github.com/purushothaman-web',
 };
@@ -510,7 +512,7 @@ export function GitHubActivity() {
       </motion.div>
 
       {/* ── Bottom Split: Most-Used Languages & Work Principles ── */}
-      <div className="grid lg:grid-cols-12 gap-6">
+      <div className="grid lg:grid-cols-12 gap-6 items-stretch">
         {/* Languages Card (7 cols) */}
         {!loadingProfile && profile && profile.topLanguages.length > 0 && (
           <motion.div
@@ -518,46 +520,54 @@ export function GitHubActivity() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.25 }}
-            className="lg:col-span-7 bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 shadow-xs"
+            className="lg:col-span-7 bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 shadow-xs flex flex-col justify-between"
           >
-            <div className="flex items-center gap-2 mb-6">
-              <TrendingUp size={16} className="text-blue-600" />
-              <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest font-sans">
-                Most-Used Languages
-              </h3>
+            <div>
+              <div className="flex items-center gap-2 mb-5">
+                <TrendingUp size={16} className="text-blue-600" />
+                <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest font-sans">
+                  Most-Used Languages
+                </h3>
+              </div>
+
+              <div className="space-y-3.5">
+                {profile.topLanguages.slice(0, 5).map(({ lang, count }, i) => {
+                  const total = profile.topLanguages.reduce((s, l) => s + l.count, 0);
+                  const rawPct = (count / total) * 100;
+                  const pct = rawPct < 1 ? '<1' : Math.round(rawPct);
+                  const langColor = LANGUAGE_META[lang]?.color || DEFAULT_LANG_COLORS[i % DEFAULT_LANG_COLORS.length];
+
+                  return (
+                    <div key={lang} className="space-y-1.5">
+                      <div className="flex items-center justify-between text-xs sm:text-sm font-sans">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="w-2.5 h-2.5 rounded-full shrink-0"
+                            style={{ backgroundColor: langColor }}
+                          />
+                          <span className="font-semibold text-slate-800">{lang}</span>
+                        </div>
+                        <span className="font-mono text-slate-500 font-medium tabular-nums">{pct}%</span>
+                      </div>
+                      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{ backgroundColor: langColor }}
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${Math.max(2, Math.round(rawPct))}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.8, delay: 0.3 + i * 0.08, ease: 'easeOut' }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
-            <div className="space-y-4">
-              {profile.topLanguages.map(({ lang, count }, i) => {
-                const total = profile.topLanguages.reduce((s, l) => s + l.count, 0);
-                const pct = Math.round((count / total) * 100);
-                const langColor = LANGUAGE_META[lang]?.color || DEFAULT_LANG_COLORS[i % DEFAULT_LANG_COLORS.length];
-
-                return (
-                  <div key={lang} className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs sm:text-sm font-sans">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className="w-2.5 h-2.5 rounded-full shrink-0"
-                          style={{ backgroundColor: langColor }}
-                        />
-                        <span className="font-semibold text-slate-800">{lang}</span>
-                      </div>
-                      <span className="font-mono text-slate-500 font-medium tabular-nums">{pct}%</span>
-                    </div>
-                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <motion.div
-                        className="h-full rounded-full"
-                        style={{ backgroundColor: langColor }}
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${pct}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.3 + i * 0.08, ease: 'easeOut' }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="pt-4 mt-5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-sans">
+              <span>Calculated across active repositories</span>
+              <span className="font-medium text-slate-500 font-mono">Top {Math.min(profile.topLanguages.length, 5)}</span>
             </div>
           </motion.div>
         )}
